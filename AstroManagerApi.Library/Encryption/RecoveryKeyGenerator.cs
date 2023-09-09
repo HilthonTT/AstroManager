@@ -43,4 +43,9 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
 
         return request;
     }
+
+    public bool VerifyKey(string key, string hashedKey)
+    {
+        return _hasher.VerifyPassword(key, hashedKey);
+    }
 }

@@ -66,6 +66,24 @@
     <Build Include="dbo\Tables\Entity.sql" />
     <Build Include="dbo\Tables\EntityAttribute.sql" />
     <Build Include="dbo\Tables\MasterPassword.sql" />
+    <Build Include="dbo\StoredProcedures\spAttribute_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\spAttribute_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spEntity_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\spEntity_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spEntityAttribute_GetById.sql" />
+    <Build Include="dbo\StoredProcedures\spEntityAttribute_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spEntityAttribute_GetByUserId.sql" />
+    <Build Include="dbo\StoredProcedures\spEntityAttribute_Update.sql" />
+    <Build Include="dbo\StoredProcedures\spEntityAttribute_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\spUser_GetByOid.sql" />
+    <Build Include="dbo\StoredProcedures\spUser_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spUser_Update.sql" />
+    <Build Include="dbo\StoredProcedures\spMasterPassword_GetByUserId.sql" />
+    <Build Include="dbo\StoredProcedures\spMasterPassword_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spMasterPassword_Update.sql" />
+    <Build Include="dbo\Tables\RecoveryKey.sql" />
+    <Build Include="dbo\StoredProcedures\spRecoveryKey_GetByUserId.sql" />
+    <Build Include="dbo\StoredProcedures\spRecoveryKey_Insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="AstroManagerData.refactorlog" />
