@@ -16,5 +16,6 @@ public enum Operation
     GetAll,
     GetByOid,
     GetById,
+    GetByUserId,
     Delete,
 }

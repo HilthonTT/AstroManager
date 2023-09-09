@@ -9,7 +9,7 @@ public interface ISqlDataAccess
     Task<T> LoadFirstOrDefaultDataAsync<T>(string storedProcedure, DynamicParameters parameters = null);
     Task<T> LoadFirstOrDefaultInTransactionAsync<T>(string storedProcedure, DynamicParameters parameters = null);
     void RollbackTransaction();
-    Task SaveDataAsync(string storedProcedure, DynamicParameters parameters = null);
-    Task SaveDataInTransactionAsync(string storedProcedure, DynamicParameters parameters = null);
+    Task SaveDataAsync(string storedProcedure, DynamicParameters parameters);
+    Task SaveDataInTransactionAsync(string storedProcedure, DynamicParameters parameters);
     void StartTransaction();
 }

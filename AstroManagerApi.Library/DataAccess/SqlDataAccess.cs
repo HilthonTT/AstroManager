@@ -53,7 +53,7 @@ public class SqlDataAccess : ISqlDataAccess
         return element;
     }
 
-    public async Task SaveDataAsync(string storedProcedure, DynamicParameters parameters = default)
+    public async Task SaveDataAsync(string storedProcedure, DynamicParameters parameters)
     {
         using var connection = new SqlConnection(_connectionString);
 
@@ -61,7 +61,7 @@ public class SqlDataAccess : ISqlDataAccess
             commandType: CommandType.StoredProcedure);
     }
 
-    public async Task SaveDataInTransactionAsync(string storedProcedure, DynamicParameters parameters = default)
+    public async Task SaveDataInTransactionAsync(string storedProcedure, DynamicParameters parameters)
     {
         await _connection?.ExecuteAsync(storedProcedure, parameters, 
             commandType: CommandType.StoredProcedure, transaction: _transaction);
@@ -75,7 +75,7 @@ public class SqlDataAccess : ISqlDataAccess
         return rows.ToList();
     }
 
-    public async Task<T> LoadFirstOrDefaultInTransactionAsync<T>(string storedProcedure, DynamicParameters parameters = null)
+    public async Task<T> LoadFirstOrDefaultInTransactionAsync<T>(string storedProcedure, DynamicParameters parameters = default)
     {
         var element = await _connection?.QueryFirstOrDefaultAsync<T>(storedProcedure, parameters,
             commandType: CommandType.StoredProcedure, transaction: _transaction);
