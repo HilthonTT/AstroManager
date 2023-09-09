@@ -4,9 +4,8 @@ namespace AstroManagerApi.Library.Models;
 public class AttributeModel
 {
     public int Id { get; set; }
-    public int UserId { get; set; }
 
-    [Required]
-    [StringLength(50)]
+    [Required(ErrorMessage = "The attribute name is required.")]
+    [StringLength(50, ErrorMessage = "The attribute name is too long.")]
     public string AttributeName { get; set; }
 }
