@@ -1,4 +1,4 @@
-﻿namespace AstroManagerApi.Library.Encryption;
+﻿namespace AstroManagerApi.Library.Encryption.Interfaces;
 
 public interface IAesEncryptor
 {
