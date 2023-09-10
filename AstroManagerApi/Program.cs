@@ -2,6 +2,7 @@ using AstroManagerApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.ConfigureAuthentication();
 builder.ConfigureServices();
 
 var app = builder.Build();
@@ -15,6 +16,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

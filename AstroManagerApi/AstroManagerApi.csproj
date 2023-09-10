@@ -4,11 +4,15 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>a229edf5-d04a-41df-b918-e2f575cfe47b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.10" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="2.13.4" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="2.13.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
