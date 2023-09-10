@@ -20,4 +20,8 @@
     <ProjectReference Include="..\AstroManagerApi.Library\AstroManagerApi.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>

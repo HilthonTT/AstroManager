@@ -47,7 +47,7 @@ public class PCAWrapper
                 .AcquireTokenInteractive(scopes)
                 .WithUseEmbeddedWebView(true)
                 .WithParentActivityOrWindow(PlatformConfig.Instance.ParentWindow)
-                .ExecuteAsync()
+                .ExecuteAsync();
 	    }
 
         systemWebViewOptions.iOSHidePrivacyPrompt = true;

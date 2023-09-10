@@ -35,13 +35,5 @@ public static class RegisterServices
         builder.Services.AddTransient<IAesEncryptor, AesEncryptor>();
         builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
         builder.Services.AddTransient<ITextHasher, TextHasher>();
-
-        builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
-        builder.Services.AddTransient<IAttributeData, AttributeData>();
-        builder.Services.AddTransient<IEntityAttributeData, EntityAttributeData>();
-        builder.Services.AddTransient<IEntityData, EntityData>();
-        builder.Services.AddTransient<IMasterPasswordData, MasterPasswordData>();
-        builder.Services.AddTransient<IRecoveryKeyData, RecoveryKeyData>();
-        builder.Services.AddTransient<IUserData, UserData>();
     }
 }
