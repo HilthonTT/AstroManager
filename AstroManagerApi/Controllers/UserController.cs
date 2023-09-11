@@ -39,8 +39,8 @@ public class UserController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error fetching the all the users: {ex}.", ex.Message);
-            return StatusCode(500, ex.Message);
+            _logger.LogError("Error fetching the all users: {ex}.", ex.Message);
+            return StatusCode(500, "An error occurred while processing the request.");
         }
     }
 
@@ -62,7 +62,7 @@ public class UserController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Error fetching the user: {ex}.", ex.Message);
-            return StatusCode(500, ex.Message);
+            return StatusCode(500, "An error occurred while processing the request.");
         }
     }
 
@@ -84,7 +84,7 @@ public class UserController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Error fetching the user from auth: {ex}.", ex.Message);
-            return StatusCode(500, ex.Message);
+            return StatusCode(500, "An error occurred while processing the request.");
         }
     }
 
@@ -106,7 +106,7 @@ public class UserController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Error creating the user: {ex}.", ex.Message);
-            return StatusCode(500, ex.Message);
+            return StatusCode(500, "An error occurred while processing the request.");
         }
     }
 
@@ -128,7 +128,7 @@ public class UserController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError("Error creating the user: {ex}.", ex.Message);
-            return StatusCode(500, ex.Message);
+            return StatusCode(500, "An error occurred while processing the request.");
         }
     }
 }
