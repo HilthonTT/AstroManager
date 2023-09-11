@@ -32,8 +32,17 @@ public static class RegisterServices
             options.InstanceName = "AstroManager_";
         });
 
-        builder.Services.AddTransient<IAesEncryptor, AesEncryptor>();
+        
         builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
         builder.Services.AddTransient<ITextHasher, TextHasher>();
+
+        builder.Services.AddSingleton<IAesEncryptor, AesEncryptor>();
+        builder.Services.AddSingleton<IDbConnection, DbConnection>();
+        builder.Services.AddSingleton<ICredentialData, MongoCredentialData>();
+        builder.Services.AddSingleton<ICredentialTemplateData, MongoCredentialTemplateData>();
+        builder.Services.AddSingleton<IMasterPasswordData, MongoMasterPasswordData>();
+        builder.Services.AddSingleton<IRecoveryKeyData, MongoRecoveryKeyData>();
+        builder.Services.AddSingleton<ITypeData, MongoTypeData>();
+        builder.Services.AddSingleton<IUserData, MongoUserData>();
     }
 }

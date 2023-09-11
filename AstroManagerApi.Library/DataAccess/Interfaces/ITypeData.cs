@@ -3,6 +3,6 @@
 namespace AstroManagerApi.Library.DataAccess.Interfaces;
 public interface ITypeData
 {
-    Task CreateTypeAsync(TypeModel type);
+    Task<TypeModel> CreateTypeAsync(TypeModel type);
     Task<List<TypeModel>> GetAllTypesAsync();
 }

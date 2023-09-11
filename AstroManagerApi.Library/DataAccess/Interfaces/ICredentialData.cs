@@ -3,7 +3,7 @@
 namespace AstroManagerApi.Library.DataAccess.Interfaces;
 public interface ICredentialData
 {
-    Task CreateCredentialAsync(CredentialModel credential);
+    Task<CredentialModel> CreateCredentialAsync(CredentialModel credential);
     Task<List<CredentialModel>> GetAllCredentialsAsync();
     Task<CredentialModel> GetCredentialAsync(string id);
     Task<List<CredentialModel>> GetUsersCredentialsAsync(string userId);

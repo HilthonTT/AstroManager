@@ -31,8 +31,9 @@ public class MongoTypeData : ITypeData
         return output;
     }
 
-    public async Task CreateTypeAsync(TypeModel type)
+    public async Task<TypeModel> CreateTypeAsync(TypeModel type)
     {
         await _types.InsertOneAsync(type);
+        return type;
     }
 }

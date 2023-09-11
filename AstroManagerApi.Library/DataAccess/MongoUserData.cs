@@ -29,9 +29,10 @@ public class MongoUserData : IUserData
         return await results.FirstOrDefaultAsync();
     }
 
-    public async Task CreateUserAsync(UserModel user)
+    public async Task<UserModel> CreateUserAsync(UserModel user)
     {
         await _users.InsertOneAsync(user);
+        return user;
     }
 
     public async Task UpdateUserAsync(UserModel user)

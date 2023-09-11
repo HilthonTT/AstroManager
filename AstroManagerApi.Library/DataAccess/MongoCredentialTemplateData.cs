@@ -50,8 +50,9 @@ public class MongoCredentialTemplateData : ICredentialTemplateData
         return output;
     }
 
-    public async Task CreateTemplateAsync(CredentialTemplateModel template)
+    public async Task<CredentialTemplateModel> CreateTemplateAsync(CredentialTemplateModel template)
     {
         await _templates.InsertOneAsync(template);
+        return template;
     }
 }

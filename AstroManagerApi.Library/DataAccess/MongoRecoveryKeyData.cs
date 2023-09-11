@@ -53,6 +53,9 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
 
         await _recoveryKeys.InsertOneAsync(recoveryKey);
         await _cache.RemoveAsync(key);
+
+        recoveryRequest.Recovery = recoveryKey;
+
         return recoveryRequest;
     }
 }

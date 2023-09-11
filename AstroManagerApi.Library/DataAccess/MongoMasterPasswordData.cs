@@ -1,4 +1,5 @@
 ﻿using AstroManagerApi.Library.DataAccess.Interfaces;
+using AstroManagerApi.Library.Encryption.Interfaces;
 using AstroManagerApi.Library.Extensions;
 using AstroManagerApi.Library.Models;
 using Microsoft.Extensions.Caching.Distributed;
@@ -10,11 +11,16 @@ public class MongoMasterPasswordData : IMasterPasswordData
     private const string CacheNamePrefix = $"{nameof(MongoMasterPasswordData)}_";
     private readonly IMongoCollection<MasterPasswordModel> _passwords;
     private readonly IDistributedCache _cache;
+    private readonly ITextHasher _hasher;
 
-    public MongoMasterPasswordData(IDbConnection db, IDistributedCache cache)
+    public MongoMasterPasswordData(
+        IDbConnection db,
+        IDistributedCache cache,
+        ITextHasher hasher)
     {
         _passwords = db.MasterPasswordCollection;
         _cache = cache;
+        _hasher = hasher;
     }
 
     public async Task<MasterPasswordModel> GetUsersMasterPasswordAsync(string userId)
@@ -32,9 +38,12 @@ public class MongoMasterPasswordData : IMasterPasswordData
         return output;
     }
 
-    public async Task CreateMasterPasswordAsync(MasterPasswordModel password)
+    public async Task<MasterPasswordModel> CreateMasterPasswordAsync(MasterPasswordModel password)
     {
+        password.HashedPassword = _hasher.HashPlainText(password.HashedPassword);
         await _passwords.InsertOneAsync(password);
+
+        return password;
     }
 
     public async Task UpdateMasterPasswordAsync(MasterPasswordModel password)

@@ -107,7 +107,7 @@ public class MongoCredentialData : ICredentialData
         await _cache.RemoveAsync(key);
     }
 
-    public async Task CreateCredentialAsync(CredentialModel credential)
+    public async Task<CredentialModel> CreateCredentialAsync(CredentialModel credential)
     {
         string key = CacheNamePrefix + credential.User.Id;
 
@@ -115,5 +115,7 @@ public class MongoCredentialData : ICredentialData
         await _credentials.InsertOneAsync(credential);
 
         await _cache.RemoveAsync(key);
+
+        return credential;
     }
 }
