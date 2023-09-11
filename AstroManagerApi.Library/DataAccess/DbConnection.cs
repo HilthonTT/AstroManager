@@ -16,6 +16,7 @@ public class DbConnection : IDbConnection
     public string UserCollectionName { get; private set; } = "users";
     public string MasterPasswordCollectionName { get; private set; } = "master-passwords";
     public string RecoveryKeyCollectionName { get; private set; } = "recovery-keys";
+    public string TypeCollectionName { get; private set; } = "types";
 
     public MongoClient Client { get; private set; }
     public IMongoCollection<CredentialModel> CredentialCollection { get; private set; }
@@ -23,6 +24,7 @@ public class DbConnection : IDbConnection
     public IMongoCollection<UserModel> UserCollection { get; private set; }
     public IMongoCollection<MasterPasswordModel> MasterPasswordCollection { get; private set; }
     public IMongoCollection<RecoveryKeyModel> RecoveryKeyCollection { get; private set; }
+    public IMongoCollection<TypeModel> TypeCollection { get; private set; }
 
     public DbConnection(IConfiguration config)
     {
@@ -36,5 +38,6 @@ public class DbConnection : IDbConnection
         UserCollection = _db.GetCollection<UserModel>(UserCollectionName);
         MasterPasswordCollection = _db.GetCollection<MasterPasswordModel>(MasterPasswordCollectionName);
         RecoveryKeyCollection = _db.GetCollection<RecoveryKeyModel>(RecoveryKeyCollectionName);
+        TypeCollection = _db.GetCollection<TypeModel>(TypeCollectionName);
     }
 }

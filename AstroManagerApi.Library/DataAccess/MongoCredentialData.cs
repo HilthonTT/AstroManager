@@ -38,18 +38,27 @@ public class MongoCredentialData : ICredentialData
         return encryptedFields;
     }
 
+    private async Task DecryptFieldAsync(FieldModel field)
+    {
+        field.Value = await _aes.DecryptAsync(field.Value);
+    }
+
     private async Task<List<CredentialModel>> DecryptFieldValuesAsync(List<CredentialModel> credentials)
     {
+        var tasks = new List<Task>();
+
         foreach (var credential in credentials)
         {
             foreach (var field in credential.Fields)
             {
-                field.Value = await _aes.DecryptAsync(field.Value);
+                tasks.Add(DecryptFieldAsync(field));
             }
         }
 
+        await Task.WhenAll(tasks);
+
         return credentials;
-    }
+    }    
 
     public async Task<List<CredentialModel>> GetAllCredentialsAsync()
     {
@@ -100,8 +109,11 @@ public class MongoCredentialData : ICredentialData
 
     public async Task CreateCredentialAsync(CredentialModel credential)
     {
-        credential.Fields = await EncryptFieldsAsync(credential);
+        string key = CacheNamePrefix + credential.User.Id;
 
+        credential.Fields = await EncryptFieldsAsync(credential);
         await _credentials.InsertOneAsync(credential);
+
+        await _cache.RemoveAsync(key);
     }
 }

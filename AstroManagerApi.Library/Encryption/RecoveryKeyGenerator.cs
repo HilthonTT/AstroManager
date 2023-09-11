@@ -1,4 +1,5 @@
 ﻿using AstroManagerApi.Library.Encryption.Interfaces;
+using AstroManagerApi.Library.Models;
 using AstroManagerApi.Library.Models.Request;
 using System.Security.Cryptography;
 
@@ -28,17 +29,16 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
     public RecoveryRequestModel GenerateRequest()
     {
         var request = new RecoveryRequestModel();
-
         for (int i = 0; i < NumberOfKeys; i++)
         {
-            string recoveryKey = GenerateRecoveryKey();
-            request.PlainRecoveryKeys.Add(recoveryKey);
+            string plainkey = GenerateRecoveryKey();
+            request.PlainRecoveryKeys.Add(plainkey);
         }
 
-        foreach (var k in request.PlainRecoveryKeys)
+        foreach (var key in request.PlainRecoveryKeys)
         {
-            string hashedKey = _hasher.HashPlainText(k);
-            request.HashedRecoveryKeys.Add(hashedKey);
+            string hashedKey = _hasher.HashPlainText(key);
+            request.Recovery.RecoveryKeys.Add(hashedKey);
         }
 
         return request;

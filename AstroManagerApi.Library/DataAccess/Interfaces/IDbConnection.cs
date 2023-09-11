@@ -16,4 +16,6 @@ public interface IDbConnection
     string RecoveryKeyCollectionName { get; }
     IMongoCollection<UserModel> UserCollection { get; }
     string UserCollectionName { get; }
+    IMongoCollection<TypeModel> TypeCollection { get; }
+    string TypeCollectionName { get; }
 }
