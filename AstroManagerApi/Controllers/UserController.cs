@@ -1,4 +1,5 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
+﻿using AstroManagerApi.Common;
+using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,24 +8,15 @@ namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class UserController : ControllerBase
+public class UserController : CustomController
 {
-    private readonly ILogger<UserController> _logger;
     private readonly IUserData _userData;
 
-    public UserController(ILogger<UserController> logger, IUserData userData)
+    public UserController(
+        ILogger<UserController> logger,
+        IUserData userData) : base(logger)
     {
-        _logger = logger;
         _userData = userData;
-    }
-
-    private void LogRequest()
-    {
-        _logger.LogInformation("Received request: {Method} {Path} from {RemoteIpAddress} at {DateTime}",
-            HttpContext.Request.Method,
-            HttpContext.Request.Path,
-            HttpContext.Connection.RemoteIpAddress,
-            DateTime.UtcNow);
     }
 
     [HttpGet]
@@ -32,7 +24,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            LogRequest();
+            LogRequestSource();
 
             var users = await _userData.GetAllUsersAsync();
             return Ok(users);
@@ -49,7 +41,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            LogRequest();
+            LogRequestSource();
 
             var user = await _userData.GetUserAsync(id);
             if (user is null)
@@ -71,7 +63,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            LogRequest();
+            LogRequestSource();
 
             var user = await _userData.GetUserFromAuthAsync(oid);
             if (user is null)
@@ -93,7 +85,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            LogRequest();
+            LogRequestSource();
 
             if (ModelState.IsValid is false)
             {
@@ -115,7 +107,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            LogRequest();
+            LogRequestSource();
 
             if (ModelState.IsValid is false)
             {
