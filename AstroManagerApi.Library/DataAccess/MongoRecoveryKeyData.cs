@@ -27,14 +27,14 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
         _keyGenerator = keyGenerator;
     }
 
-    public async Task<List<RecoveryKeyModel>> GetUsersRecoveryKeysAsync(string userId)
+    public async Task<RecoveryKeyModel> GetUsersRecoveryKeyAsync(string userId)
     {
         string key = CacheNamePrefix + userId;
-        var output = await _cache.GetRecordAsync<List<RecoveryKeyModel>>(key);
-        if (output?.Count == 0)
+        var output = await _cache.GetRecordAsync<RecoveryKeyModel>(key);
+        if (output is null)
         {
             var results = await _recoveryKeys.FindAsync(r => r.User.Id == userId);
-            output = await results.ToListAsync();
+            output = await results.FirstOrDefaultAsync();
 
             await _cache.SetRecordAsync(key, output, TimeSpan.FromDays(1), TimeSpan.FromHours(12));
         }
@@ -42,10 +42,9 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
         return output;
     }
 
-    public async Task<RecoveryRequestModel> CreateRecoveryKeysAsync(string userId)
+    public async Task<RecoveryRequestModel> CreateRecoveryKeysAsync(UserModel user)
     {
-        string key = CacheNamePrefix + userId;
-        var user = await _userData.GetUserAsync(userId);
+        string key = CacheNamePrefix + user.Id;
 
         var recoveryRequest = _keyGenerator.GenerateRequest();
         recoveryRequest.Recovery.User = new BasicUserModel(user);

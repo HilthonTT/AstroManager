@@ -1,8 +1,10 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
+﻿using Amazon.Runtime.Internal.Util;
+using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption.Interfaces;
 using AstroManagerApi.Library.Extensions;
 using AstroManagerApi.Library.Models;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace AstroManagerApi.Library.DataAccess;
@@ -13,15 +15,18 @@ public class MongoCredentialData : ICredentialData
     private readonly IMongoCollection<CredentialModel> _credentials;
     private readonly IDistributedCache _cache;
     private readonly IAesEncryptor _aes;
+    private readonly ILogger<MongoCredentialData> _logger;
 
     public MongoCredentialData(
         IDbConnection db,
         IDistributedCache cache,
-        IAesEncryptor aes)
+        IAesEncryptor aes,
+        ILogger<MongoCredentialData> logger)
     {
         _credentials = db.CredentialCollection;
         _cache = cache;
         _aes = aes;
+        _logger = logger;
     }
 
     private async Task<List<FieldModel>> EncryptFieldsAsync(CredentialModel credential)
@@ -40,22 +45,30 @@ public class MongoCredentialData : ICredentialData
 
     private async Task DecryptFieldAsync(FieldModel field)
     {
-        field.Value = await _aes.DecryptAsync(field.Value);
+        try
+        {
+            field.Value = await _aes.DecryptAsync(field.Value);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Error decrypting field: {ex}", ex.Message);
+        }
     }
 
     private async Task<List<CredentialModel>> DecryptFieldValuesAsync(List<CredentialModel> credentials)
     {
-        var tasks = new List<Task>();
-
-        foreach (var credential in credentials)
+        var parallelOptions = new ParallelOptions
         {
-            foreach (var field in credential.Fields)
-            {
-                tasks.Add(DecryptFieldAsync(field));
-            }
-        }
+            CancellationToken = CancellationToken.None
+        };
 
-        await Task.WhenAll(tasks);
+        await Parallel.ForEachAsync(credentials, async (credential, token) =>
+        {
+            await Parallel.ForEachAsync(credential.Fields, async (field, token) =>
+            {
+                await DecryptFieldAsync(field);
+            });
+        });
 
         return credentials;
     }    
