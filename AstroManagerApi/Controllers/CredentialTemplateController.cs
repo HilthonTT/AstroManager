@@ -8,7 +8,7 @@ namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class CredentialTemplateController : CustomController
+public class CredentialTemplateController : CustomController<CredentialTemplateController>
 {
     private readonly ICredentialTemplateData _templateData;
 

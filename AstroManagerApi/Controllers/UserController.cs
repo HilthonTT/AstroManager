@@ -8,7 +8,7 @@ namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class UserController : CustomController
+public class UserController : CustomController<UserController>
 {
     private readonly IUserData _userData;
 
@@ -31,8 +31,7 @@ public class UserController : CustomController
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error fetching the all users: {ex}.", ex.Message);
-            return StatusCode(500, "An error occurred while processing the request.");
+            return ServerErrorCode(ex);
         }
     }
 
@@ -53,8 +52,7 @@ public class UserController : CustomController
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error fetching the user: {ex}.", ex.Message);
-            return StatusCode(500, "An error occurred while processing the request.");
+            return ServerErrorCode(ex);
         }
     }
 
@@ -75,8 +73,7 @@ public class UserController : CustomController
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error fetching the user from auth: {ex}.", ex.Message);
-            return StatusCode(500, "An error occurred while processing the request.");
+            return ServerErrorCode(ex);
         }
     }
 
@@ -97,8 +94,7 @@ public class UserController : CustomController
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error creating the user: {ex}.", ex.Message);
-            return StatusCode(500, "An error occurred while processing the request.");
+            return ServerErrorCode(ex);
         }
     }
 
@@ -119,8 +115,7 @@ public class UserController : CustomController
         }
         catch (Exception ex)
         {
-            _logger.LogError("Error creating the user: {ex}.", ex.Message);
-            return StatusCode(500, "An error occurred while processing the request.");
+            return ServerErrorCode(ex);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class MasterPasswordController : CustomController
+public class MasterPasswordController : CustomController<MasterPasswordController>
 {
     private readonly IMasterPasswordData _passwordData;
     private readonly IRecoveryKeyData _recoveryKeyData;

@@ -8,12 +8,12 @@ namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class TypeController : CustomController
+public class TypeController : CustomController<TypeController>
 {
     private readonly ITypeData _typeData;
 
     public TypeController(
-        ILogger<CustomController> logger,
+        ILogger<TypeController> logger,
         ITypeData typeData) : base(logger)
     {
         _typeData = typeData;

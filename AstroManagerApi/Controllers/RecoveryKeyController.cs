@@ -8,12 +8,12 @@ namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class RecoveryKeyController : CustomController
+public class RecoveryKeyController : CustomController<RecoveryKeyController>
 {
     private readonly IRecoveryKeyData _recoveryKeyData;
 
     public RecoveryKeyController(
-        ILogger<CustomController> logger,
+        ILogger<RecoveryKeyController> logger,
         IRecoveryKeyData recoveryKeyData) : base(logger)
     {
         _recoveryKeyData = recoveryKeyData;
