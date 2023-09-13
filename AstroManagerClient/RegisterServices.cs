@@ -2,11 +2,21 @@
 using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace AstroManagerClient;
 public static class RegisterServices
 {
+    private static IConfiguration AddConfiguration()
+    {
+        string configFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+        var builder = new ConfigurationBuilder()
+            .AddJsonFile(configFilePath, optional: false, reloadOnChange: true);
+
+        return builder.Build();
+    }
+
     public static void ConfigureServices(this MauiAppBuilder builder)
     {
         builder
@@ -21,6 +31,7 @@ public static class RegisterServices
         builder.Logging.AddDebug();
 #endif
         builder.Services.AddHttpClient();
+        builder.Configuration.AddConfiguration(AddConfiguration());
 
         builder.Services.AddSingleton<ILoggedInUser, UserModel>();
         builder.Services.AddSingleton<IApiHelper, ApiHelper>();

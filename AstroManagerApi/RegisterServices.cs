@@ -31,7 +31,6 @@ public static class RegisterServices
             options.Configuration = builder.Configuration.GetConnectionString("Redis");
             options.InstanceName = "AstroManager_";
         });
-
         
         builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
         builder.Services.AddTransient<ITextHasher, TextHasher>();

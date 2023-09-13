@@ -14,8 +14,8 @@ public class AesEncryptor : IAesEncryptor
     {
         _config = config;
 
-        _key = _config["aes_key"];
-        _iv = _config["aes_iv"];
+        _key = _config["Aes:Key"];
+        _iv = _config["Aes:IV"];
     }
 
     public async Task<string> EncryptAsync(string plainText)
