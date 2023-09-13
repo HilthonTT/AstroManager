@@ -73,20 +73,6 @@ public class MongoCredentialData : ICredentialData
         return credentials;
     }    
 
-    public async Task<List<CredentialModel>> GetAllCredentialsAsync()
-    {
-        var output = await _cache.GetRecordAsync<List<CredentialModel>>(CacheName);
-        if (output is null)
-        {
-            var results = await _credentials.FindAsync(_ => true);
-            output = await results.ToListAsync();
-
-            await _cache.SetRecordAsync(CacheName, output, TimeSpan.FromMinutes(20), TimeSpan.FromMinutes(10));
-        }
-
-        return output;
-    }
-
     public async Task<List<CredentialModel>> GetUsersCredentialsAsync(string userId)
     {
         string key = CacheNamePrefix + userId;

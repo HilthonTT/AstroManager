@@ -19,22 +19,6 @@ public class CredentialController : CustomController<CredentialController>
         _credentialData = credentialData;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllCredentialsAsync()
-    {
-        try
-        {
-            LogRequestSource();
-
-            var credentials = await _credentialData.GetAllCredentialsAsync();
-            return Ok(credentials);
-        }
-        catch (Exception ex)
-        {
-            return ServerErrorCode(ex);
-        }
-    }
-
     [HttpGet("user/{userId}")]
     public async Task<IActionResult> GetUsersCredentialsAsync(string userId)
     {

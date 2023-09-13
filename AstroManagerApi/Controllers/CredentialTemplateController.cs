@@ -42,7 +42,7 @@ public class CredentialTemplateController : CustomController<CredentialTemplateC
         {
             LogRequestSource();
 
-            var templates = await _templateData.GetAllTemplatesAsync();
+            var templates = await _templateData.GetTemplateAsync(id);
             return Ok(templates);
         }
         catch (Exception ex)
