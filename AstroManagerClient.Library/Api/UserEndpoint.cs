@@ -30,13 +30,13 @@ public class UserEndpoint : IUserEndpoint
         {
             output = await response.Content.ReadFromJsonAsync<List<UserModel>>();
             await _storage.SetRecordAsync(CacheName, output, TimeSpan.FromHours(1));
+
+            return output;
         }
         else
         {
             throw new Exception(response.ReasonPhrase);
         }
-
-        return output;
     }
 
     public async Task<UserModel> GetUserAsync(string id)
