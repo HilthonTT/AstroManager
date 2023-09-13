@@ -54,4 +54,8 @@
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.32.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\AstroManagerClient.Library\AstroManagerClient.Library.csproj" />
+	</ItemGroup>
+
 </Project>
