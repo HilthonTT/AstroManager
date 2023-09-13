@@ -13,12 +13,16 @@ public class UserModel
     [StringLength(36, ErrorMessage = "Your oid is too long.")]
     public string ObjectIdentifier { get; set; }
 
+    [Required(ErrorMessage = "The display name is required.")]
+    [StringLength(100, ErrorMessage = "Your display name is too long.")]
+    public string DisplayName { get; set; }
+
     [Required(ErrorMessage = "The first name is required.")]
-    [StringLength(50, ErrorMessage = "Your first name is too long.")]
+    [StringLength(150, ErrorMessage = "Your first name is too long.")]
     public string FirstName { get; set; }
     
     [Required(ErrorMessage = "The last name is required.")]
-    [StringLength(50, ErrorMessage = "Your last name is too long.")]
+    [StringLength(150, ErrorMessage = "Your last name is too long.")]
     public string LastName { get; set; }
 
     [Required(ErrorMessage = "The email address is required.")]

@@ -6,4 +6,5 @@ public interface IMasterPasswordEndpoint
     Task<MasterPasswordModel> CreateMasterPasswordAsync(MasterPasswordModel password);
     Task<MasterPasswordModel> GetUsersMasterPasswordAsync(string userId);
     Task<string> UpdateMasterPasswordAsync(PasswordResetModel password);
+    Task<bool> VerifyPasswordAsync(string userId, string password);
 }

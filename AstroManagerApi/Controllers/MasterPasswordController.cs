@@ -104,4 +104,22 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
             return ServerErrorCode(ex);
         }
     }
+
+    [HttpPost("verify/{userId}/{password}")]
+    public async Task<IActionResult> VerifyPasswordAsync(string userId, string password)
+    {
+        try
+        {
+            LogRequestSource();
+
+            var hashedMasterPassword = await _passwordData.GetUsersMasterPasswordAsync(userId);
+            bool isCorrect = _hasher.VerifyPassword(password, hashedMasterPassword.HashedPassword);
+
+            return Ok(isCorrect);
+        }
+        catch (Exception ex)
+        {
+            return ServerErrorCode(ex);
+        }
+    }
 }

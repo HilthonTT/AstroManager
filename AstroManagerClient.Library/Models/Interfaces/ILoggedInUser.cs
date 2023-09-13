@@ -7,4 +7,5 @@ public interface ILoggedInUser
     string Id { get; set; }
     string LastName { get; set; }
     string ObjectIdentifier { get; set; }
+    string DisplayName { get; set; }
 }

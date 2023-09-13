@@ -66,4 +66,17 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
             throw new Exception(response.ReasonPhrase);
         }
     }
+
+    public async Task<bool> VerifyPasswordAsync(string userId, string password)
+    {
+        using var response = await _api.HttpClient.PostAsync($"{Uri}/verify/{userId}/{password}", null);
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<bool>();
+        }
+        else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
 }

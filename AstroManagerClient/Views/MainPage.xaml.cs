@@ -1,4 +1,4 @@
-﻿namespace AstroManagerClient;
+﻿namespace AstroManagerClient.Views;
 
 public partial class MainPage : ContentPage
 {

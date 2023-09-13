@@ -2,6 +2,7 @@
 using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
@@ -42,5 +43,7 @@ public static class RegisterServices
         builder.Services.AddTransient<IRecoveryKeyEndpoint, RecoveryKeyEndpoint>();
         builder.Services.AddTransient<ITypeEndpoint, TypeEndpoint>();
         builder.Services.AddTransient<IUserEndpoint, UserEndpoint>();
+
+        builder.Services.AddTransient<LoginViewModel>();
     }
 }
