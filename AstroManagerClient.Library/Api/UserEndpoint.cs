@@ -7,7 +7,7 @@ namespace AstroManagerClient.Library.Api;
 public class UserEndpoint : IUserEndpoint
 {
     private const string CacheName = nameof(UserEndpoint);
-    private const string Uri = "user";
+    private const string Uri = "api/user";
     private readonly IApiHelper _api;
     private readonly ISecureStorageWrapper _storage;
 
@@ -15,6 +15,18 @@ public class UserEndpoint : IUserEndpoint
     {
         _api = api;
         _storage = storage;
+    }
+
+    private static UserModel NotFoundError(HttpResponseMessage response)
+    {
+        if (response.ReasonPhrase.Contains("Not Found"))
+        {
+            return default;
+        }
+        else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
     }
 
     public async Task<List<UserModel>> GetAllUsersAsync()
@@ -46,22 +58,22 @@ public class UserEndpoint : IUserEndpoint
         {
             return await response.Content.ReadFromJsonAsync<UserModel>();
         }
-        else
+        else 
         {
-            throw new Exception(response.ReasonPhrase);
+            return NotFoundError(response);
         }
     }
 
     public async Task<UserModel> GetUserFromAuthAsync(string oid)
     {
-        using var response = await _api.HttpClient.GetAsync($"{Uri}/auth{oid}");
+        using var response = await _api.HttpClient.GetAsync($"{Uri}/auth/{oid}");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadFromJsonAsync<UserModel>();
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return NotFoundError(response);
         }
     }
 
@@ -74,7 +86,7 @@ public class UserEndpoint : IUserEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return NotFoundError(response);
         }
     }
 
