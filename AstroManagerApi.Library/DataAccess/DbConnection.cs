@@ -30,7 +30,7 @@ public class DbConnection : IDbConnection
     {
         _config = config;
         Client = new(_config.GetConnectionString(ConnectionId));
-        DbName = _config["DatabaseName"];
+        DbName = _config["MongoDB:DatabaseName"];
         _db = Client.GetDatabase(DbName);
 
         CredentialCollection = _db.GetCollection<CredentialModel>(CredentialCollectionName);
