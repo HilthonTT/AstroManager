@@ -9,19 +9,32 @@ public static class UserVerifier
     {
         var claims = PCAWrapper.AcquireClaims(result);
 
-        string objectId = claims.FirstOrDefault(c => c.Type.Contains("objectidentifier"))?.Value;
-
+        string objectId = claims.FirstOrDefault(c => c.Type.Contains("oid"))?.Value;
         if (string.IsNullOrWhiteSpace(objectId))
         {
             return default;
         }
 
         var loggedInUser = await userEndpoint.GetUserFromAuthAsync(objectId) ?? new();
+        
+        string name = claims.FirstOrDefault(c => c.Type.Contains("name"))?.Value;
+        string firstName = "";
+        string lastName = "";
 
-        string firstName = claims.FirstOrDefault(c => c.Type.Contains("givenname"))?.Value;
-        string lastName = claims.FirstOrDefault(c => c.Type.Contains("surname"))?.Value;
+        string[] nameParts = name.Split(' ');
+        if (nameParts.Length >= 2)
+        {
+            firstName = nameParts[0];
+            lastName = nameParts[1];
+        }
+        else
+        {
+            firstName = nameParts[0];
+            lastName = "";
+        }
+
         string displayName = claims.FirstOrDefault(c => c.Type.Equals("name"))?.Value;
-        string email = claims.FirstOrDefault(c => c.Type.Contains("email"))?.Value;
+        string email = claims.FirstOrDefault(c => c.Type.Contains("preferred_username"))?.Value;
 
         bool isDirty = false;
 
@@ -34,32 +47,32 @@ public static class UserVerifier
         if (firstName.Equals(loggedInUser.FirstName) is false)
         {
             isDirty = true;
-            loggedInUser.FirstName = firstName[..150];
+            loggedInUser.FirstName = firstName;
         }
 
         if (lastName.Equals(loggedInUser.LastName) is false)
         {
             isDirty = true;
-            loggedInUser.LastName = lastName[..150];
+            loggedInUser.LastName = lastName;
         }
 
         if (displayName.Equals(loggedInUser.DisplayName) is false)
         {
             isDirty = true;
-            loggedInUser.DisplayName = displayName[..100];
+            loggedInUser.DisplayName = displayName;
         }
 
         if (email.Equals(loggedInUser.EmailAddress) is false)
         {
             isDirty = true;
-            loggedInUser.EmailAddress = email[..256];
+            loggedInUser.EmailAddress = email;
         }
 
         if (isDirty)
         {
             if (string.IsNullOrWhiteSpace(loggedInUser.Id))
             {
-                loggedInUser = await userEndpoint.CreateUserAsync(loggedInUser);
+                await userEndpoint.CreateUserAsync(loggedInUser);
             }
             else
             {

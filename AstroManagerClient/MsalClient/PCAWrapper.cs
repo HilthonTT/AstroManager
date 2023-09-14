@@ -14,7 +14,7 @@ public class PCAWrapper
     private const string TenantId = "";
     private const string Authority = $"https://login.microsoftonline.com/{TenantId}";
     private const string ClientId = "";
-    public static string[] Scopes = { $"api://{ClientId}/access_as_user" };
+    public static string[] Scopes = { $"api://{ClientId}/accesss_as_user" };
 
     private PCAWrapper()
     {
@@ -31,6 +31,7 @@ public class PCAWrapper
         var acct = accts.FirstOrDefault();
 
         var authResult = await PCA.AcquireTokenSilent(scopes, acct).ExecuteAsync();
+
         var tenantProfiles = acct.GetTenantProfiles();
 
         return authResult;
@@ -39,20 +40,19 @@ public class PCAWrapper
     public async Task<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes)
     {
         var systemWebViewOptions = new SystemWebViewOptions();
-
 #if IOS
+        // embedded view is not supported on Android
         if (UseEmbedded)
-	    {
-            return await PCA
-                .AcquireTokenInteractive(scopes)
+        {
+            return await PCA.AcquireTokenInteractive(scopes)
                 .WithUseEmbeddedWebView(true)
                 .WithParentActivityOrWindow(PlatformConfig.Instance.ParentWindow)
                 .ExecuteAsync();
-	    }
+        }
 
+        // Hide the privacy prompt in iOS
         systemWebViewOptions.iOSHidePrivacyPrompt = true;
 #endif
-
         return await PCA.AcquireTokenInteractive(scopes)
             .WithAuthority(Authority)
             .WithTenantId(TenantId)

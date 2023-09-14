@@ -24,8 +24,6 @@ public partial class LoginViewModel : BaseViewModel
         _loggedInUser = loggedInUser;
         _userEndpoint = userEndpoint;
         _passwordEndpoint = passwordEndpoint;
-
-        LoginAsync();
     }
 
     [ObservableProperty]
@@ -46,6 +44,9 @@ public partial class LoginViewModel : BaseViewModel
 
     private async Task VerifyUserDataAsync(AuthenticationResult result)
     {
+        IsLoggedIn = true;
+        _api.AcquireHeaders(result.AccessToken);
+
         var verifiedUser = await UserVerifier.VerifyUserInformationAsync(_userEndpoint, result);
 
         _loggedInUser.Id = verifiedUser.Id;
@@ -64,15 +65,14 @@ public partial class LoginViewModel : BaseViewModel
             var result = await PCAWrapper.Instance.AcquireTokenSilentAsync(PCAWrapper.Scopes);
             IsLoggedIn = true;
 
-            _api.AcquireHeaders(result.AccessToken);
             await VerifyUserDataAsync(result);
         }
         catch (MsalUiRequiredException)
         {
             var result = await PCAWrapper.Instance.AcquireTokenInteractiveAsync(PCAWrapper.Scopes);
+
             IsLoggedIn = true;
 
-            _api.AcquireHeaders(result.AccessToken);
             await VerifyUserDataAsync(result);
         }
         catch (Exception ex) 
