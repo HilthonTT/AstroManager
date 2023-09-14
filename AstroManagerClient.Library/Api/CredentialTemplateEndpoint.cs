@@ -7,7 +7,7 @@ namespace AstroManagerClient.Library.Api;
 public class CredentialTemplateEndpoint : ICredentialTemplateEndpoint
 {
     private const string CacheName = nameof(CredentialTemplateEndpoint);
-    private const string Uri = "credentialTemplate";
+    private const string Uri = "api/credentialTemplate";
     private readonly IApiHelper _api;
     private readonly ISecureStorageWrapper _storage;
 
@@ -48,7 +48,7 @@ public class CredentialTemplateEndpoint : ICredentialTemplateEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return _api.NotFoundError<CredentialTemplateModel>(response);
         }
     }
 
@@ -61,7 +61,7 @@ public class CredentialTemplateEndpoint : ICredentialTemplateEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return _api.NotFoundError<CredentialTemplateModel>(response);
         }
     }
 }

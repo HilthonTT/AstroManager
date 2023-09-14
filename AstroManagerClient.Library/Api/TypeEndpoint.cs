@@ -7,7 +7,7 @@ namespace AstroManagerClient.Library.Api;
 public class TypeEndpoint : ITypeEndpoint
 {
     private const string CacheName = nameof(TypeEndpoint);
-    private const string Uri = "type";
+    private const string Uri = "api/type";
     private readonly IApiHelper _api;
     private readonly ISecureStorageWrapper _storage;
 

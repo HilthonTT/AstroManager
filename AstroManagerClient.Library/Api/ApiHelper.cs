@@ -51,4 +51,16 @@ public class ApiHelper : IApiHelper
         _loggedInUser.DisplayName = "";
         _loggedInUser.EmailAddress = "";
     }
+
+    public T NotFoundError<T>(HttpResponseMessage response)
+    {
+        if (response.ReasonPhrase.Contains("Not Found"))
+        {
+            return default;
+        }
+        else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
 }

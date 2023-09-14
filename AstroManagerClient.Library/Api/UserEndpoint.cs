@@ -17,18 +17,6 @@ public class UserEndpoint : IUserEndpoint
         _storage = storage;
     }
 
-    private static UserModel NotFoundError(HttpResponseMessage response)
-    {
-        if (response.ReasonPhrase.Contains("Not Found"))
-        {
-            return default;
-        }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
-    }
-
     public async Task<List<UserModel>> GetAllUsersAsync()
     {
         var output = await _storage.GetRecordAsync<List<UserModel>>(CacheName);
@@ -60,7 +48,7 @@ public class UserEndpoint : IUserEndpoint
         }
         else 
         {
-            return NotFoundError(response);
+            return _api.NotFoundError<UserModel>(response);
         }
     }
 
@@ -73,7 +61,7 @@ public class UserEndpoint : IUserEndpoint
         }
         else
         {
-            return NotFoundError(response);
+            return _api.NotFoundError<UserModel>(response);
         }
     }
 
@@ -86,7 +74,7 @@ public class UserEndpoint : IUserEndpoint
         }
         else
         {
-            return NotFoundError(response);
+            return _api.NotFoundError<UserModel>(response);
         }
     }
 

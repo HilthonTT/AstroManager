@@ -7,7 +7,7 @@ namespace AstroManagerClient.Library.Api;
 public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
 {
     private const string CacheName = nameof(RecoveryKeyEndpoint);
-    private const string Uri = "recoveryKey";
+    private const string Uri = "api/recoveryKey";
     private readonly IApiHelper _api;
     private readonly ISecureStorageWrapper _storage;
 
@@ -35,7 +35,7 @@ public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return _api.NotFoundError<RecoveryKeyModel>(response);
         }
     }
 
@@ -48,7 +48,7 @@ public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return _api.NotFoundError<RecoveryRequestModel>(response);
         }
     }
 }

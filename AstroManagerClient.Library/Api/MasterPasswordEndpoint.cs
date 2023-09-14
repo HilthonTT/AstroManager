@@ -7,7 +7,7 @@ namespace AstroManagerClient.Library.Api;
 public class MasterPasswordEndpoint : IMasterPasswordEndpoint
 {
     private const string CacheName = nameof(MasterPasswordEndpoint);
-    private const string Uri = "masterPassword";
+    private const string Uri = "api/masterPassword";
     private readonly IApiHelper _api;
     private readonly ISecureStorageWrapper _storage;
 
@@ -35,7 +35,7 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return _api.NotFoundError<MasterPasswordModel>(response);
         }
     }
 
@@ -49,7 +49,7 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
         }
         else
         {
-            throw new Exception(response.ReasonPhrase);
+            return _api.NotFoundError<MasterPasswordModel>(response);
         }
     }
 
