@@ -79,4 +79,18 @@ public class CredentialEndpoint : ICredentialEndpoint
             throw new Exception(response.ReasonPhrase);
         }
     }
+
+    public async Task<string> DeleteCredentialAsync(CredentialModel credential)
+    {
+        using var response = await _api.HttpClient.DeleteAsync($"{Uri}/{credential.Id}");
+        if (response.IsSuccessStatusCode)
+        {
+            SecureStorage.Remove(CacheName);
+            return await response.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            throw new Exception(response.ReasonPhrase);
+        }
+    }
 }

@@ -1,0 +1,173 @@
+﻿using AstroManagerClient.Library.Api.Interfaces;
+using AstroManagerClient.Library.Models;
+using AstroManagerClient.Library.Models.Interfaces;
+using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+
+namespace AstroManagerClient.ViewModels;
+public partial class HomeViewModel : BaseViewModel
+{
+    private readonly ILoggedInUser _loggedInUser;
+    private readonly ICredentialEndpoint _credentialEndpoint;
+    private readonly ITypeEndpoint _typeEndpoint;
+
+    public const string Title = "Title";
+    public const string DateCreated = "DateCreated";
+    public const string DateModified = "DateModified";
+
+    public HomeViewModel(
+        ILoggedInUser loggedInUser,
+        ICredentialEndpoint credentialEndpoint,
+        ITypeEndpoint typeEndpoint)
+    {
+        _loggedInUser = loggedInUser;
+        _credentialEndpoint = credentialEndpoint;
+        _typeEndpoint = typeEndpoint;
+    }
+
+    [ObservableProperty]
+    private ObservableCollection<CredentialModel> _credentials;
+
+    [ObservableProperty]
+    private ObservableCollection<TypeModel> _types;
+
+    [ObservableProperty]
+    private CredentialModel _selectedCredential;
+
+    [ObservableProperty]
+    private string _filtering;
+
+    [ObservableProperty]
+    private bool _isEditing;
+
+    [ObservableProperty]
+    private bool _showPassword;
+
+    [RelayCommand]
+    private async Task LoadCredentialsAsync()
+    {
+        var loadedCredentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
+        Credentials = new(loadedCredentials);
+    }
+
+    [RelayCommand]
+    private async Task LoadTypesAsync()
+    {
+        var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
+        Types = new(loadedTypes);
+    }
+
+    [RelayCommand]
+    private void OnFilteringClick(string filtering)
+    {
+        Filtering = filtering;
+    }
+
+    [RelayCommand]
+    private void OnCredentialClick(CredentialModel credential)
+    {
+        IsEditing = false;
+        ShowPassword = false;
+
+        SelectedCredential = credential;
+    }
+
+    [RelayCommand]
+    private void ToggleShowPassword()
+    {
+        ShowPassword = !ShowPassword;
+    }
+
+    [RelayCommand]
+    private async Task UpdateCredentialAsync()
+    {
+        if (SelectedCredential is null)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            await _credentialEndpoint.UpdateCredentialAsync(SelectedCredential);
+        }
+        catch (Exception)
+        {   
+            // TODO: Move to error page
+        }
+        finally
+        {
+            IsBusy = false;
+            IsEditing = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task DeleteCredentialAsync()
+    {
+        if (SelectedCredential is null)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            Credentials.Remove(Credentials.FirstOrDefault(x => x.Id == SelectedCredential.Id));
+            SelectedCredential = null;
+
+            await _credentialEndpoint.DeleteCredentialAsync(SelectedCredential);
+        }
+        catch (Exception)
+        {
+            // TODO: Move to error page
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task SearchCredentialsAsync(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query) is false)
+        {
+            await LoadCredentialsAsync();
+            Credentials = Credentials.OrderByDescending(x => x.Title.Contains(query)).ToObservableCollection();
+        }
+    }
+
+    [RelayCommand]
+    private async Task FilterCredentialsAsync()
+    {
+        await LoadCredentialsAsync();
+
+        switch (Filtering)
+        {
+            case DateCreated:
+                Credentials = SortCredentialsByDate(Credentials, x => x.DateAdded, x => x.DateModified);
+                break;
+
+            case DateModified:
+                Credentials = SortCredentialsByDate(Credentials, x => x.DateModified, x => x.DateAdded);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private ObservableCollection<CredentialModel> SortCredentialsByDate(
+        ObservableCollection<CredentialModel> credentials,
+        Func<CredentialModel, DateTime> primarySortKey,
+        Func<CredentialModel, DateTime> secondarySortKey)
+    {
+        return credentials
+            .OrderByDescending(primarySortKey)
+            .ThenByDescending(secondarySortKey)
+            .ToObservableCollection();
+    }
+}

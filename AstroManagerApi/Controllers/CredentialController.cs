@@ -96,4 +96,20 @@ public class CredentialController : CustomController<CredentialController>
             return ServerErrorCode(ex);
         }
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteCredentialAsycn(string id)
+    {
+        try
+        {
+            LogRequestSource();
+
+            await _credentialData.DeleteCredentialAsync(id);
+            return Ok("Deleted credential.");
+        }
+        catch (Exception ex)
+        {
+            return ServerErrorCode(ex);
+        }
+    }
 }

@@ -50,12 +50,12 @@ public static class RegisterServices
         builder.Services.AddTransient<ITypeEndpoint, TypeEndpoint>();
         builder.Services.AddTransient<IUserEndpoint, UserEndpoint>();
 
-        builder.Services.AddTransient<MainPage>();
+        builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<LoginPage>();
 
         builder.Services.AddTransient<LoginViewModel>();
 
-        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+        Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
     }
 }

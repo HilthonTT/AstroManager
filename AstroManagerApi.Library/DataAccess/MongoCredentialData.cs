@@ -101,6 +101,7 @@ public class MongoCredentialData : ICredentialData
         string key = CacheNamePrefix + credential.User.Id;
 
         credential.Fields = await EncryptFieldsAsync(credential);
+        credential.DateModified = DateTime.UtcNow;
 
         await _credentials.ReplaceOneAsync(c => c.Id == credential.Id, credential);
         await _cache.RemoveAsync(key);
@@ -116,5 +117,15 @@ public class MongoCredentialData : ICredentialData
         await _cache.RemoveAsync(key);
 
         return credential;
+    }
+
+    public async Task DeleteCredentialAsync(string id)
+    {
+        var credential = await GetCredentialAsync(id);
+        string key = CacheNamePrefix + credential.User.Id;
+
+        await _cache.RemoveAsync(key);
+
+        await _credentials.DeleteOneAsync(x => x.Id == id);
     }
 }
