@@ -35,7 +35,7 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     private ObservableCollection<TypeModel> _types;
 
     [ObservableProperty]
-    private CredentialModel _selectedCredential;
+    private CredentialDisplayModel _selectedCredential;
 
     [ObservableProperty]
     private string _filtering;
@@ -61,14 +61,9 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task OnCredentialClickAsync(CredentialDisplayModel credential)
+    private void OnCredentialClick(CredentialDisplayModel credential)
     {
-        var parameters = new Dictionary<string, object>
-        {
-            { "Credential", credential },
-        };
-
-        // TODO: Add CredentialPage
+        SelectedCredential = credential;
     }
 
     [RelayCommand]
@@ -83,9 +78,14 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
         try
         {
             Credentials.Remove(Credentials.FirstOrDefault(x => x.Id == SelectedCredential.Id));
-            SelectedCredential = null;
 
-            await _credentialEndpoint.DeleteCredentialAsync(SelectedCredential);
+            var credentialToDelete = new CredentialModel()
+            {
+                Id = SelectedCredential.Id,
+            };
+
+            SelectedCredential = null;
+            await _credentialEndpoint.DeleteCredentialAsync(credentialToDelete);
         }
         catch (Exception)
         {
