@@ -1,6 +1,7 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Models;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -28,7 +29,7 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     }
 
     [ObservableProperty]
-    private ObservableCollection<CredentialModel> _credentials;
+    private ObservableCollection<CredentialDisplayModel> _credentials;
 
     [ObservableProperty]
     private ObservableCollection<TypeModel> _types;
@@ -43,7 +44,7 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     private async Task LoadCredentialsAsync()
     {
         var loadedCredentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
-        Credentials = new(loadedCredentials);
+        Credentials = new(loadedCredentials.Select(x => new CredentialDisplayModel(x)));
     }
 
     [RelayCommand]
@@ -60,7 +61,7 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private async Task OnCredentialClickAsync(CredentialModel credential)
+    private async Task OnCredentialClickAsync(CredentialDisplayModel credential)
     {
         var parameters = new Dictionary<string, object>
         {
@@ -126,10 +127,10 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
         }
     }
 
-    private ObservableCollection<CredentialModel> SortCredentialsByDate(
-        ObservableCollection<CredentialModel> credentials,
-        Func<CredentialModel, DateTime> primarySortKey,
-        Func<CredentialModel, DateTime> secondarySortKey)
+    private ObservableCollection<CredentialDisplayModel> SortCredentialsByDate(
+        ObservableCollection<CredentialDisplayModel> credentials,
+        Func<CredentialDisplayModel, DateTime> primarySortKey,
+        Func<CredentialDisplayModel, DateTime> secondarySortKey)
     {
         return credentials
             .OrderByDescending(primarySortKey)
@@ -139,7 +140,7 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        var credentials = query["Credentials"] as List<CredentialModel>;
+        var credentials = query["Credentials"] as List<CredentialDisplayModel>;
         Credentials = new(credentials);
     }
 }

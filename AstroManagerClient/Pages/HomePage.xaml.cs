@@ -1,6 +1,6 @@
 using AstroManagerClient.ViewModels;
 
-namespace AstroManagerClient.Views;
+namespace AstroManagerClient.Pages;
 
 public partial class HomePage : ContentPage
 {

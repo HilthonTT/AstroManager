@@ -5,7 +5,7 @@ using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Library.Storage;
 using AstroManagerClient.Library.Storage.Interfaces;
 using AstroManagerClient.ViewModels;
-using AstroManagerClient.Views;
+using AstroManagerClient.Pages;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -52,10 +52,17 @@ public static class RegisterServices
 
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<DashboardPage>();
 
         builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<HomeViewModel>();
+        builder.Services.AddTransient<DashboardViewModel>();
+        builder.Services.AddTransient<SettingsViewModel>();
 
         Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
+        Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
     }
 }

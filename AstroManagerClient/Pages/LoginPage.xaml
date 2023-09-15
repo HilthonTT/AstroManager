@@ -4,7 +4,7 @@
              xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vms:LoginViewModel"
-             x:Class="AstroManagerClient.Views.LoginPage"
+             x:Class="AstroManagerClient.Pages.LoginPage"
              Title="LoginPage">
 
     <ContentPage.Behaviors>

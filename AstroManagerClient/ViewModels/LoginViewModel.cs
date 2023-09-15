@@ -1,7 +1,7 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.MsalClient;
-using AstroManagerClient.Views;
+using AstroManagerClient.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Identity.Client;
