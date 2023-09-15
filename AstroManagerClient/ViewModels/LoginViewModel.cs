@@ -34,7 +34,7 @@ public partial class LoginViewModel : BaseViewModel
 
     private async Task LoadMainPageAsync()
     {
-        await Shell.Current.GoToAsync(nameof(MainPage), true);
+        await Shell.Current.GoToAsync(nameof(HomePage), true);
     }
 
     private static async Task ShowMessageAsync(string title, string message)
