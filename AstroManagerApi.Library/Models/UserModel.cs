@@ -27,5 +27,6 @@ public class UserModel
 
     [Required(ErrorMessage = "The email address is required.")]
     [StringLength(256, ErrorMessage = "Your email address too long.")]
+    [EmailAddress(ErrorMessage = "The email address you've provided is not an email address.")]
     public string EmailAddress { get; set; }
 }

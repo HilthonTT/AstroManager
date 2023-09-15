@@ -7,7 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
 namespace AstroManagerClient.ViewModels;
-public partial class HomeViewModel : BaseViewModel
+public partial class HomeViewModel : BaseViewModel, IQueryAttributable
 {
     private readonly ILoggedInUser _loggedInUser;
     private readonly ICredentialEndpoint _credentialEndpoint;
@@ -39,12 +39,6 @@ public partial class HomeViewModel : BaseViewModel
     [ObservableProperty]
     private string _filtering;
 
-    [ObservableProperty]
-    private bool _isEditing;
-
-    [ObservableProperty]
-    private bool _showPassword;
-
     [RelayCommand]
     private async Task LoadCredentialsAsync()
     {
@@ -66,42 +60,14 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void OnCredentialClick(CredentialModel credential)
+    private async Task OnCredentialClickAsync(CredentialModel credential)
     {
-        IsEditing = false;
-        ShowPassword = false;
-
-        SelectedCredential = credential;
-    }
-
-    [RelayCommand]
-    private void ToggleShowPassword()
-    {
-        ShowPassword = !ShowPassword;
-    }
-
-    [RelayCommand]
-    private async Task UpdateCredentialAsync()
-    {
-        if (SelectedCredential is null)
+        var parameters = new Dictionary<string, object>
         {
-            return;
-        }
+            { "Credential", credential },
+        };
 
-        IsBusy = true;
-        try
-        {
-            await _credentialEndpoint.UpdateCredentialAsync(SelectedCredential);
-        }
-        catch (Exception)
-        {   
-            // TODO: Move to error page
-        }
-        finally
-        {
-            IsBusy = false;
-            IsEditing = false;
-        }
+        // TODO: Add CredentialPage
     }
 
     [RelayCommand]
@@ -169,5 +135,11 @@ public partial class HomeViewModel : BaseViewModel
             .OrderByDescending(primarySortKey)
             .ThenByDescending(secondarySortKey)
             .ToObservableCollection();
+    }
+
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        var credentials = query["Credentials"] as List<CredentialModel>;
+        Credentials = new(credentials);
     }
 }
