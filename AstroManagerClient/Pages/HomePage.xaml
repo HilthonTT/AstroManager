@@ -1,12 +1,170 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:a="clr-namespace:AstroManagerClient.Fonts"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:AstroManagerClient.Pages.Views"
+             xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
+             xmlns:models="clr-namespace:AstroManagerClient.Models"
+             xmlns:layouts="clr-namespace:AstroManagerClient.Layouts"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             x:DataType="vms:HomeViewModel"
              x:Class="AstroManagerClient.Pages.HomePage"
+             Shell.NavBarIsVisible="False"
              Title="HomePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to HOME"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File">
+            <MenuFlyoutItem Text="Preferences"
+                         ParentChanged="MenuFlyoutItem_ParentChanged"
+                         Command="{Binding PreferencesCommand}" />
+        </MenuBarItem>
+        <MenuBarItem Text="Credential">
+            <MenuFlyoutItem Text="Add Credential" Command="{Binding LoadCredentialsCommand}"
+                         ParentChanged="MenuFlyoutItem_ParentChanged"/>
+            <MenuFlyoutItem Text="Add Credential Types"/>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+
+    <Grid RowDefinitions="100,70,*"
+          ColumnDefinitions="*,400"
+          Margin="24,24,0,0"
+          x:Name="PageGrid">
+
+
+        <ScrollView Grid.Row="2">
+            <Grid RowDefinitions="70">
+                <Label Text="My Credentials" Style="{StaticResource Title1}"/>
+                <layouts:HorizontalWrapLayout Grid.Row="1" Spacing="20"
+                                              BindableLayout.ItemsSource="{Binding Credentials}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:CredentialDisplayModel">
+                            <Grid RowDefinitions="30, 220" WidthRequest="200">
+                                <Border Background="{StaticResource DarkBg2Brush}"
+                                        Stroke="{StaticResource DarkBg2Brush}"
+                                        StrokeThickness="1"
+                                        Grid.Row="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="16" />
+                                    </Border.StrokeShape>
+                                </Border>
+
+                                <VerticalStackLayout Grid.RowSpan="2" Margin="20,0,20,20"
+                                                     VerticalOptions="End"
+                                                     Spacing="6">
+
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center" Style="{StaticResource Title2}"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding Type.Name}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <Image 
+                                    Grid.RowSpan="2" VerticalOptions="Start"
+                                    Source="home.png" HorizontalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </layouts:HorizontalWrapLayout>
+            </Grid>
+        </ScrollView>
+
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="AstroManager" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+        </VerticalStackLayout>
+
+        <Border 
+            HorizontalOptions="End"
+            Margin="0,0,24,0"
+            HeightRequest="48"
+            WidthRequest="300"
+            Background="{StaticResource DarkBg1Brush}"
+            Stroke="{StaticResource SecondaryBrush}"
+            StrokeThickness="1">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="8"/>
+            </Border.StrokeShape>
+            <HorizontalStackLayout>
+                <ImageButton Source="{FontImage Color=White, FontFamily=FontAwesome, Glyph={x:Static a:IconFont.Search}, Size=14}"
+                             Margin="14,0" VerticalOptions="Center"/>
+                <Entry Background="Transparent"
+                       Placeholder="Search for login, identity, etc."
+                       PlaceholderColor="{StaticResource TextSecondary}"
+                       TextColor="White"
+                       VerticalOptions="Center"
+                       WidthRequest="250"
+                       FontSize="14"/>
+            </HorizontalStackLayout>
+        </Border>
+        
+        <!-- Tab Control -->
+
+        <Grid Grid.Row="1">
+            <BoxView Style="{StaticResource HRule}"
+                     Margin="0,0,0,0"
+                     VerticalOptions="Start"/>
+            <HorizontalStackLayout Spacing="20"
+                                   RadioButtonGroup.GroupName="CredentialTypes"
+                                   RadioButtonGroup.SelectedValue="{Binding SelectedType}">
+
+                <BindableLayout.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Logins</x:String>
+                        <x:String>Passwords</x:String>
+                        <x:String>Secure Note</x:String>
+                        <x:String>Credit Card</x:String>
+                        <x:String>Identity</x:String>
+                    </x:Array>
+                </BindableLayout.ItemsSource>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding .}" Value="{Binding .}">
+                            <RadioButton.ControlTemplate>
+                                <ControlTemplate>
+                                    <Grid RowDefinitions="30,4">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroupList>
+                                                <VisualStateGroup x:Name="CheckedStates">
+                                                    <VisualState x:Name="Checked">
+                                                        <VisualState.Setters>
+                                                            <Setter
+                                                                TargetName="TextLabel"
+                                                                Property="Label.TextColor"
+                                                                Value="{StaticResource Primary}"/>
+                                                            <Setter
+                                                                TargetName="Indicator"
+                                                                Property="BoxView.Color"
+                                                                Value="{StaticResource Primary}"/>
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+
+                                                    <VisualState x:Name="Unchecked">
+                                                        <VisualState.Setters>
+                                                            <Setter
+                                                                TargetName="TextLabel"
+                                                                Property="Label.TextColor"
+                                                                Value="White"/>
+                                                            <Setter
+                                                                TargetName="Indicator"
+                                                                Property="BoxView.Color"
+                                                                Value="Transparent"/>
+                                                        </VisualState.Setters>
+                                                    </VisualState>
+                                                </VisualStateGroup>
+                                            </VisualStateGroupList>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <Label Text="{TemplateBinding Content}" x:Name="TextLabel" />
+                                        <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
+                                    </Grid>
+                                </ControlTemplate>
+
+                            </RadioButton.ControlTemplate>
+                        </RadioButton>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+                
+            </HorizontalStackLayout>
+        </Grid>
+
+        <views:SelectedCredentialView Grid.Column="1" Grid.RowSpan="3"/>
+
+    </Grid>
 </ContentPage>

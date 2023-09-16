@@ -2,6 +2,7 @@
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Models;
+using AstroManagerClient.Pages;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -38,6 +39,9 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     private CredentialDisplayModel _selectedCredential;
 
     [ObservableProperty]
+    private TypeModel _selectedType;
+
+    [ObservableProperty]
     private string _filtering;
 
     [RelayCommand]
@@ -64,6 +68,12 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     private void OnCredentialClick(CredentialDisplayModel credential)
     {
         SelectedCredential = credential;
+    }
+
+    [RelayCommand]
+    private async Task PreferencesAsync()
+    {
+        await Shell.Current.GoToAsync($"{nameof(SettingsPage)}?sub=appearance");
     }
 
     [RelayCommand]

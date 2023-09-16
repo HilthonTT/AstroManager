@@ -10,9 +10,29 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
+#if WINDOWS
+using Microsoft.UI;
+using Microsoft.UI.Windowing;
+using Windows.Graphics;
+#endif
+
+#if ANDROID
+[assembly: Android.App.UsesPermission(Android.Manifest.Permission.Camera)]
+#endif
+
 namespace AstroManagerClient;
 public static class RegisterServices
 {
+    private static void ModifyEntry()
+    {
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoMoreBorders", (handler, view) =>
+        {
+#if WINDOWS
+            handler.PlatformView.FontWeight = Microsoft.UI.Text.FontWeights.Thin;
+#endif
+        });
+    }
+
     private static IConfiguration AddConfiguration()
     {
         string configFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
@@ -31,6 +51,8 @@ public static class RegisterServices
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("fa_solid.ttf", "FontAwesome");
+                fonts.AddFont("fabmdl2.ttf", "Fabric");
             });
 
 #if DEBUG
@@ -64,5 +86,7 @@ public static class RegisterServices
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
         Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
+
+        ModifyEntry();
     }
 }
