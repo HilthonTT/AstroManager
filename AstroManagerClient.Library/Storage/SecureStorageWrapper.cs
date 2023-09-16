@@ -20,14 +20,19 @@ public class SecureStorageWrapper : ISecureStorageWrapper
     public async Task<T> GetRecordAsync<T>(string recordId)
     {
         string jsonData = await SecureStorage.GetAsync(recordId);
-        var cachedData = JsonSerializer.Deserialize<CachedData<T>>(jsonData);
 
-        if (string.IsNullOrWhiteSpace(jsonData) || cachedData.Expiration > DateTimeOffset.UtcNow)
+        if (string.IsNullOrWhiteSpace(jsonData))
         {
             return default;
         }
 
-        
+        var cachedData = JsonSerializer.Deserialize<CachedData<T>>(jsonData);
+
+        if (cachedData?.Expiration > DateTimeOffset.UtcNow)
+        {
+            return default;
+        }
+
         return cachedData.Data;
     }
 }

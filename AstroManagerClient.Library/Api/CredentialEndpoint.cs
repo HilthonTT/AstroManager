@@ -25,7 +25,7 @@ public class CredentialEndpoint : ICredentialEndpoint
             return output;
         }
 
-        using var response = await _api.HttpClient.GetAsync(Uri);
+        using var response = await _api.HttpClient.GetAsync($"{Uri}/user/{userId}");
         if (response.IsSuccessStatusCode)
         {
             output = await response.Content.ReadFromJsonAsync<List<CredentialModel>>();
