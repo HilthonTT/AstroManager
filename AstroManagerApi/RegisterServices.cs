@@ -1,4 +1,6 @@
-﻿using AstroManagerApi.Library.DataAccess;
+﻿using AstroManagerApi.Data;
+using AstroManagerApi.Data.Interfaces;
+using AstroManagerApi.Library.DataAccess;
 using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption;
 using AstroManagerApi.Library.Encryption.Interfaces;
@@ -43,5 +45,7 @@ public static class RegisterServices
         builder.Services.AddSingleton<IRecoveryKeyData, MongoRecoveryKeyData>();
         builder.Services.AddSingleton<ITypeData, MongoTypeData>();
         builder.Services.AddSingleton<IUserData, MongoUserData>();
+
+        builder.Services.AddTransient<IDummyDataService, DummyDataService>();
     }
 }
