@@ -6,10 +6,11 @@ using AstroManagerClient.Pages;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 namespace AstroManagerClient.ViewModels;
-public partial class HomeViewModel : BaseViewModel, IQueryAttributable
+public partial class HomeViewModel : BaseViewModel
 {
     private readonly ILoggedInUser _loggedInUser;
     private readonly ICredentialEndpoint _credentialEndpoint;
@@ -39,7 +40,17 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     private CredentialDisplayModel _selectedCredential;
 
     [ObservableProperty]
-    private TypeModel _selectedType;
+    private string _selectedType;
+    async partial void OnSelectedTypeChanged(string value)
+    {
+        var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
+        var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
+
+        var types = await _typeEndpoint.GetAllTypesAsync();
+
+        var selectedType = types.Where(x => x.Name.Equals(value)).FirstOrDefault();
+        Credentials = mappedCredentials.Where(x => x.Type.Id == selectedType.Id).ToObservableCollection();
+    }
 
     [ObservableProperty]
     private string _filtering;
@@ -65,9 +76,9 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
     }
 
     [RelayCommand]
-    private void OnCredentialClick(CredentialDisplayModel credential)
+    private static void CredentialClick(CredentialDisplayModel credential)
     {
-        SelectedCredential = credential;
+        WeakReferenceMessenger.Default.Send(credential);
     }
 
     [RelayCommand]
@@ -146,11 +157,5 @@ public partial class HomeViewModel : BaseViewModel, IQueryAttributable
             .OrderByDescending(primarySortKey)
             .ThenByDescending(secondarySortKey)
             .ToObservableCollection();
-    }
-
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
-    {
-        var credentials = query["Credentials"] as List<CredentialDisplayModel>;
-        Credentials = new(credentials);
     }
 }

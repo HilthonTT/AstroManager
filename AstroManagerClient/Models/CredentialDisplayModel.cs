@@ -17,6 +17,8 @@ public partial class CredentialDisplayModel : ObservableObject
     [ObservableProperty]
     private string _notes;
 
+    public string ImageSource => GetImageSource();
+
     public TypeModel Type { get; set; }
     public BasicUserModel User { get; set; }
     public DateTime DateAdded { get; set; } = DateTime.UtcNow;
@@ -39,5 +41,18 @@ public partial class CredentialDisplayModel : ObservableObject
         User = credential.User;
         DateAdded = credential.DateAdded;
         DateModified = credential.DateModified;
+    }
+
+    private string GetImageSource()
+    {
+        return Type.Name.ToLower() switch
+        {
+            "logins" => "login_icon_gif.gif",
+            "passwords" => "password_icon_gif.gif",
+            "secure notes" => "note_icon_gif.gif",
+            "credit card" or "creditcard" => "credit_card_gif.gif",
+            "identity" => "identity_icon_gif.gif",
+            _ => "food_01.png"
+        };
     }
 }

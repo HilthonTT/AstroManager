@@ -24,6 +24,8 @@ public partial class LoginViewModel : BaseViewModel
         _loggedInUser = loggedInUser;
         _userEndpoint = userEndpoint;
         _passwordEndpoint = passwordEndpoint;
+
+        SecureStorage.RemoveAll();
     }
 
     [ObservableProperty]
@@ -55,6 +57,8 @@ public partial class LoginViewModel : BaseViewModel
         _loggedInUser.FirstName = verifiedUser.FirstName;
         _loggedInUser.LastName = verifiedUser.LastName;
         _loggedInUser.EmailAddress = verifiedUser.EmailAddress;
+
+        await Shell.Current.GoToAsync(nameof(HomePage), true);
     }
 
     [RelayCommand]
