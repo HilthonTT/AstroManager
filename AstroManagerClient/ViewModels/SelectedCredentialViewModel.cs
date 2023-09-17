@@ -1,9 +1,10 @@
-﻿using AstroManagerClient.Library.Api;
-using AstroManagerClient.Library.Api.Interfaces;
+﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Models;
+using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Text.Json;
 
 namespace AstroManagerClient.ViewModels;
 public partial class SelectedCredentialViewModel : BaseViewModel
@@ -27,7 +28,7 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     [ObservableProperty]
     private string _selectedTab;
 
-    partial void OnSelectedTabChanged(string value)
+    async partial void OnSelectedTabChanged(string value)
     {
         bool isReadonly = value switch
         {
@@ -37,6 +38,12 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         };
 
         CanEdit = !isReadonly;
+
+        if (value == "Export")
+        {
+            await ExportDataAsync();
+            return;
+        }
 
         if (isReadonly)
         {
@@ -93,5 +100,19 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         await _credentialEndpoint.UpdateCredentialAsync(credential);
 
         await Shell.Current.DisplayAlert("Saved Credential", "Your credential have been saved!", "OK");
+    }
+
+    private async Task ExportDataAsync()
+    {
+        var credential = ModelConverter.GetCredential(Credential);
+
+        string jsonCredential = JsonSerializer.Serialize(credential);
+
+        var result = await FolderPicker.Default.PickAsync(new());
+        if (result.IsSuccessful)
+        {
+            string fullPath = Path.Combine(result.Folder.Path, $"{credential.Id}.json");
+            await File.WriteAllTextAsync(fullPath, jsonCredential);
+        }
     }
 }
