@@ -1,5 +1,7 @@
+using AstroManagerClient.Messages;
 using AstroManagerClient.Pages.Views;
 using AstroManagerClient.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient.Pages;
 
@@ -9,7 +11,12 @@ public partial class HomePage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+
+        WeakReferenceMessenger.Default.Register<AddCredentialMessage>(this, (r, m) =>
+        {
+            NavSubContent(m.Value);
+        });
+    }
 
     public void MenuFlyoutItem_ParentChanged(object sender, EventArgs e)
     {

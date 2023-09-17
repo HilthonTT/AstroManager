@@ -1,4 +1,5 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
+using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,6 +20,15 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         {
             Credential = m;
         });
+
+        WeakReferenceMessenger.Default.Register<AddCredentialMessage>(this, (r, m) =>
+        {
+            if (m.Value is false)
+            {
+                IsCreating = false;
+                CloseCredential();
+            }
+        });
     }
 
     [ObservableProperty]
@@ -28,6 +38,19 @@ public partial class SelectedCredentialViewModel : BaseViewModel
 
     [ObservableProperty]
     private string _selectedTab;
+
+    [ObservableProperty]
+    private bool _isPassword = true;
+
+    [ObservableProperty]
+    private bool _canEdit;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsCredential))]
+    private bool _isCreating;
+
+    public bool IsCredential => Credential is not null && IsCreating is false;
+    public bool IsNotCredential => !IsCredential;
 
     async partial void OnSelectedTabChanged(string value)
     {
@@ -56,15 +79,6 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         }
     }
 
-    [ObservableProperty]
-    private bool _isPassword = true;
-
-    [ObservableProperty]
-    private bool _canEdit;
-
-    public bool IsCredential => Credential is not null;
-    public bool IsNotCredential => !IsCredential;
-
     private void ChangeFieldsReadonly(bool isReadonly)
     {
         foreach (var f in Credential.Fields)
@@ -78,6 +92,25 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         foreach (var f in Credential.Fields)
         {
             f.IsPassword = isPassword;
+        }
+    }
+
+    private async Task ExportDataAsync()
+    {
+        var credential = ModelConverter.GetCredential(Credential);
+
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+        };
+
+        string jsonCredential = JsonSerializer.Serialize(credential, options);
+
+        var result = await FolderPicker.Default.PickAsync(new());
+        if (result.IsSuccessful)
+        {
+            string fullPath = Path.Combine(result.Folder.Path, $"{credential.Id}.json");
+            await File.WriteAllTextAsync(fullPath, jsonCredential);
         }
     }
 
@@ -105,22 +138,14 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         await Shell.Current.DisplayAlert("Saved Credential", "Your credential have been saved!", "OK");
     }
 
-    private async Task ExportDataAsync()
+    [RelayCommand]
+    private void CreateCredential()
     {
-        var credential = ModelConverter.GetCredential(Credential);
+        Credential = new();
 
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = true,
-        };
+        IsCreating = true;
 
-        string jsonCredential = JsonSerializer.Serialize(credential, options);
-
-        var result = await FolderPicker.Default.PickAsync(new());
-        if (result.IsSuccessful)
-        {
-            string fullPath = Path.Combine(result.Folder.Path, $"{credential.Id}.json");
-            await File.WriteAllTextAsync(fullPath, jsonCredential);
-        }
+        var message = new AddCredentialMessage(true);
+        WeakReferenceMessenger.Default.Send(message);
     }
 }
