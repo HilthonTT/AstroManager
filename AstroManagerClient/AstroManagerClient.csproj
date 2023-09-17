@@ -67,6 +67,7 @@
 	  <None Remove="Resources\Images\note_icon_gif.gif" />
 	  <None Remove="Resources\Images\password_icon_gif.gif" />
 	  <None Remove="Resources\Images\setting.svg" />
+	  <None Remove="Resources\Images\ufo_icon_gif.gif" />
 	</ItemGroup>
 
 	<ItemGroup>

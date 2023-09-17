@@ -23,6 +23,7 @@ public partial class SelectedCredentialViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsCredential))]
+    [NotifyPropertyChangedFor(nameof(IsNotCredential))]
     private CredentialDisplayModel _credential;
 
     [ObservableProperty]
@@ -62,6 +63,7 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     private bool _canEdit;
 
     public bool IsCredential => Credential is not null;
+    public bool IsNotCredential => !IsCredential;
 
     private void ChangeFieldsReadonly(bool isReadonly)
     {
@@ -83,6 +85,7 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     private void CloseCredential()
     {
         Credential = null;
+        CanEdit = false;
     }
 
     [RelayCommand]
@@ -106,7 +109,12 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     {
         var credential = ModelConverter.GetCredential(Credential);
 
-        string jsonCredential = JsonSerializer.Serialize(credential);
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+        };
+
+        string jsonCredential = JsonSerializer.Serialize(credential, options);
 
         var result = await FolderPicker.Default.PickAsync(new());
         if (result.IsSuccessful)
