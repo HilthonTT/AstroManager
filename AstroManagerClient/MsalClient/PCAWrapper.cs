@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -11,15 +12,22 @@ public class PCAWrapper
 
     private bool UseEmbedded { get; set; } = false;
 
-    private const string TenantId = "5a082e08-8ff0-48f6-a6fa-f2da72888235";
-    private const string Authority = $"https://login.microsoftonline.com/{TenantId}";
-    private const string ClientId = "a0cf4cb8-1ead-4403-9920-955bd2a37576";
-    public static string[] Scopes = { $"api://{ClientId}/accesss_as_user" };
+    private readonly string _tenantId;
+    private readonly string _authority;
+    private readonly string _clientId;
+    public static string[] _scopes;
 
     private PCAWrapper()
     {
+        var config = App.Services.GetService<IConfiguration>();
+
+        _tenantId = config["AzureAd:TenantId"];
+        _authority = config["AzureAd:Authority"];
+        _clientId = config["AzureAd:ClientId"];
+        _scopes = new string[] { config["AzureAd:Scopes"] };
+
         PCA = PublicClientApplicationBuilder
-            .Create(ClientId)
+            .Create(_clientId)
             .WithRedirectUri(PlatformConfig.Instance.RedirectUri)
             .WithIosKeychainSecurityGroup("com.microsoft.adalcache")
             .Build();
@@ -54,8 +62,8 @@ public class PCAWrapper
         systemWebViewOptions.iOSHidePrivacyPrompt = true;
 #endif
         return await PCA.AcquireTokenInteractive(scopes)
-            .WithAuthority(Authority)
-            .WithTenantId(TenantId)
+            .WithAuthority(_authority)
+            .WithTenantId(_tenantId)
             .WithParentActivityOrWindow(PlatformConfig.Instance.ParentWindow)
             .WithUseEmbeddedWebView(true)
             .ExecuteAsync();

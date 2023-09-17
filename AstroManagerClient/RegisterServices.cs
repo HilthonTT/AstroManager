@@ -36,8 +36,13 @@ public static class RegisterServices
     private static IConfiguration AddConfiguration()
     {
         string configFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+        string developpmentFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.dev.json");
+
         var builder = new ConfigurationBuilder()
             .AddJsonFile(configFilePath, optional: false, reloadOnChange: true);
+#if DEBUG
+        builder.AddJsonFile(developpmentFilePath, optional: false, reloadOnChange: true);
+#endif
 
         return builder.Build();
     }

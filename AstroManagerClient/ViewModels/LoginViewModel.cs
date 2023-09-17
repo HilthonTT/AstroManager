@@ -66,14 +66,14 @@ public partial class LoginViewModel : BaseViewModel
     {
         try
         {
-            var result = await PCAWrapper.Instance.AcquireTokenSilentAsync(PCAWrapper.Scopes);
+            var result = await PCAWrapper.Instance.AcquireTokenSilentAsync(PCAWrapper._scopes);
             IsLoggedIn = true;
 
             await VerifyUserDataAsync(result);
         }
         catch (MsalUiRequiredException)
         {
-            var result = await PCAWrapper.Instance.AcquireTokenInteractiveAsync(PCAWrapper.Scopes);
+            var result = await PCAWrapper.Instance.AcquireTokenInteractiveAsync(PCAWrapper._scopes);
 
             IsLoggedIn = true;
 
