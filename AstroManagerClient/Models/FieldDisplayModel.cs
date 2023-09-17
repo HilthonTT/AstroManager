@@ -10,6 +10,12 @@ public partial class FieldDisplayModel : ObservableObject
     [ObservableProperty]
     private string _value;
 
+    [ObservableProperty]
+    private bool _isReadOnly = true;
+
+    [ObservableProperty]
+    private bool _isPassword = true;
+
     public FieldDisplayModel()
     {
         

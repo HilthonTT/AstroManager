@@ -11,9 +11,9 @@ public class PCAWrapper
 
     private bool UseEmbedded { get; set; } = false;
 
-    private const string TenantId = "";
+    private const string TenantId = "5a082e08-8ff0-48f6-a6fa-f2da72888235";
     private const string Authority = $"https://login.microsoftonline.com/{TenantId}";
-    private const string ClientId = "";
+    private const string ClientId = "a0cf4cb8-1ead-4403-9920-955bd2a37576";
     public static string[] Scopes = { $"api://{ClientId}/accesss_as_user" };
 
     private PCAWrapper()
