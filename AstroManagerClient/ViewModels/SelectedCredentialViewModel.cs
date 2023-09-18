@@ -16,9 +16,9 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     {
         _credentialEndpoint = App.Services.GetService<ICredentialEndpoint>();
 
-        WeakReferenceMessenger.Default.Register<CredentialDisplayModel>(this, (r, m) =>
+        WeakReferenceMessenger.Default.Register<ViewCredentialMessage>(this, (r, m) =>
         {
-            Credential = m;
+            Credential = m.Value;
         });
 
         WeakReferenceMessenger.Default.Register<AddCredentialMessage>(this, (r, m) =>

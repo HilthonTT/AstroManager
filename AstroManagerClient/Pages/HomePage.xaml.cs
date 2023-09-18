@@ -12,6 +12,14 @@ public partial class HomePage : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
 
+        WeakReferenceMessenger.Default.Register<ViewCredentialMessage>(this, (r, m) =>
+        {
+            if (m.Value is not null)
+            {
+                NavSubContent(false);
+            }
+        });
+
         WeakReferenceMessenger.Default.Register<AddCredentialMessage>(this, (r, m) =>
         {
             NavSubContent(m.Value);
@@ -45,12 +53,13 @@ public partial class HomePage : ContentPage
 
             var view = (AddCredentialView)PageGrid.Children.Where(v => v.GetType() == typeof(AddCredentialView)).SingleOrDefault();
 
-            var x = DeviceDisplay.Current.MainDisplayInfo.Width;
-            view.TranslateTo(displayWidth - view.X, 0, 800, easing: Easing.CubicIn);
+            var x = DeviceDisplay.Current.MainDisplayInfo.Width;  
 
-            if (view != null)
+            if (view is not null)
+            {
+                view.TranslateTo(displayWidth - view.X, 0, 800, easing: Easing.CubicIn);
                 PageGrid.Children.Remove(view);
-
+            }
         }
     }
 }

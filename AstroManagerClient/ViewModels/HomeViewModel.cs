@@ -1,6 +1,7 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using AstroManagerClient.Pages;
 using CommunityToolkit.Maui.Core.Extensions;
@@ -78,7 +79,8 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     private static void CredentialClick(CredentialDisplayModel credential)
     {
-        WeakReferenceMessenger.Default.Send(credential);
+        var message = new ViewCredentialMessage(credential);
+        WeakReferenceMessenger.Default.Send(message);
     }
 
     [RelayCommand]
