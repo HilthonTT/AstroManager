@@ -21,9 +21,9 @@ public partial class AppShell : Shell
 
     async void OnMenuItemChanged(object sender, CheckedChangedEventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(_selectedRoute) is false)
+        if (string.IsNullOrWhiteSpace(SelectedRoute) is false)
         {
-            await Current.GoToAsync($"//{_selectedRoute}");
+            await Current.GoToAsync($"//{SelectedRoute}");
         }
     }
 }
