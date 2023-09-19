@@ -118,6 +118,7 @@
 
                 <BindableLayout.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
+                        <x:String>All</x:String>
                         <x:String>Logins</x:String>
                         <x:String>Passwords</x:String>
                         <x:String>Secure Note</x:String>

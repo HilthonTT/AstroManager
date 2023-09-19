@@ -47,9 +47,15 @@ public partial class HomeViewModel : BaseViewModel
         var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
         var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
 
-        var types = await _typeEndpoint.GetAllTypesAsync();
+        if (value == "All")
+        {
+            Credentials = new(mappedCredentials);
+            return;
+        }
 
+        var types = await _typeEndpoint.GetAllTypesAsync();
         var selectedType = types.Where(x => x.Name.Equals(value)).FirstOrDefault();
+
         Credentials = mappedCredentials.Where(x => x.Type.Id == selectedType.Id).ToObservableCollection();
     }
 
