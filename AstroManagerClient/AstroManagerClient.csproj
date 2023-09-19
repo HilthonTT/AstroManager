@@ -64,6 +64,7 @@
 	  <None Remove="Resources\Images\login_icon_gif.gif" />
 	  <None Remove="Resources\Images\logo.svg" />
 	  <None Remove="Resources\Images\logout.svg" />
+	  <None Remove="Resources\Images\mars_icon_gif.gif" />
 	  <None Remove="Resources\Images\note_icon_gif.gif" />
 	  <None Remove="Resources\Images\password_icon_gif.gif" />
 	  <None Remove="Resources\Images\setting.svg" />

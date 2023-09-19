@@ -2,19 +2,35 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vms:LoginViewModel"
              x:Class="AstroManagerClient.Pages.LoginPage"
+             Shell.NavBarIsVisible="False"
              Title="LoginPage">
+    <Grid RowDefinitions="100, 70, *"
+          ColumnDefinitions="*"
+          Margin="24,24,0,0"
+          x:Name="PageGrid">
 
-    <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoginCommand}"/>
-    </ContentPage.Behaviors>
-    
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to LOGIN!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="AstroManager" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="1">
+            <BoxView Style="{StaticResource HRule}"
+                 Margin="0,0,0,0"
+                 VerticalOptions="Start"/>
+        </Grid>
+
+        <Grid Grid.Row="2" HorizontalOptions="Center">
+            <VerticalStackLayout HorizontalOptions="Center">
+                <Image Source="mars_icon_gif.gif" WidthRequest="250" HeightRequest="250" 
+                   HorizontalOptions="Center" Aspect="AspectFit"/>
+                <Button Text="Login" Command="{Binding LoginCommand}" WidthRequest="250"/>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
 </ContentPage>
