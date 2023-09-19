@@ -85,7 +85,7 @@
                    Margin="0,15,0,15"/>
 
                 <RadioButton Value="home" IsChecked="True" Grid.Row="1"
-                         CheckedChanged="OnMenuItemChanged">
+                         CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
                         <Image Source="home.png">
                             <!--<Image.Behaviors>
@@ -99,7 +99,7 @@
                 </RadioButton>
 
                 <RadioButton Value="dashboard" Grid.Row="2"
-                                CheckedChanged="OnMenuItemChanged">
+                                CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
                         <Image Source="graph.png">
                             <!--<Image.Behaviors>
@@ -114,7 +114,7 @@
                 </RadioButton>
 
                 <RadioButton Value="settings" Grid.Row="3"
-                            CheckedChanged="OnMenuItemChanged">
+                            CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
                         <Image Source="setting.png">
                             <!--<Image.Behaviors>
@@ -128,7 +128,11 @@
                     </RadioButton.Content>
                 </RadioButton>
 
-                <Image Source="logout.png" Margin="15,15,0,15" Grid.Row="5"/>
+                <Image Source="logout.png" Margin="15,15,0,15" Grid.Row="5" IsVisible="{Binding Path=IsLoggedIn}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLogoutImageTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
             </Grid>
         </DataTemplate>
     </Shell.FlyoutContentTemplate>

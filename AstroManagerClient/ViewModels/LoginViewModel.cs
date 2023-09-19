@@ -1,9 +1,11 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Messages;
 using AstroManagerClient.MsalClient;
 using AstroManagerClient.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Identity.Client;
 
 namespace AstroManagerClient.ViewModels;
@@ -57,6 +59,9 @@ public partial class LoginViewModel : BaseViewModel
         _loggedInUser.FirstName = verifiedUser.FirstName;
         _loggedInUser.LastName = verifiedUser.LastName;
         _loggedInUser.EmailAddress = verifiedUser.EmailAddress;
+
+        var message = new UserLoggedInMessage(true);
+        WeakReferenceMessenger.Default.Send(message);
 
         await Shell.Current.GoToAsync(nameof(HomePage), true);
     }

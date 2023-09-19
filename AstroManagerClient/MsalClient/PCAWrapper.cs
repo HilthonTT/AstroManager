@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AstroManagerClient.Messages;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Identity.Client;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -84,5 +86,8 @@ public class PCAWrapper
         {
             await PCA.RemoveAsync(acct);
         }
+
+        var message = new UserLoggedInMessage(false);
+        WeakReferenceMessenger.Default.Send(message);
     }
 }
