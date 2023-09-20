@@ -74,9 +74,11 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+		<PackageReference Include="Microcharts" Version="0.9.5.9" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.56.0" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.83" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" />
 	</ItemGroup>
 

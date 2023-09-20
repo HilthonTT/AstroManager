@@ -9,4 +9,15 @@ public partial class DashboardPage : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        DrawChart();
+    }
+
+    private void DrawChart()
+    {
+
+    }
 }
