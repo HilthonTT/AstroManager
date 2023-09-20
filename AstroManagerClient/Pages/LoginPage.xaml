@@ -8,7 +8,7 @@
              x:Class="AstroManagerClient.Pages.LoginPage"
              Shell.NavBarIsVisible="False"
              Title="LoginPage">
-    <Grid RowDefinitions="100, 70, *"
+    <Grid RowDefinitions="100, 40, *"
           ColumnDefinitions="*"
           Margin="24,24,0,0"
           x:Name="PageGrid">
@@ -28,9 +28,71 @@
             <VerticalStackLayout HorizontalOptions="Center">
                 <Image Source="mars_icon_gif.gif" WidthRequest="250" HeightRequest="250" 
                    HorizontalOptions="Center" Aspect="AspectFit"/>
-                <Button Text="Login" Command="{Binding LoginCommand}" WidthRequest="250"/>
+                <Grid IsVisible="{Binding IsNotLoggedIn}">
+                    <Button Text="Login" Command="{Binding LoginCommand}" WidthRequest="250"/>
+                </Grid>
+                <Grid RowDefinitions="*,*,*"
+                      IsVisible="{Binding IsAbleToEnterMasterPassword}">
+
+                    <VerticalStackLayout Grid.Row="0">
+                        <Label Text="Make a master password!"/>
+                        <BoxView Style="{StaticResource HRule}"
+                             VerticalOptions="Start"
+                             Margin="0,5,0,5"/>
+                    </VerticalStackLayout>
+
+                    <Entry Grid.Row="1"
+                           Background="Transparent"
+                           WidthRequest="500"
+                           PlaceholderColor="{StaticResource TextSecondary}"
+                           TextColor="White"
+                           Placeholder="Enter your master password."
+                           Margin="10"
+                           Text="{Binding MasterPassword}"/>
+
+                    <Button Grid.Row="2"
+                            Text="Login" Command="{Binding VerifyMasterPasswordCommand}" 
+                            WidthRequest="250" HorizontalOptions="Center"/>
+
+                </Grid>
+                <Grid RowDefinitions="*,*,*,*"
+                    IsVisible="{Binding IsNotAbleToEnterMasterPassword}">
+
+                    <VerticalStackLayout Grid.Row="0">
+                        <Label Text="Make a master password!"/>
+                        <BoxView Style="{StaticResource HRule}"
+                                 VerticalOptions="Start"
+                                 Margin="0,5,0,5"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="1" Margin="10" WidthRequest="500">
+                        <Entry
+                            Background="Transparent"
+                            Placeholder="Enter your master password."
+                            PlaceholderColor="{StaticResource TextSecondary}"
+                            TextColor="White"
+                            IsPassword="True"
+                            WidthRequest="500"
+                            Text="{Binding MasterPassword}"
+                            Margin="0,0,0,10"/>
+
+                        <Entry
+                            Background="Transparent"
+                            Placeholder="Re-Enter your master password."
+                            PlaceholderColor="{StaticResource TextSecondary}"
+                            TextColor="White"
+                            IsPassword="True"
+                            WidthRequest="500"
+                            Text="{Binding ReEnteredMasterPassword}"/>
+                    </VerticalStackLayout>
+
+                    <Button Grid.Row="3"
+                        Text="Create Master Password" Command="{Binding CreateMasterPasswordCommand}" 
+                        WidthRequest="250" HorizontalOptions="Center"/>
+
+                </Grid>
             </VerticalStackLayout>
         </Grid>
-
     </Grid>
+
 </ContentPage>

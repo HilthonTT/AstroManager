@@ -1,4 +1,5 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
+using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.MsalClient;
@@ -31,10 +32,25 @@ public partial class LoginViewModel : BaseViewModel
     }
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotAbleToEnterMasterPassword))]
+    [NotifyPropertyChangedFor(nameof(IsNotLoggedIn))]
     private bool _isLoggedIn;
 
     [ObservableProperty]
+    private bool _isAbleToEnterMasterPassword;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsNotAbleToEnterMasterPassword))]
+    private bool _hasMasterPassword;
+
+    [ObservableProperty]
     private string _masterPassword;
+
+    [ObservableProperty]
+    private string _reEnteredMasterPassword;
+
+    public bool IsNotLoggedIn => !IsLoggedIn;
+    public bool IsNotAbleToEnterMasterPassword => IsLoggedIn && !HasMasterPassword;
 
     private async Task LoadMainPageAsync()
     {
@@ -48,7 +64,6 @@ public partial class LoginViewModel : BaseViewModel
 
     private async Task VerifyUserDataAsync(AuthenticationResult result)
     {
-        IsLoggedIn = true;
         _api.AcquireHeaders(result.AccessToken);
 
         var verifiedUser = await UserVerifier.VerifyUserInformationAsync(_userEndpoint, result);
@@ -60,10 +75,9 @@ public partial class LoginViewModel : BaseViewModel
         _loggedInUser.LastName = verifiedUser.LastName;
         _loggedInUser.EmailAddress = verifiedUser.EmailAddress;
 
-        var message = new UserLoggedInMessage(true);
-        WeakReferenceMessenger.Default.Send(message);
+        await FetchMasterPasswordAsync(_loggedInUser.Id);
 
-        await Shell.Current.GoToAsync(nameof(HomePage), true);
+        IsLoggedIn = true;
     }
 
     [RelayCommand]
@@ -72,7 +86,6 @@ public partial class LoginViewModel : BaseViewModel
         try
         {
             var result = await PCAWrapper.Instance.AcquireTokenSilentAsync(PCAWrapper._scopes);
-            IsLoggedIn = true;
 
             await VerifyUserDataAsync(result);
         }
@@ -80,11 +93,9 @@ public partial class LoginViewModel : BaseViewModel
         {
             var result = await PCAWrapper.Instance.AcquireTokenInteractiveAsync(PCAWrapper._scopes);
 
-            IsLoggedIn = true;
-
             await VerifyUserDataAsync(result);
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             IsLoggedIn = false;
             await ShowMessageAsync("Error logging you in.", ex.Message);
@@ -92,14 +103,15 @@ public partial class LoginViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task VerifyMasterPassword()
+    private async Task VerifyMasterPasswordAsync()
     {
         try
         {
-            bool isCorrect = await _passwordEndpoint.VerifyPasswordAsync(_loggedInUser.Id, MasterPassword);
-
-            if (isCorrect)
+            if (await _passwordEndpoint.VerifyPasswordAsync(_loggedInUser.Id, MasterPassword))
             {
+                var message = new UserLoggedInMessage(true);
+                WeakReferenceMessenger.Default.Send(message);
+
                 await LoadMainPageAsync();
             }
             else
@@ -109,7 +121,79 @@ public partial class LoginViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            await ShowMessageAsync("Error verifying your password", ex.Message);
+            await ShowMessageAsync("Error verifying your password.", ex.Message);
+        }
+    }
+
+    private async Task<bool> CanCreateMasterPassword()
+    {
+        if (string.IsNullOrWhiteSpace(_loggedInUser.Id))
+        {
+            await ShowMessageAsync("Not logged in.", "You must be logged in to create a master password.");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(MasterPassword))
+        {
+            await ShowMessageAsync("Master password is empty.", "You must enter a master password.");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(ReEnteredMasterPassword))
+        {
+            await ShowMessageAsync("Re-entered Master password is empty.", "You must enter your master password again.");
+            return false;
+        }
+
+        if (MasterPassword.Equals(ReEnteredMasterPassword) is false)
+        {
+            await ShowMessageAsync("Wrong re-entered master password.", "You've inputed the wrong master password.");
+            return false;
+        }
+
+        return true;
+    }
+
+    [RelayCommand]
+    private async Task CreateMasterPasswordAsync()
+    {
+        if (await CanCreateMasterPassword() is false)
+        {
+            return;
+        }
+
+        try
+        {
+            var masterPassword = new MasterPasswordModel()
+            {
+                User = new BasicUserModel((UserModel)_loggedInUser),
+                HashedPassword = MasterPassword,
+            };
+
+            await _passwordEndpoint.CreateMasterPasswordAsync(masterPassword);
+
+            HasMasterPassword = true;
+            IsAbleToEnterMasterPassword = true;
+        }
+        catch (Exception ex)
+        {
+            await ShowMessageAsync("Oops, something went wrong.", ex.Message);
+        }
+    }
+
+    private async Task FetchMasterPasswordAsync(string id)
+    {
+        try
+        {
+            var masterPassword = await _passwordEndpoint.GetUsersMasterPasswordAsync(id);
+            bool isMasterPassword = masterPassword is not null;
+
+            HasMasterPassword = isMasterPassword;
+            IsAbleToEnterMasterPassword = isMasterPassword;
+        }
+        catch (Exception ex)
+        {
+            await ShowMessageAsync("Error fetching your master password.", ex.Message);
         }
     }
 }

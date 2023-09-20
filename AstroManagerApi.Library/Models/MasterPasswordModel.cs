@@ -1,11 +1,12 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
 
 namespace AstroManagerApi.Library.Models;
 public class MasterPasswordModel
 {
     [BsonId]
-    [BsonRepresentation(MongoDB.Bson.BsonType.String)]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; }
 
     [Required]
