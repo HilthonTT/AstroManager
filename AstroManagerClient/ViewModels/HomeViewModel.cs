@@ -17,10 +17,6 @@ public partial class HomeViewModel : BaseViewModel
     private readonly ICredentialEndpoint _credentialEndpoint;
     private readonly ITypeEndpoint _typeEndpoint;
 
-    public const string Title = "Title";
-    public const string DateCreated = "DateCreated";
-    public const string DateModified = "DateModified";
-
     public HomeViewModel(
         ILoggedInUser loggedInUser,
         ICredentialEndpoint credentialEndpoint,
@@ -35,10 +31,16 @@ public partial class HomeViewModel : BaseViewModel
     private ObservableCollection<CredentialDisplayModel> _credentials;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TypeNames))]
     private ObservableCollection<TypeModel> _types;
 
     [ObservableProperty]
     private CredentialDisplayModel _selectedCredential;
+
+    [ObservableProperty]
+    private string _searchText;
+
+    public ObservableCollection<string> TypeNames => Types?.Select(x => x.Name).ToObservableCollection() ?? new();
 
     [ObservableProperty]
     private string _selectedType;
@@ -59,9 +61,6 @@ public partial class HomeViewModel : BaseViewModel
         Credentials = mappedCredentials.Where(x => x.Type.Id == selectedType.Id).ToObservableCollection();
     }
 
-    [ObservableProperty]
-    private string _filtering;
-
     [RelayCommand]
     private async Task LoadCredentialsAsync()
     {
@@ -72,14 +71,18 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadTypesAsync()
     {
-        var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
-        Types = new(loadedTypes);
-    }
+        var baseTypes = new List<TypeModel>
+        {
+            new TypeModel
+            {
+                Name = "All",
+                Description = "Shows all the credentials."
+            }
+        };
 
-    [RelayCommand]
-    private void OnFilteringClick(string filtering)
-    {
-        Filtering = filtering;
+        var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
+
+        Types = new(baseTypes.Concat(loadedTypes));
     }
 
     [RelayCommand]
@@ -90,80 +93,26 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private static void AddCredential()
+    {
+        var message = new AddCredentialMessage(true);
+        WeakReferenceMessenger.Default.Send(message);
+    }
+
+    [RelayCommand]
     private async Task PreferencesAsync()
     {
         await Shell.Current.GoToAsync($"{nameof(SettingsPage)}?sub=appearance");
     }
 
     [RelayCommand]
-    private async Task DeleteCredentialAsync()
-    {
-        if (SelectedCredential is null)
-        {
-            return;
-        }
-
-        IsBusy = true;
-        try
-        {
-            Credentials.Remove(Credentials.FirstOrDefault(x => x.Id == SelectedCredential.Id));
-
-            var credentialToDelete = new CredentialModel()
-            {
-                Id = SelectedCredential.Id,
-            };
-
-            SelectedCredential = null;
-            await _credentialEndpoint.DeleteCredentialAsync(credentialToDelete);
-        }
-        catch (Exception)
-        {
-            // TODO: Move to error page
-        }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
-    [RelayCommand]
-    private async Task SearchCredentialsAsync(string query)
-    {
-        if (string.IsNullOrWhiteSpace(query) is false)
-        {
-            await LoadCredentialsAsync();
-            Credentials = Credentials.OrderByDescending(x => x.Title.Contains(query)).ToObservableCollection();
-        }
-    }
-
-    [RelayCommand]
-    private async Task FilterCredentialsAsync()
+    private async Task SearchCredentialsAsync()
     {
         await LoadCredentialsAsync();
 
-        switch (Filtering)
+        if (string.IsNullOrWhiteSpace(SearchText) is false)
         {
-            case DateCreated:
-                Credentials = SortCredentialsByDate(Credentials, x => x.DateAdded, x => x.DateModified);
-                break;
-
-            case DateModified:
-                Credentials = SortCredentialsByDate(Credentials, x => x.DateModified, x => x.DateAdded);
-                break;
-
-            default:
-                break;
+            Credentials = Credentials.OrderByDescending(x => x.Title.Contains(SearchText)).ToObservableCollection();
         }
-    }
-
-    private ObservableCollection<CredentialDisplayModel> SortCredentialsByDate(
-        ObservableCollection<CredentialDisplayModel> credentials,
-        Func<CredentialDisplayModel, DateTime> primarySortKey,
-        Func<CredentialDisplayModel, DateTime> secondarySortKey)
-    {
-        return credentials
-            .OrderByDescending(primarySortKey)
-            .ThenByDescending(secondarySortKey)
-            .ToObservableCollection();
     }
 }

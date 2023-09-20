@@ -25,7 +25,7 @@
                          Command="{Binding PreferencesCommand}" />
         </MenuBarItem>
         <MenuBarItem Text="Credential">
-            <MenuFlyoutItem Text="Add Credential" Command="{Binding LoadCredentialsCommand}"
+            <MenuFlyoutItem Text="Add Credential" Command="{Binding AddCredentialCommand}"
                          ParentChanged="MenuFlyoutItem_ParentChanged"/>
             <MenuFlyoutItem Text="Add Credential Types"/>
         </MenuBarItem>
@@ -95,11 +95,12 @@
             </Border.StrokeShape>
             <HorizontalStackLayout>
                 <ImageButton Source="{FontImage Color=White, FontFamily=FontAwesome, Glyph={x:Static a:IconFont.Search}, Size=14}"
-                             Margin="14,0" VerticalOptions="Center"/>
+                             Margin="14,0" VerticalOptions="Center" Command="{Binding SearchCredentialsCommand}"/>
                 <Entry Background="Transparent"
                        Placeholder="Search for login, identity, etc."
                        PlaceholderColor="{StaticResource TextSecondary}"
                        TextColor="White"
+                       Text="{Binding SearchText}"
                        VerticalOptions="Center"
                        WidthRequest="250"
                        FontSize="14"/>
@@ -114,18 +115,8 @@
                      VerticalOptions="Start"/>
             <HorizontalStackLayout Spacing="20"
                                    RadioButtonGroup.GroupName="CredentialTypes"
-                                   RadioButtonGroup.SelectedValue="{Binding SelectedType}">
-
-                <BindableLayout.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>All</x:String>
-                        <x:String>Logins</x:String>
-                        <x:String>Passwords</x:String>
-                        <x:String>Secure Note</x:String>
-                        <x:String>Credit Card</x:String>
-                        <x:String>Identity</x:String>
-                    </x:Array>
-                </BindableLayout.ItemsSource>
+                                   RadioButtonGroup.SelectedValue="{Binding SelectedType}"
+                                   BindableLayout.ItemsSource="{Binding TypeNames}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <RadioButton Content="{Binding .}" Value="{Binding .}">
