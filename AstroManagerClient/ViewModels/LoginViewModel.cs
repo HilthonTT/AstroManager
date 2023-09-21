@@ -27,8 +27,6 @@ public partial class LoginViewModel : BaseViewModel
         _loggedInUser = loggedInUser;
         _userEndpoint = userEndpoint;
         _passwordEndpoint = passwordEndpoint;
-
-        SecureStorage.RemoveAll();
     }
 
     [ObservableProperty]

@@ -54,7 +54,9 @@ public class ApiHelper : IApiHelper
 
     public T NotFoundError<T>(HttpResponseMessage response)
     {
-        if (response.ReasonPhrase.Contains("Not Found"))
+        string[] errorPhrases = new string[] { "Not Found", "No Content" };
+
+        if (errorPhrases.Any(phrase => response.ReasonPhrase.Contains(phrase, StringComparison.InvariantCultureIgnoreCase)))
         {
             return default;
         }

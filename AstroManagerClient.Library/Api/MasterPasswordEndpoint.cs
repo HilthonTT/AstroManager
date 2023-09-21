@@ -17,6 +17,11 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
         _storage = storage;
     }
 
+    private static bool HasValue(HttpResponseMessage response)
+    {
+        return response.Content.Headers.ContentLength.HasValue && response.Content.Headers.ContentLength.Value > 0;
+    }
+
     public async Task<MasterPasswordModel> GetUsersMasterPasswordAsync(string userId)
     {
         var output = await _storage.GetRecordAsync<MasterPasswordModel>(CacheName);
@@ -26,7 +31,7 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
         }
 
         using var response = await _api.HttpClient.GetAsync($"{Uri}/{userId}");
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode && HasValue(response))
         {
             output = await response.Content.ReadFromJsonAsync<MasterPasswordModel>();
             await _storage.SetRecordAsync(CacheName, output, TimeSpan.FromDays(5));
