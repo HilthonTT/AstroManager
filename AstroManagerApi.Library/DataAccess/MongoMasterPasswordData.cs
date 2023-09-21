@@ -10,15 +10,20 @@ public class MongoMasterPasswordData : IMasterPasswordData
 {
     private const string CacheNamePrefix = $"{nameof(MongoMasterPasswordData)}_";
     private readonly IMongoCollection<MasterPasswordModel> _passwords;
+    private readonly IDbConnection _db;
+    private readonly IRecoveryKeyGenerator _keyGenerator;
     private readonly IDistributedCache _cache;
     private readonly ITextHasher _hasher;
 
     public MongoMasterPasswordData(
         IDbConnection db,
+        IRecoveryKeyGenerator keyGenerator,
         IDistributedCache cache,
         ITextHasher hasher)
     {
         _passwords = db.MasterPasswordCollection;
+        _db = db;
+        _keyGenerator = keyGenerator;
         _cache = cache;
         _hasher = hasher;
     }
@@ -40,10 +45,36 @@ public class MongoMasterPasswordData : IMasterPasswordData
 
     public async Task<MasterPasswordModel> CreateMasterPasswordAsync(MasterPasswordModel password)
     {
-        password.HashedPassword = _hasher.HashPlainText(password.HashedPassword);
-        await _passwords.InsertOneAsync(password);
+        var client = _db.Client;
 
-        return password;
+        using var session = await client.StartSessionAsync();
+
+        session.StartTransaction();
+
+        try
+        {
+            var db = client.GetDatabase(_db.DbName);
+            var passwordInTransaction = db.GetCollection<MasterPasswordModel>(_db.MasterPasswordCollectionName);
+
+            password.HashedPassword = _hasher.HashPlainText(password.HashedPassword);
+            await passwordInTransaction.InsertOneAsync(session, password);
+
+            var recoveryKeyInTransaction = db.GetCollection<RecoveryKeyModel>(_db.RecoveryKeyCollectionName);
+            var recoveryRequest = _keyGenerator.GenerateRequest();
+            recoveryRequest.Recovery.User = password.User;
+            var recoveryKey = new RecoveryKeyModel(recoveryRequest);
+
+            await recoveryKeyInTransaction.InsertOneAsync(session, recoveryKey);
+
+            await session.CommitTransactionAsync();
+
+            return password;
+        }
+        catch (Exception)
+        {
+            await session.AbortTransactionAsync();
+            throw;
+        }
     }
 
     public async Task UpdateMasterPasswordAsync(MasterPasswordModel password)

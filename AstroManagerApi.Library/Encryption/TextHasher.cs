@@ -4,11 +4,11 @@ using BC = BCrypt.Net.BCrypt;
 namespace AstroManagerApi.Library.Encryption;
 public class TextHasher : ITextHasher
 {
+    private const int Salt = 12;
+
     public string HashPlainText(string plainText)
     {
-        string salt = BC.GenerateSalt();
-
-        return BC.HashPassword(plainText, salt);
+        return BC.HashPassword(plainText, Salt);
     }
 
     public bool VerifyPassword(string plainText, string hashedText)
