@@ -25,7 +25,7 @@ public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
             return output;
         }
 
-        using var response = await _api.HttpClient.GetAsync(Uri);
+        using var response = await _api.HttpClient.GetAsync($"{Uri}/{userId}");
         if (response.IsSuccessStatusCode)
         {
             output = await response.Content.ReadFromJsonAsync<RecoveryKeyModel>();

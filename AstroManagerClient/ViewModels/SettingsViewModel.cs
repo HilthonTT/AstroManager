@@ -3,24 +3,29 @@ using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Library.Storage.Interfaces;
+using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
 {
     private static readonly TimeSpan ThemeCacheTimeSpan = TimeSpan.FromDays(365 * 50);
     private readonly ILoggedInUser _loggedInUser;
+    private readonly IRecoveryKeyEndpoint _recoveryKeyEndpoint;
     private readonly IUserEndpoint _userEndpoint;
     private readonly ISecureStorageWrapper _storage;
 
     public SettingsViewModel(
         ILoggedInUser loggedInUser,
+        IRecoveryKeyEndpoint recoveryKeyEndpoint,
         IUserEndpoint userEndpoint,
         ISecureStorageWrapper storage)
     {
         _loggedInUser = loggedInUser;
+        _recoveryKeyEndpoint = recoveryKeyEndpoint;
         _userEndpoint = userEndpoint;
         _storage = storage;
     }
@@ -30,6 +35,16 @@ public partial class SettingsViewModel : BaseViewModel
 
     [ObservableProperty]
     private EditUserModel _model;
+
+    [RelayCommand]
+    private async Task LoadRecoveryKeysAsync()
+    {
+        var recovery = await _recoveryKeyEndpoint.GetUsersRecoveryKeyAsync(_loggedInUser.Id);
+        var mappedRecovery = new RecoveryKeyDisplayModel(recovery);
+
+        var message = new ViewRecoveryMessage(mappedRecovery);
+        WeakReferenceMessenger.Default.Send(message);
+    }
 
     [RelayCommand]
     private async Task EditDisplayNameAsync()

@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:views="clr-namespace:AstroManagerClient.Pages.Views"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
              x:Class="AstroManagerClient.Pages.SettingsPage"
+             x:DataType="vms:SettingsViewModel"
              Title="SettingsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to SETTINGS"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadRecoveryKeysCommand}"/>
+    </ContentPage.Behaviors>
+
+    <Grid RowDefinitions="100,70, *"
+          ColumnDefinitions="*,400"
+          Margin="24,24,0,0"
+          x:Name="PageGrid">
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="Settings" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+        </VerticalStackLayout>
+
+        <ScrollView Grid.Row="2">
+            <Grid RowDefinitions="70,*">
+
+            </Grid>
+        </ScrollView>
+
+        <Grid Grid.Row="1">
+            <BoxView Style="{StaticResource HRule}"
+                 Margin="0,0,0,0"
+                 VerticalOptions="Start"/>
+            <HorizontalStackLayout Spacing="20">
+
+            </HorizontalStackLayout>
+        </Grid>
+
+        <views:RecoveryKeyView Grid.Column="1" Grid.RowSpan="3"/>
+
+    </Grid>
+
 </ContentPage>

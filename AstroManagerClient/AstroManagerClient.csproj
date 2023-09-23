@@ -117,6 +117,9 @@
 	  <MauiXaml Update="Pages\Views\CredentialView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\Views\RecoveryKeyView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\Views\SelectedCredentialView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
