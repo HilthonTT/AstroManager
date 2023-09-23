@@ -14,14 +14,16 @@
         <ScrollView>
             <VerticalStackLayout Margin="24" Spacing="20">
                 <Label Text="Recovery Keys" Style="{StaticResource Title1}"/>
-                <HorizontalStackLayout Spacing="12">
+                <HorizontalStackLayout Spacing="12" 
+                                       RadioButtonGroup.GroupName="Key Visibility"
+                                       RadioButtonGroup.SelectedValue="{Binding IsHidden}">
                     <HorizontalStackLayout.Resources>
                         <Style TargetType="RadioButton">
                             <Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
                         </Style>
                     </HorizontalStackLayout.Resources>
-                    <RadioButton Content="Hide Values" IsChecked="True"/>
-                    <RadioButton Content="Show Values" />
+                    <RadioButton Content="Hide Values" Value="Hide" IsChecked="True" />
+                    <RadioButton Content="Show Values" Value="Show"/>
                 </HorizontalStackLayout>
 
                 <Grid ColumnDefinitions="60*,20*">
@@ -60,11 +62,9 @@
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="8"/>
                                     </Border.StrokeShape>
-                                    <Entry Text="{Binding KeyIndex}"
-                                        MaxLength="2"
+                                    <Label Text="{Binding KeyIndex}"
                                         WidthRequest="44"
                                         HorizontalTextAlignment="Center"
-                                        Keyboard="Numeric"
                                         Background="Transparent" TextColor="White"
                                         HorizontalOptions="Center" VerticalOptions="Center"/>
 
@@ -75,6 +75,7 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
-        <Button Text="Copy" HorizontalOptions="Fill" Margin="24" Grid.Row="1"/>
+        <Button Text="Copy" HorizontalOptions="Fill" Margin="24" Grid.Row="1"
+                Command="{Binding CopyCommand}"/>
     </Grid>
 </ContentView>

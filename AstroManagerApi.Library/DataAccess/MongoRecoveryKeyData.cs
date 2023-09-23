@@ -26,7 +26,7 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
         _cache = cache;
         _keyGenerator = keyGenerator;
     }
-
+    
     public async Task<RecoveryKeyModel> GetUsersRecoveryKeyAsync(string userId)
     {
         string key = CacheNamePrefix + userId;
