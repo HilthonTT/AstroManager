@@ -56,7 +56,12 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\fabmdl2.ttf" />
 	  <None Remove="Resources\Fonts\fa_solid.ttf" />
+	  <None Remove="Resources\Images\arrow_down.svg" />
+	  <None Remove="Resources\Images\arrow_up.svg" />
+	  <None Remove="Resources\Images\coin.svg" />
 	  <None Remove="Resources\Images\credit_card_gif.gif" />
+	  <None Remove="Resources\Images\customer.svg" />
+	  <None Remove="Resources\Images\filter.svg" />
 	  <None Remove="Resources\Images\food_01.png" />
 	  <None Remove="Resources\Images\graph.svg" />
 	  <None Remove="Resources\Images\home.svg" />
@@ -66,6 +71,7 @@
 	  <None Remove="Resources\Images\logout.svg" />
 	  <None Remove="Resources\Images\mars_icon_gif.gif" />
 	  <None Remove="Resources\Images\note_icon_gif.gif" />
+	  <None Remove="Resources\Images\order.svg" />
 	  <None Remove="Resources\Images\password_icon_gif.gif" />
 	  <None Remove="Resources\Images\setting.svg" />
 	  <None Remove="Resources\Images\ufo_icon_gif.gif" />
@@ -78,7 +84,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.56.0" />
-		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.83" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0-preview.86" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" />
 	</ItemGroup>
 
