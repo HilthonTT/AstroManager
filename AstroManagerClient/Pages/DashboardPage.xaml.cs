@@ -37,11 +37,21 @@ public partial class DashboardPage : ContentPage
     {
         var allCredentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
 
-        float loginsCount = allCredentials.Where(x => x.Type.Name.Contains("Logins")).Count();
-        float passwordsCount = allCredentials.Where(x => x.Type.Name.Contains("Password")).Count();
-        float secureNoteCount = allCredentials.Where(x => x.Type.Name.Contains("Secure Note")).Count();
-        float creditCardCount = allCredentials.Where(x => x.Type.Name.Contains("Credit Card")).Count();
-        float identityCount = allCredentials.Where(x => x.Type.Name.Contains("Identity")).Count();
+        var credentialCounts = allCredentials
+            .GroupBy(x => x.Type.Name)
+            .Select(group => new
+            {
+                Type = group.Key,
+                Count = group.Count()
+            })
+            .ToList();
+
+        float loginsCount = credentialCounts.FirstOrDefault(x => x.Type.Contains("Logins"))?.Count ?? 0;
+        float passwordsCount = credentialCounts.FirstOrDefault(x => x.Type.Contains("Password"))?.Count ?? 0;
+        float secureNoteCount = credentialCounts.FirstOrDefault(x => x.Type.Contains("Secure Note"))?.Count ?? 0;
+        float creditCardCount = credentialCounts.FirstOrDefault(x => x.Type.Contains("Credit Card"))?.Count ?? 0;
+        float identityCount = credentialCounts.FirstOrDefault(x => x.Type.Contains("Identity"))?.Count ?? 0;
+
 
         int totalCount = allCredentials.Count;
 

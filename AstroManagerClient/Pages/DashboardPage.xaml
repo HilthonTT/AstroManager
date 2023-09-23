@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:fonts="clr-namespace:AstroManagerClient.Fonts"
              xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
              xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:views="clr-namespace:AstroManagerClient.Pages.Views"
+             xmlns:models="clr-namespace:AstroManagerClient.Models"
              x:Class="AstroManagerClient.Pages.DashboardPage"
              x:DataType="vms:DashboardViewModel"
              Title="DashboardPage"
              Shell.NavBarIsVisible="False">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadCredentialsCommand}"/>
+    </ContentPage.Behaviors>
+    
     <Grid RowDefinitions="100,*" RowSpacing="24"
       ColumnDefinitions="*,400"
       Margin="24,0,0,0">
@@ -70,8 +77,8 @@
                             <Label Text="+32.40%" class="Percent,Down"/>
                             <Image Source="arrow_up.png"/>
                         </HorizontalStackLayout>
-                        <Label Text="$10,482" Grid.Row="1" class="Data"/>
-                        <Label Text="Total Revenue" Grid.Row="2" class="Label"/>
+                        <Label Text="{Binding ReusedCredentials.Count}" Grid.Row="1" class="Data"/>
+                        <Label Text="Total of reused passwords" Grid.Row="2" class="Label"/>
                     </Grid>
                 </Border>
 
@@ -88,8 +95,8 @@
                             <Label Text="-12.40%" class="Percent,Down"/>
                             <Image Source="arrow_down.png"/>
                         </HorizontalStackLayout>
-                        <Label Text="23,456" Grid.Row="1" class="Data"/>
-                        <Label Text="Total Orders" Grid.Row="2" class="Label"/>
+                        <Label Text="{Binding WeakCredentials.Count}" Grid.Row="1" class="Data"/>
+                        <Label Text="Total of weak passwords" Grid.Row="2" class="Label"/>
                     </Grid>
                 </Border>
 
@@ -106,8 +113,8 @@
                             <Label Text="+2.40%" class="Percent,Up"/>
                             <Image Source="arrow_up.png"/>
                         </HorizontalStackLayout>
-                        <Label Text="1,234" Grid.Row="1" class="Data"/>
-                        <Label Text="Total Customers" Grid.Row="2" class="Label"/>
+                        <Label Text="{Binding TwoFactorCredentials.Count}" Grid.Row="1" class="Data"/>
+                        <Label Text="Total of 2FA passwords" Grid.Row="2" class="Label"/>
                     </Grid>
                 </Border>
 
@@ -140,38 +147,26 @@
                             <VerticalStackLayout Spacing="16">
                                 <!-- heading -->
                                 <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="Customer" Style="{StaticResource Headline}"/>
-                                    <Label Text="Menu" Grid.Column="1" Style="{StaticResource Headline}"/>
-                                    <Label Text="Payment" Grid.Column="2" Style="{StaticResource Headline}"/>
-                                    <Label Text="Status" Grid.Column="3" Style="{StaticResource Headline}"/>
+                                    <Label Text="User" Style="{StaticResource Headline}"/>
+                                    <Label Text="Type" Grid.Column="1" Style="{StaticResource Headline}"/>
+                                    <Label Text="Date Added" Grid.Column="2" Style="{StaticResource Headline}"/>
+                                    <Label Text="Last Modified" Grid.Column="3" Style="{StaticResource Headline}"/>
                                 </Grid>
 
                                 <BoxView Style="{StaticResource HRule}"/>
 
-                                <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="David Ortinau" />
-                                    <Label Text="Spicy Noodles" Grid.Column="1" />
-                                    <Label Text="$5.95" Grid.Column="2" />
-                                    <Label Text="Completed" Grid.Column="3" />
-                                </Grid>
-                                <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="David Ortinau" />
-                                    <Label Text="Spicy Noodles" Grid.Column="1" />
-                                    <Label Text="$5.95" Grid.Column="2" />
-                                    <Label Text="Completed" Grid.Column="3" />
-                                </Grid>
-                                <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="David Ortinau" />
-                                    <Label Text="Spicy Noodles" Grid.Column="1" />
-                                    <Label Text="$5.95" Grid.Column="2" />
-                                    <Label Text="Completed" Grid.Column="3" />
-                                </Grid>
-                                <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="David Ortinau" />
-                                    <Label Text="Spicy Noodles" Grid.Column="1" />
-                                    <Label Text="$5.95" Grid.Column="2" />
-                                    <Label Text="Completed" Grid.Column="3" />
-                                </Grid>
+                                <CollectionView ItemsSource="{Binding Credentials}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:CredentialDisplayModel">
+                                            <Grid ColumnDefinitions="200,*,150,150">
+                                                <Label Text="{Binding User.DisplayName}" />
+                                                <Label Text="{Binding Type.Name}" Grid.Column="1" />
+                                                <Label Text="{Binding DateAdded.Date}" Grid.Column="2" />
+                                                <Label Text="{Binding DateModified.Date}" Grid.Column="3" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
 
                             </VerticalStackLayout>
 
@@ -192,7 +187,7 @@
                     <Grid Margin="24" RowDefinitions="50,1,*,84" RowSpacing="20">
                         <Label
                             Grid.Row="0" VerticalOptions="Center"
-                            Text="Most Ordered" Style="{StaticResource Title1}"/>
+                            Text="Recently Updated" Style="{StaticResource Title1}"/>
                         <Border Stroke="{StaticResource SecondaryBrush}" 
                                 StrokeThickness="1" Background="Transparent"
                                 Grid.Row="0" HorizontalOptions="End">
@@ -209,26 +204,21 @@
                         </Border>
                         <BoxView Style="{StaticResource HRule}" Grid.Row="1"/>
 
-                        <VerticalStackLayout Spacing="12" Grid.Row="2">
-                            <BindableLayout.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>One</x:String>
-                                    <x:String>One</x:String>
-                                    <x:String>One</x:String>
-                                </x:Array>
-                            </BindableLayout.ItemsSource>
+                        <VerticalStackLayout Spacing="12" Grid.Row="2" 
+                                             BindableLayout.ItemsSource="{Binding RecentlyUpdatedCredentials}">
                             <BindableLayout.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="models:CredentialDisplayModel">
                                     <Grid ColumnDefinitions="60,*">
                                         <Image WidthRequest="40" HeightRequest="40"
                                                Aspect="AspectFit"
-                                               Source="food_01.png"/>
+                                               Source="{Binding ImageSource}"/>
                                         <Label Style="{StaticResource Headline}" Grid.Column="1">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span>Spicy Noodle Soup</Span>
+                                                    <Span Text="{Binding Title}"></Span>
                                                     <Span Text="{x:Static system:Environment.NewLine}"/>
-                                                    <Span TextColor="{StaticResource TextSecondary}" FontSize="12">$2.29</Span>
+                                                    <Span Text="{Binding DateModified.Date}" 
+                                                          TextColor="{StaticResource TextSecondary}" FontSize="12" />
                                                 </FormattedString>
 
                                             </Label.FormattedText>
