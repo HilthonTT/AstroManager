@@ -55,6 +55,7 @@
                            TextColor="White"
                            Placeholder="Enter your master password."
                            Margin="10"
+                           IsPassword="True"
                            Text="{Binding MasterPassword}"/>
 
                     <Button Grid.Row="2"

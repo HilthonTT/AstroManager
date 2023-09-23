@@ -9,6 +9,7 @@ using AstroManagerClient.Pages;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 #if WINDOWS
 using Microsoft.UI;
@@ -52,6 +53,7 @@ public static class RegisterServices
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseSkiaSharp()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
