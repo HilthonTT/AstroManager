@@ -5,7 +5,21 @@ using Microsoft.Identity.Client;
 namespace AstroManagerClient.MsalClient;
 public static class UserVerifier
 {
-    public static async Task<UserModel> VerifyUserInformationAsync(IUserEndpoint userEndpoint, AuthenticationResult result)
+    private static readonly IUserEndpoint _userEndpoint = App.Services.GetService<IUserEndpoint>();
+
+    public static async Task<UserModel> GetUserFromAuthAsync(AuthenticationResult result)
+    {
+        var claims = PCAWrapper.AcquireClaims(result);
+        string objectId = claims.FirstOrDefault(c => c.Type.Contains("oid"))?.Value;
+        if (string.IsNullOrWhiteSpace(objectId))
+        {
+            return default;
+        }
+
+        return await _userEndpoint.GetUserFromAuthAsync(objectId) ?? new();
+    }
+
+    public static async Task<UserModel> VerifyUserInformationAsync(AuthenticationResult result)
     {
         var claims = PCAWrapper.AcquireClaims(result);
 
@@ -15,7 +29,7 @@ public static class UserVerifier
             return default;
         }
 
-        var loggedInUser = await userEndpoint.GetUserFromAuthAsync(objectId) ?? new();
+        var loggedInUser = await _userEndpoint.GetUserFromAuthAsync(objectId) ?? new();
         
         string name = claims.FirstOrDefault(c => c.Type.Contains("name"))?.Value;
         string firstName = "";
@@ -72,11 +86,11 @@ public static class UserVerifier
         {
             if (string.IsNullOrWhiteSpace(loggedInUser.Id))
             {
-                await userEndpoint.CreateUserAsync(loggedInUser);
+                await _userEndpoint.CreateUserAsync(loggedInUser);
             }
             else
             {
-                await userEndpoint.UpdateUserAsync(loggedInUser);
+                await _userEndpoint.UpdateUserAsync(loggedInUser);
             }
         }
 

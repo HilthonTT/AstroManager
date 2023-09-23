@@ -14,7 +14,6 @@ public partial class LoginViewModel : BaseViewModel
 {
     private readonly IApiHelper _api;
     private readonly ILoggedInUser _loggedInUser;
-    private readonly IUserEndpoint _userEndpoint;
     private readonly IMasterPasswordEndpoint _passwordEndpoint;
 
     public LoginViewModel(
@@ -25,7 +24,6 @@ public partial class LoginViewModel : BaseViewModel
     {
         _api = api;
         _loggedInUser = loggedInUser;
-        _userEndpoint = userEndpoint;
         _passwordEndpoint = passwordEndpoint;
     }
 
@@ -64,14 +62,15 @@ public partial class LoginViewModel : BaseViewModel
     {
         _api.AcquireHeaders(result.AccessToken);
 
-        var verifiedUser = await UserVerifier.VerifyUserInformationAsync(_userEndpoint, result);
+        var fetchedUser = await UserVerifier.GetUserFromAuthAsync(result);
 
-        _loggedInUser.Id = verifiedUser.Id;
-        _loggedInUser.ObjectIdentifier = verifiedUser.ObjectIdentifier;
-        _loggedInUser.DisplayName = verifiedUser.DisplayName;
-        _loggedInUser.FirstName = verifiedUser.FirstName;
-        _loggedInUser.LastName = verifiedUser.LastName;
-        _loggedInUser.EmailAddress = verifiedUser.EmailAddress;
+        // var verifiedUser = await UserVerifier.VerifyUserInformationAsync(result);
+        _loggedInUser.Id = fetchedUser.Id;
+        _loggedInUser.ObjectIdentifier = fetchedUser.ObjectIdentifier;
+        _loggedInUser.DisplayName = fetchedUser.DisplayName;
+        _loggedInUser.FirstName = fetchedUser.FirstName;
+        _loggedInUser.LastName = fetchedUser.LastName;
+        _loggedInUser.EmailAddress = fetchedUser.EmailAddress;
 
         await FetchMasterPasswordAsync(_loggedInUser.Id);
 
