@@ -2,11 +2,38 @@
 <toolkit:Popup 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
     x:Class="AstroManagerClient.Pages.Popups.FilterPopupPage"
-    CanBeDismissedByTappingOutsideOfPopup="True">
-
+    x:DataType="vms:FilterPopupViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="True"
+    Color="{StaticResource DarkBg1}">
+    
     <Grid RowDefinitions="108,*">
-        
+        <VerticalStackLayout VerticalOptions="Center" Margin="24">
+            <Label Text="Choose a type" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <BoxView Style="{StaticResource HRule}" Margin="0,24,0,0"/>
+        </VerticalStackLayout>
+        <ScrollView Grid.Row="1" HorizontalOptions="Center">
+            <VerticalStackLayout>
+                <Picker SelectedItem="{Binding Type}" Margin="0,24,0,0"
+                        WidthRequest="320" HeightRequest="45"
+                        HorizontalOptions="FillAndExpand">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Logins</x:String>
+                            <x:String>Passwords</x:String>
+                            <x:String>Secure Note</x:String>
+                            <x:String>Credit Card</x:String>
+                            <x:String>Identity</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <Button Margin="24" Text="Save Filter" HorizontalOptions="Center"
+                        Command="{Binding FilterCredentialCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </toolkit:Popup>

@@ -30,7 +30,7 @@ public partial class DashboardViewModel : BaseViewModel
             }
 
             var filteredCredentials = Credentials.Where(x => x.Type.Name.Contains(m.Value.Name)).ToList();
-            Credentials = new(filteredCredentials);
+            FilterableCredentials = new(filteredCredentials);
         });
     }
 
@@ -40,6 +40,9 @@ public partial class DashboardViewModel : BaseViewModel
     [NotifyPropertyChangedFor(nameof(WeakCredentials))]
     [NotifyPropertyChangedFor(nameof(TwoFactorCredentials))]
     private ObservableCollection<CredentialDisplayModel> _credentials = new();
+
+    [ObservableProperty]
+    private ObservableCollection<CredentialDisplayModel> _filterableCredentials;
 
     public ObservableCollection<CredentialDisplayModel> RecentlyUpdatedCredentials => Credentials
         .OrderByDescending(x => x.DateModified).Take(3).ToObservableCollection();
@@ -56,6 +59,7 @@ public partial class DashboardViewModel : BaseViewModel
         var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
 
         Credentials = new(mappedCredentials);
+        FilterableCredentials = new(mappedCredentials);
     }
 
     [RelayCommand]

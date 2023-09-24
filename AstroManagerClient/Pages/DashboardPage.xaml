@@ -123,7 +123,7 @@
                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                 Style="{StaticResource DarkBorderView}">
                     <Grid Margin="24" RowDefinitions="80,*">
-                        <Label Text="Order Report" Style="{StaticResource Title1}"/>
+                        <Label Text="Credential Report" Style="{StaticResource Title1}"/>
                         <Border Stroke="{StaticResource SecondaryBrush}" 
                             StrokeThickness="1" Background="Transparent"
                             Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
@@ -147,7 +147,7 @@
                             <VerticalStackLayout Spacing="16">
                                 <!-- heading -->
                                 <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="User" Style="{StaticResource Headline}"/>
+                                    <Label Text="Title" Style="{StaticResource Headline}"/>
                                     <Label Text="Type" Grid.Column="1" Style="{StaticResource Headline}"/>
                                     <Label Text="Date Added" Grid.Column="2" Style="{StaticResource Headline}"/>
                                     <Label Text="Last Modified" Grid.Column="3" Style="{StaticResource Headline}"/>
@@ -155,11 +155,11 @@
 
                                 <BoxView Style="{StaticResource HRule}"/>
 
-                                <CollectionView ItemsSource="{Binding Credentials}">
+                                <CollectionView ItemsSource="{Binding FilterableCredentials}">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate x:DataType="models:CredentialDisplayModel">
                                             <Grid ColumnDefinitions="200,*,150,150">
-                                                <Label Text="{Binding User.DisplayName}" />
+                                                <Label Text="{Binding Title}" />
                                                 <Label Text="{Binding Type.Name}" Grid.Column="1" />
                                                 <Label Text="{Binding DateAdded.Date}" Grid.Column="2" />
                                                 <Label Text="{Binding DateModified.Date}" Grid.Column="3" />
