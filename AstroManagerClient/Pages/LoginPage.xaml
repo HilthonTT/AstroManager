@@ -25,79 +25,68 @@
         </Grid>
 
         <Grid Grid.Row="2" HorizontalOptions="Center">
-
             <VerticalStackLayout HorizontalOptions="Center">
-                <Image Source="mars_icon_gif.gif" WidthRequest="250" HeightRequest="250" 
-                   HorizontalOptions="Center" Aspect="AspectFit"/>
-                <Grid IsVisible="{Binding IsNotLoggedIn}">
-                    <VerticalStackLayout Grid.Row="0">
-                        <Label Text="AstroManager | Login"/>
-                        <BoxView Style="{StaticResource HRule}"
-                             VerticalOptions="Start"
-                             Margin="0,10,0,10"/>
-                        <Button Text="Login" Command="{Binding LoginCommand}" WidthRequest="250"/>
+                <Grid RowDefinitions="60, 300, 80" WidthRequest="420">
+                    <Border Background="{StaticResource DarkBg2Brush}"
+                        Stroke="{StaticResource DarkBg2Brush}"
+                        StrokeThickness="1"
+                        Grid.Row="1">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16" />
+                        </Border.StrokeShape>
+                    </Border>
+
+                    <VerticalStackLayout Grid.RowSpan="2" Margin="20,30,20,20" 
+                                            VerticalOptions="End" Spacing="6">
+                        <Grid IsVisible="{Binding IsNotLoggedIn}">
+                            <Button Text="Login" Command="{Binding LoginCommand}" 
+                                HorizontalOptions="Center"
+                                WidthRequest="250"/>
+                        </Grid>
+                        <Grid IsVisible="{Binding IsAbleToEnterMasterPassword}">
+                            <VerticalStackLayout>
+                                <Entry Background="Transparent" 
+                                       TextColor="White"
+                                       PlaceholderColor="{StaticResource TextSecondary}"
+                                       Placeholder="Master Password"
+                                       WidthRequest="300" HeightRequest="40" 
+                                       IsPassword="True" 
+                                       Margin="0,0,0,8"
+                                       Text="{Binding MasterPassword}"/>
+                                <Button Text="Login" Command="{Binding VerifyMasterPasswordCommand}" 
+                                        HorizontalOptions="Center"
+                                        WidthRequest="250"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Grid IsVisible="{Binding IsNotAbleToEnterMasterPassword}">
+                            <VerticalStackLayout>
+                                <Entry Background="Transparent" 
+                                       TextColor="White"
+                                       PlaceholderColor="{StaticResource TextSecondary}"
+                                       Placeholder="Enter Master Password"
+                                       WidthRequest="300" HeightRequest="40" 
+                                       IsPassword="True" 
+                                       Margin="0,0,0,8"
+                                       Text="{Binding MasterPassword}"/>
+                                <Entry Background="Transparent" 
+                                       TextColor="White"
+                                       PlaceholderColor="{StaticResource TextSecondary}"
+                                       Placeholder="Enter Master Password Again"
+                                       WidthRequest="300" HeightRequest="40" 
+                                       IsPassword="True" 
+                                       Margin="0,0,0,8"
+                                       Text="{Binding ReEnteredMasterPassword}"/>
+                                <Button Text="Login" Command="{Binding CreateMasterPasswordCommand}" 
+                                        HorizontalOptions="Center"
+                                        WidthRequest="250"/>
+                            </VerticalStackLayout>
+                        </Grid>
                     </VerticalStackLayout>
-                </Grid>
-                <Grid RowDefinitions="*,*,*"
-                      IsVisible="{Binding IsAbleToEnterMasterPassword}">
-
-                    <VerticalStackLayout Grid.Row="0">
-                        <Label Text="AstroManager | Master Password"/>
-                        <BoxView Style="{StaticResource HRule}"
-                             VerticalOptions="Start"
-                             Margin="0,5,0,5"/>
-                    </VerticalStackLayout>
-
-                    <Entry Grid.Row="1"
-                           Background="Transparent"
-                           WidthRequest="500"
-                           PlaceholderColor="{StaticResource TextSecondary}"
-                           TextColor="White"
-                           Placeholder="Enter your master password."
-                           Margin="10"
-                           IsPassword="True"
-                           Text="{Binding MasterPassword}"/>
-
-                    <Button Grid.Row="2"
-                            Text="Login" Command="{Binding VerifyMasterPasswordCommand}" 
-                            WidthRequest="250" HorizontalOptions="Center"/>
-
-                </Grid>
-                <Grid RowDefinitions="*,*,*,*"
-                    IsVisible="{Binding IsNotAbleToEnterMasterPassword}">
-
-                    <VerticalStackLayout Grid.Row="0">
-                        <Label Text="AstroManager | Register"/>
-                        <BoxView Style="{StaticResource HRule}"
-                                 VerticalOptions="Start"
-                                 Margin="0,5,0,5"/>
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Grid.Row="1" Margin="10" WidthRequest="500">
-                        <Entry
-                            Background="Transparent"
-                            Placeholder="Enter your master password."
-                            PlaceholderColor="{StaticResource TextSecondary}"
-                            TextColor="White"
-                            IsPassword="True"
-                            WidthRequest="500"
-                            Text="{Binding MasterPassword}"
-                            Margin="0,0,0,10"/>
-
-                        <Entry
-                            Background="Transparent"
-                            Placeholder="Re-Enter your master password."
-                            PlaceholderColor="{StaticResource TextSecondary}"
-                            TextColor="White"
-                            IsPassword="True"
-                            WidthRequest="500"
-                            Text="{Binding ReEnteredMasterPassword}"/>
-                    </VerticalStackLayout>
-
-                    <Button Grid.Row="3"
-                        Text="Create Master Password" Command="{Binding CreateMasterPasswordCommand}" 
-                        WidthRequest="250" HorizontalOptions="Center"/>
-
+                    <Image 
+                        Grid.RowSpan="2" VerticalOptions="Start"
+                        Source="mars_icon_gif.gif" WidthRequest="250" 
+                        BackgroundColor="Transparent" HeightRequest="250" Aspect="AspectFit" 
+                        HorizontalOptions="Center"/>
                 </Grid>
             </VerticalStackLayout>
         </Grid>
