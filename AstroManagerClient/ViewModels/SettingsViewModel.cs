@@ -1,8 +1,5 @@
-﻿using AstroManagerClient.ConstantsVariables;
-using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
+﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Library.Storage.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,22 +11,17 @@ using System.Globalization;
 namespace AstroManagerClient.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
 {
-    private static readonly TimeSpan ThemeCacheTimeSpan = TimeSpan.FromDays(365 * 50);
+    private static readonly Color PrimaryColor = Color.FromArgb("#EA7C69");
+    private static readonly Color DarkBg2Brush = Color.FromArgb("#1F1D2B");
     private readonly ILoggedInUser _loggedInUser;
     private readonly IRecoveryKeyEndpoint _recoveryKeyEndpoint;
-    private readonly IUserEndpoint _userEndpoint;
-    private readonly ISecureStorageWrapper _storage;
 
     public SettingsViewModel(
         ILoggedInUser loggedInUser,
-        IRecoveryKeyEndpoint recoveryKeyEndpoint,
-        IUserEndpoint userEndpoint,
-        ISecureStorageWrapper storage)
+        IRecoveryKeyEndpoint recoveryKeyEndpoint)
     {
         _loggedInUser = loggedInUser;
         _recoveryKeyEndpoint = recoveryKeyEndpoint;
-        _userEndpoint = userEndpoint;
-        _storage = storage;
 
         LoadLanguages();
     }
@@ -40,23 +32,16 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<LanguageModel> _languages;
 
-    [ObservableProperty]
-    private bool _editProfile;
-
-    [ObservableProperty]
-    private EditUserModel _model;
-
     private void LoadLanguages()
     {
         var languages = new ObservableCollection<LanguageModel>()
         {
-            new() { Language = "English-US" },
+            new() { Language = "English-US", Color = PrimaryColor },
             new() { Language = "French-FR" },
         };
 
         Languages = new(languages);
     }
-
 
     [RelayCommand]
     private async Task LoadRecoveryKeysAsync()
@@ -69,41 +54,7 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task EditDisplayNameAsync()
-    {
-        _loggedInUser.DisplayName = Model.DisplayName;
-
-        try
-        {
-            IsBusy = true;
-            await _userEndpoint.UpdateUserAsync(_loggedInUser as UserModel);
-        }
-        catch (Exception)
-        {
-            //TODO: Go to error page
-        }
-        finally
-        {
-            IsBusy = false;
-            EditProfile = false;
-        }
-    }
-
-    [RelayCommand]
-    private async Task ChangeThemeAsync(string theme)
-    {
-        Application.Current.UserAppTheme = theme switch
-        {
-            Constants.DarkTheme => AppTheme.Dark,
-            Constants.LightTheme => AppTheme.Light,
-            _ => AppTheme.Dark,
-        };
-
-        await _storage.SetRecordAsync(Constants.ThemeKey, theme, ThemeCacheTimeSpan);
-    }
-
-    [RelayCommand]
-    private static void ChangeCulture(LanguageModel language)
+    private void ChangeCulture(LanguageModel language)
     {
         string culture;
 
@@ -116,8 +67,15 @@ public partial class SettingsViewModel : BaseViewModel
             culture = "fr-FR";
         }
 
+        language.Color = PrimaryColor;
+
         var cultureToSwitch = new CultureInfo(culture);
 
         LocalizationResourceManager.Instance.SetCulture(cultureToSwitch);
+
+        foreach (var lang in Languages)
+        {
+            lang.Color = lang.Language == language.Language ? PrimaryColor : DarkBg2Brush;
+        }
     }
 }

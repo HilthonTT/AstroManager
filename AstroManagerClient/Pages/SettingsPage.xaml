@@ -36,7 +36,7 @@
                         <DataTemplate x:DataType="models:LanguageModel">
                             <Grid RowDefinitions="30, 230, 40" WidthRequest="200">
                                 <Border Background="{StaticResource DarkBg2Brush}"
-                                        Stroke="{StaticResource DarkBg2Brush}"
+                                        Stroke="{Binding Color}"
                                         StrokeThickness="1"
                                         Grid.Row="1">
                                     <Border.StrokeShape>
@@ -55,7 +55,7 @@
                                 </VerticalStackLayout>
                                 <Image 
                                     Grid.RowSpan="2" VerticalOptions="Start"
-                                    Source="food_01.png" WidthRequest="140" 
+                                    Source="{Binding ImageSource}" WidthRequest="140" 
                                     BackgroundColor="Transparent" HeightRequest="140" Aspect="AspectFit" 
                                     HorizontalOptions="Center"/>
                             </Grid>
