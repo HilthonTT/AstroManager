@@ -1,10 +1,12 @@
 ﻿using AstroManagerClient.ConstantsVariables;
 using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 
 namespace AstroManagerClient.ViewModels;
@@ -17,6 +19,19 @@ public partial class DashboardViewModel : BaseViewModel
     {
         _loggedInUser = loggedInUser;
         _credentialEndpoint = credentialEndpoint;
+
+        WeakReferenceMessenger.Default.Register<CloseFilterPopupMessage>(this, async (r, m) =>
+        {
+            await LoadCredentialsAsync();
+
+            if (m.Value.Name.Equals("All", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            var filteredCredentials = Credentials.Where(x => x.Type.Name.Contains(m.Value.Name)).ToList();
+            Credentials = new(filteredCredentials);
+        });
     }
 
     [ObservableProperty]
@@ -41,6 +56,13 @@ public partial class DashboardViewModel : BaseViewModel
         var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
 
         Credentials = new(mappedCredentials);
+    }
+
+    [RelayCommand]
+    private static void OpenFilterPopup()
+    {
+        var message = new OpenFilterPopupMessage(true);
+        WeakReferenceMessenger.Default.Send(message);
     }
 
     private static bool IsCommonWord(string password)

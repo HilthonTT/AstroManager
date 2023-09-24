@@ -138,7 +138,7 @@
                             </HorizontalStackLayout>
 
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer />
+                                <TapGestureRecognizer Command="{Binding OpenFilterPopupCommand}"/>
                             </Border.GestureRecognizers>
                         </Border>
 

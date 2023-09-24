@@ -10,6 +10,7 @@ using CommunityToolkit.Maui;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using AstroManagerClient.Pages.Popups;
 
 #if WINDOWS
 using Microsoft.UI;
@@ -83,11 +84,13 @@ public static class RegisterServices
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<DashboardPage>();
+        builder.Services.AddTransient<FilterPopupPage>();
 
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
+        builder.Services.AddTransient<FilterPopupViewModel>();
 
         Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));

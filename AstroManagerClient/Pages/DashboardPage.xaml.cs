@@ -1,6 +1,10 @@
 using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Messages;
+using AstroManagerClient.Pages.Popups;
 using AstroManagerClient.ViewModels;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
 using Microcharts;
 using SkiaSharp.Views.Maui;
 
@@ -21,6 +25,11 @@ public partial class DashboardPage : ContentPage
 		BindingContext = viewModel;
         _credentialEndpoint = credentialEndpoint;
         _loggedInUser = loggedInUser;
+
+        WeakReferenceMessenger.Default.Register<OpenFilterPopupMessage>(this, async (r, m) =>
+        {
+            await this.ShowPopupAsync(new FilterPopupPage());
+        });
     }
 
     protected override async void OnAppearing()
