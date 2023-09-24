@@ -49,7 +49,7 @@ public partial class CredentialDisplayModel : ObservableObject
         {
             "logins" => "login_icon_gif.gif",
             "passwords" => "password_icon_gif.gif",
-            "secure notes" => "note_icon_gif.gif",
+            "secure notes" or "secure note" => "note_icon_gif.gif",
             "credit card" or "creditcard" => "credit_card_gif.gif",
             "identity" => "identity_icon_gif.gif",
             _ => "food_01.png"

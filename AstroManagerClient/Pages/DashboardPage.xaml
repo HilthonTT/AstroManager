@@ -238,7 +238,7 @@
                     <Grid Margin="24" RowDefinitions="50,1,*" RowSpacing="20">
                         <Label
                             Grid.Row="0" VerticalOptions="Center"
-                            Text="Order Types" Style="{StaticResource Title1}"/>
+                            Text="Credentials Types" Style="{StaticResource Title1}"/>
 
                         <Border Stroke="{StaticResource SecondaryBrush}" 
                                 StrokeThickness="1" Background="Transparent"

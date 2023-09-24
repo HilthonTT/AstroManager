@@ -71,6 +71,7 @@ public partial class AddCredentialViewModel : BaseViewModel
         await _credentialEndpoint.CreateCredentialAsync(credentialToCreate);
 
         Template = new();
+        Title = "";
         IsVisible = false;
     }
 
