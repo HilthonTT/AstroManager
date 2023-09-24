@@ -19,7 +19,6 @@ public partial class LoginViewModel : BaseViewModel
     public LoginViewModel(
         IApiHelper api,
         ILoggedInUser loggedInUser,
-        IUserEndpoint userEndpoint,
         IMasterPasswordEndpoint passwordEndpoint)
     {
         _api = api;
@@ -62,15 +61,13 @@ public partial class LoginViewModel : BaseViewModel
     {
         _api.AcquireHeaders(result.AccessToken);
 
-        var fetchedUser = await UserVerifier.GetUserFromAuthAsync(result);
-
-        // var verifiedUser = await UserVerifier.VerifyUserInformationAsync(result);
-        _loggedInUser.Id = fetchedUser.Id;
-        _loggedInUser.ObjectIdentifier = fetchedUser.ObjectIdentifier;
-        _loggedInUser.DisplayName = fetchedUser.DisplayName;
-        _loggedInUser.FirstName = fetchedUser.FirstName;
-        _loggedInUser.LastName = fetchedUser.LastName;
-        _loggedInUser.EmailAddress = fetchedUser.EmailAddress;
+        var verifiedUser = await UserVerifier.VerifyUserInformationAsync(result);
+        _loggedInUser.Id = verifiedUser.Id;
+        _loggedInUser.ObjectIdentifier = verifiedUser.ObjectIdentifier;
+        _loggedInUser.DisplayName = verifiedUser.DisplayName;
+        _loggedInUser.FirstName = verifiedUser.FirstName;
+        _loggedInUser.LastName = verifiedUser.LastName;
+        _loggedInUser.EmailAddress = verifiedUser.EmailAddress;
 
         await FetchMasterPasswordAsync(_loggedInUser.Id);
 
@@ -104,21 +101,26 @@ public partial class LoginViewModel : BaseViewModel
     {
         try
         {
-            if (await _passwordEndpoint.VerifyPasswordAsync(_loggedInUser.Id, MasterPassword))
-            {
-                var message = new UserLoggedInMessage(true);
-                WeakReferenceMessenger.Default.Send(message);
+            bool isPasswordCorrect = await _passwordEndpoint.VerifyPasswordAsync(_loggedInUser.Id, MasterPassword);
 
-                await LoadMainPageAsync();
-            }
-            else
+            if (isPasswordCorrect is false)
             {
                 await ShowMessageAsync("Incorrect", "Your password is incorrect.");
+                return;
             }
+
+            var message = new UserLoggedInMessage(true);
+            WeakReferenceMessenger.Default.Send(message);
+
+            await LoadMainPageAsync();
         }
         catch (Exception ex)
         {
             await ShowMessageAsync("Error verifying your password.", ex.Message);
+        }
+        finally
+        {
+            MasterPassword = "";
         }
     }
 
@@ -171,6 +173,7 @@ public partial class LoginViewModel : BaseViewModel
 
             HasMasterPassword = true;
             IsAbleToEnterMasterPassword = true;
+            MasterPassword = "";
         }
         catch (Exception ex)
         {
