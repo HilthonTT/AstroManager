@@ -26,6 +26,8 @@ public partial class LoginViewModel : BaseViewModel
         _passwordEndpoint = passwordEndpoint;
     }
 
+    public LocalizationResourceManager LocalizationResourceManager => LocalizationResourceManager.Instance;
+
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotAbleToEnterMasterPassword))]
     [NotifyPropertyChangedFor(nameof(IsNotLoggedIn))]

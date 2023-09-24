@@ -54,6 +54,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Remove="Resources\Languages\AppResources.fr.resx" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\fabmdl2.ttf" />
 	  <None Remove="Resources\Fonts\fa_solid.ttf" />
 	  <None Remove="Resources\Images\arrow_down.svg" />
@@ -95,6 +99,11 @@
 	<ItemGroup>
 	  <Compile Update="Pages\Views\CredentialView.xaml.cs">
 	    <DependentUpon>CredentialView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Resources\Languages\AppResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppResources.resx</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -146,6 +155,20 @@
 	<ItemGroup>
 	  <MauiFont Include="Fonts\FabIconFont.cs" />
 	  <MauiFont Include="Fonts\IconFont.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Resources\Languages\AppResources.fr.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Languages\AppResources.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 </Project>

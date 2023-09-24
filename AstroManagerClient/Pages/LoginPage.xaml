@@ -4,6 +4,8 @@
              xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
              xmlns:system="clr-namespace:System;assembly=System.Runtime"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:lang="clr-namespace:AstroManagerClient.Resources.Languages"
+             xmlns:local="clr-namespace:AstroManagerClient"
              x:DataType="vms:LoginViewModel"
              x:Class="AstroManagerClient.Pages.LoginPage"
              Shell.NavBarIsVisible="False"
@@ -39,9 +41,10 @@
                     <VerticalStackLayout Grid.RowSpan="2" Margin="20,30,20,20" 
                                             VerticalOptions="End" Spacing="6">
                         <Grid IsVisible="{Binding IsNotLoggedIn}">
-                            <Button Text="Login" Command="{Binding LoginCommand}" 
-                                HorizontalOptions="Center"
-                                WidthRequest="250"/>
+                            <Button Text="{Binding LocalizationResourceManager[Login], Mode=OneWay}" 
+                                    Command="{Binding LoginCommand}" 
+                                    HorizontalOptions="Center"
+                                    WidthRequest="250"/>
                         </Grid>
                         <Grid IsVisible="{Binding IsAbleToEnterMasterPassword}">
                             <VerticalStackLayout>

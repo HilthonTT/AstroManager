@@ -5,9 +5,12 @@ using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Library.Storage.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Resources.Languages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Platform;
+using System.Globalization;
 
 namespace AstroManagerClient.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
@@ -78,5 +81,15 @@ public partial class SettingsViewModel : BaseViewModel
         };
 
         await _storage.SetRecordAsync(Constants.ThemeKey, theme, ThemeCacheTimeSpan);
+    }
+
+    [RelayCommand]
+    private void ChangeCulture()
+    {
+        var switchToCulture = AppResources.Culture.TwoLetterISOLanguageName
+            .Equals("fr", StringComparison.InvariantCultureIgnoreCase) 
+            ? new CultureInfo("en-US") : new CultureInfo("fr-FR");
+
+        LocalizationResourceManager.Instance.SetCulture(switchToCulture);
     }
 }

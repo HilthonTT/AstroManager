@@ -13,6 +13,45 @@
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadRecoveryKeysCommand}"/>
     </ContentPage.Behaviors>
 
+    <ContentPage.Resources>
+        <ControlTemplate x:Key="ThemeRadioTemplate">
+            <Border Style="{StaticResource DarkBorderView}"
+                    HeightRequest="120"
+                    WidthRequest="100"
+                    HorizontalOptions="Start"
+                    VerticalOptions="Start"
+                    Padding="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CheckedStates">
+                            
+                            <VisualState x:Name="Checked">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource Primary}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Unchecked">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource Accent}"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Border>
+        </ControlTemplate>
+    </ContentPage.Resources>
+    
+    
+
     <Grid RowDefinitions="100,70, *"
           ColumnDefinitions="*,400"
           Margin="24,24,0,0"
@@ -24,7 +63,7 @@
 
         <ScrollView Grid.Row="2">
             <Grid RowDefinitions="70,*">
-
+                
             </Grid>
         </ScrollView>
 
