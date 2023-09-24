@@ -5,11 +5,10 @@ using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Library.Storage.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
-using AstroManagerClient.Resources.Languages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Maui.Platform;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace AstroManagerClient.ViewModels;
@@ -31,13 +30,33 @@ public partial class SettingsViewModel : BaseViewModel
         _recoveryKeyEndpoint = recoveryKeyEndpoint;
         _userEndpoint = userEndpoint;
         _storage = storage;
+
+        LoadLanguages();
     }
+
+    [ObservableProperty]
+    private string _selectedLanguage;
+
+    [ObservableProperty]
+    private ObservableCollection<LanguageModel> _languages;
 
     [ObservableProperty]
     private bool _editProfile;
 
     [ObservableProperty]
     private EditUserModel _model;
+
+    private void LoadLanguages()
+    {
+        var languages = new ObservableCollection<LanguageModel>()
+        {
+            new() { Language = "English-US" },
+            new() { Language = "French-FR" },
+        };
+
+        Languages = new(languages);
+    }
+
 
     [RelayCommand]
     private async Task LoadRecoveryKeysAsync()
@@ -84,12 +103,21 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void ChangeCulture()
+    private static void ChangeCulture(LanguageModel language)
     {
-        var switchToCulture = AppResources.Culture.TwoLetterISOLanguageName
-            .Equals("fr", StringComparison.InvariantCultureIgnoreCase) 
-            ? new CultureInfo("en-US") : new CultureInfo("fr-FR");
+        string culture;
 
-        LocalizationResourceManager.Instance.SetCulture(switchToCulture);
+        if (language.Language == "English-US")
+        {
+            culture = "en-US";
+        }
+        else
+        {
+            culture = "fr-FR";
+        }
+
+        var cultureToSwitch = new CultureInfo(culture);
+
+        LocalizationResourceManager.Instance.SetCulture(cultureToSwitch);
     }
 }

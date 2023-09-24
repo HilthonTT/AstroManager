@@ -5,76 +5,65 @@
              xmlns:views="clr-namespace:AstroManagerClient.Pages.Views"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
+             xmlns:layouts="clr-namespace:AstroManagerClient.Layouts"
+             xmlns:models="clr-namespace:AstroManagerClient.Models"
+             xmlns:a="clr-namespace:AstroManagerClient.Fonts"
              x:Class="AstroManagerClient.Pages.SettingsPage"
              x:DataType="vms:SettingsViewModel"
+             Shell.NavBarIsVisible="False"
              Title="SettingsPage">
 
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadRecoveryKeysCommand}"/>
     </ContentPage.Behaviors>
 
-    <ContentPage.Resources>
-        <ControlTemplate x:Key="ThemeRadioTemplate">
-            <Border Style="{StaticResource DarkBorderView}"
-                    HeightRequest="120"
-                    WidthRequest="100"
-                    HorizontalOptions="Start"
-                    VerticalOptions="Start"
-                    Padding="0">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="16" />
-                </Border.StrokeShape>
-
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CheckedStates">
-                            
-                            <VisualState x:Name="Checked">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor"
-                                            Value="{StaticResource Primary}"/>
-                                </VisualState.Setters>
-                            </VisualState>
-
-                            <VisualState x:Name="Unchecked">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor"
-                                            Value="{StaticResource Accent}"/>
-                                </VisualState.Setters>
-                            </VisualState>
-                            
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </VisualStateManager.VisualStateGroups>
-            </Border>
-        </ControlTemplate>
-    </ContentPage.Resources>
-    
-    
-
-    <Grid RowDefinitions="100,70, *"
+    <Grid RowDefinitions="100, 70, *"
           ColumnDefinitions="*,400"
           Margin="24,24,0,0"
           x:Name="PageGrid">
         <VerticalStackLayout VerticalOptions="Center">
             <Label Text="Settings" Style="{StaticResource LargeTitle}"/>
             <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,0"/>
         </VerticalStackLayout>
 
         <ScrollView Grid.Row="2">
             <Grid RowDefinitions="70,*">
-                
+                <Label Text="Languages" Style="{StaticResource Title1}"/>
+                <layouts:HorizontalWrapLayout Grid.Row="1" Spacing="20"
+                                              BindableLayout.ItemsSource="{Binding Languages}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:LanguageModel">
+                            <Grid RowDefinitions="30, 230, 40" WidthRequest="200">
+                                <Border Background="{StaticResource DarkBg2Brush}"
+                                        Stroke="{StaticResource DarkBg2Brush}"
+                                        StrokeThickness="1"
+                                        Grid.Row="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="16" />
+                                    </Border.StrokeShape>
+                                </Border>
+                                <VerticalStackLayout Grid.RowSpan="2" Margin="20,0,20,20"
+                                                     VerticalOptions="End"
+                                                     Spacing="6">
+                                    <Label Text="{Binding Language}" HorizontalOptions="Center" Style="{StaticResource Title2}"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Button Text="Choose"  
+                                            CommandParameter="{Binding .}"
+                                            HorizontalOptions="Center"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vms:SettingsViewModel}}, Path=ChangeCultureCommand}"/>
+                                </VerticalStackLayout>
+                                <Image 
+                                    Grid.RowSpan="2" VerticalOptions="Start"
+                                    Source="food_01.png" WidthRequest="140" 
+                                    BackgroundColor="Transparent" HeightRequest="140" Aspect="AspectFit" 
+                                    HorizontalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate> 
+                    </BindableLayout.ItemTemplate>
+                </layouts:HorizontalWrapLayout>
             </Grid>
         </ScrollView>
-
-        <Grid Grid.Row="1">
-            <BoxView Style="{StaticResource HRule}"
-                 Margin="0,0,0,0"
-                 VerticalOptions="Start"/>
-            <HorizontalStackLayout Spacing="20">
-
-            </HorizontalStackLayout>
-        </Grid>
 
         <views:RecoveryKeyView Grid.Column="1" Grid.RowSpan="3"/>
 
