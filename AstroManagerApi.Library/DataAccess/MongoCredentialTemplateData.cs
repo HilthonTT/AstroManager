@@ -1,7 +1,6 @@
 ﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Extensions;
+using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
-using Microsoft.Extensions.Caching.Distributed;
 using MongoDB.Driver;
 
 namespace AstroManagerApi.Library.DataAccess;
@@ -10,11 +9,11 @@ public class MongoCredentialTemplateData : ICredentialTemplateData
     private const string CacheName = nameof(MongoCredentialTemplateData);
     private const string CacheNamePrefix = $"{CacheName}_";
     private readonly IMongoCollection<CredentialTemplateModel> _templates;
-    private readonly IDistributedCache _cache;
+    private readonly IDistributedCacheHelper _cache;
 
     public MongoCredentialTemplateData(
         IDbConnection db,
-        IDistributedCache cache)
+        IDistributedCacheHelper cache)
     {
         _templates = db.CredentialTemplateCollection;
         _cache = cache;

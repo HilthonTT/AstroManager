@@ -1,7 +1,6 @@
 ﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Extensions;
+using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
-using Microsoft.Extensions.Caching.Distributed;
 using MongoDB.Driver;
 
 namespace AstroManagerApi.Library.DataAccess;
@@ -9,9 +8,9 @@ public class MongoTypeData : ITypeData
 {
     private const string CacheName = nameof(MongoTypeData);
     private readonly IMongoCollection<TypeModel> _types;
-    private readonly IDistributedCache _cache;
+    private readonly IDistributedCacheHelper _cache;
 
-    public MongoTypeData(IDbConnection db, IDistributedCache cache)
+    public MongoTypeData(IDbConnection db, IDistributedCacheHelper cache)
     {
         _types = db.TypeCollection;
         _cache = cache;

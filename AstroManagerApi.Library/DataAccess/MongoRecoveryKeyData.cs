@@ -1,9 +1,8 @@
 ﻿using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Extensions;
+using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
 using AstroManagerApi.Library.Models.Request;
-using Microsoft.Extensions.Caching.Distributed;
 using MongoDB.Driver;
 
 namespace AstroManagerApi.Library.DataAccess;
@@ -12,13 +11,13 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
     private const string CacheNamePrefix = $"{nameof(MongoRecoveryKeyData)}_";
     private readonly IMongoCollection<RecoveryKeyModel> _recoveryKeys;
     private readonly IUserData _userData;
-    private readonly IDistributedCache _cache;
+    private readonly IDistributedCacheHelper _cache;
     private readonly IRecoveryKeyGenerator _keyGenerator;
 
     public MongoRecoveryKeyData(
         IDbConnection db,
         IUserData userData,
-        IDistributedCache cache,
+        IDistributedCacheHelper cache,
         IRecoveryKeyGenerator keyGenerator)
     {
         _recoveryKeys = db.RecoveryKeyCollection;

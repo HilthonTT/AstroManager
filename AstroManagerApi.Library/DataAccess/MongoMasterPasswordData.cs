@@ -1,8 +1,7 @@
 ﻿using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Extensions;
+using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
-using Microsoft.Extensions.Caching.Distributed;
 using MongoDB.Driver;
 
 namespace AstroManagerApi.Library.DataAccess;
@@ -12,13 +11,13 @@ public class MongoMasterPasswordData : IMasterPasswordData
     private readonly IMongoCollection<MasterPasswordModel> _passwords;
     private readonly IDbConnection _db;
     private readonly IRecoveryKeyGenerator _keyGenerator;
-    private readonly IDistributedCache _cache;
+    private readonly IDistributedCacheHelper _cache;
     private readonly ITextHasher _hasher;
 
     public MongoMasterPasswordData(
         IDbConnection db,
         IRecoveryKeyGenerator keyGenerator,
-        IDistributedCache cache,
+        IDistributedCacheHelper cache,
         ITextHasher hasher)
     {
         _passwords = db.MasterPasswordCollection;

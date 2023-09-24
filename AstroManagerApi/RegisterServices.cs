@@ -4,6 +4,8 @@ using AstroManagerApi.Library.DataAccess;
 using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption;
 using AstroManagerApi.Library.Encryption.Interfaces;
+using AstroManagerApi.Library.Extensions;
+using AstroManagerApi.Library.Extensions.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 
@@ -27,6 +29,7 @@ public static class RegisterServices
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddDistributedMemoryCache();
+        builder.Services.AddMemoryCache();
 
         builder.Services.AddStackExchangeRedisCache(options =>
         {
@@ -34,6 +37,7 @@ public static class RegisterServices
             options.InstanceName = "AstroManager_";
         });
         
+        builder.Services.AddTransient<IDistributedCacheHelper, DistributedCacheHelper>();
         builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
         builder.Services.AddTransient<ITextHasher, TextHasher>();
 

@@ -2,6 +2,7 @@
 using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption.Interfaces;
 using AstroManagerApi.Library.Extensions;
+using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
@@ -13,13 +14,13 @@ public class MongoCredentialData : ICredentialData
     private const string CacheName = nameof(MongoCredentialData);
     private const string CacheNamePrefix = $"{CacheName}_";
     private readonly IMongoCollection<CredentialModel> _credentials;
-    private readonly IDistributedCache _cache;
+    private readonly IDistributedCacheHelper _cache;
     private readonly IAesEncryptor _aes;
     private readonly ILogger<MongoCredentialData> _logger;
 
     public MongoCredentialData(
         IDbConnection db,
-        IDistributedCache cache,
+        IDistributedCacheHelper cache,
         IAesEncryptor aes,
         ILogger<MongoCredentialData> logger)
     {
