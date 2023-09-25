@@ -24,6 +24,7 @@ public partial class SettingsViewModel : BaseViewModel
         _recoveryKeyEndpoint = recoveryKeyEndpoint;
 
         LoadLanguages();
+        LoadThemes();
     }
 
     [ObservableProperty]
@@ -32,15 +33,31 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<LanguageModel> _languages;
 
+    [ObservableProperty]
+    private ObservableCollection<ThemeModel> _themes;
+
     private void LoadLanguages()
     {
         var languages = new ObservableCollection<LanguageModel>()
         {
             new() { Language = "English-US", Color = PrimaryColor },
             new() { Language = "French-FR" },
+            new() { Language = "German-DE" },
+            new() { Language = "Indonesian-ID" },
         };
 
         Languages = new(languages);
+    }
+
+    private void LoadThemes()
+    {
+        var themes = new ObservableCollection<ThemeModel>()
+        {
+            new() { Theme = "Dark Mode", Color = PrimaryColor },
+            new() { Theme = "Light Mode" },
+        };
+
+        Themes = new(themes);
     }
 
     [RelayCommand]
@@ -76,6 +93,23 @@ public partial class SettingsViewModel : BaseViewModel
         foreach (var lang in Languages)
         {
             lang.Color = lang.Language == language.Language ? PrimaryColor : DarkBg2Brush;
+        }
+    }
+
+    [RelayCommand]
+    private void ChangeTheme(ThemeModel theme)
+    {
+        Application.Current.UserAppTheme = theme.Theme.ToLower() switch
+        {
+            "dark mode" => AppTheme.Dark,
+            _ => AppTheme.Light,
+        };
+
+        theme.Color = PrimaryColor;
+
+        foreach (var t in Themes)
+        {
+            t.Color = t.Theme == theme.Theme ? PrimaryColor : DarkBg2Brush;
         }
     }
 }

@@ -17,6 +17,8 @@ public partial class LanguageModel : ObservableObject
         {
             "english-us" or "us-english" => "us_flag.png",
             "french-fr" or "fr-french" => "france_flag.png",
+            "german-de" or "de-german" => "germany_flag.png",
+            "indonesian-id" or "id-indonesian" => "indonesia_flag.png",
             _ => "food_01.png",
         };
     }

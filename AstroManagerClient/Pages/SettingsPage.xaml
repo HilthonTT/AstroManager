@@ -28,7 +28,7 @@
         </VerticalStackLayout>
 
         <ScrollView Grid.Row="2">
-            <Grid RowDefinitions="70,*">
+            <Grid RowDefinitions="70,*,70,*">
                 <Label Text="Languages" Style="{StaticResource Title1}"/>
                 <layouts:HorizontalWrapLayout Grid.Row="1" Spacing="20"
                                               BindableLayout.ItemsSource="{Binding Languages}">
@@ -48,7 +48,7 @@
                                                      Spacing="6">
                                     <Label Text="{Binding Language}" HorizontalOptions="Center" Style="{StaticResource Title2}"
                                            HorizontalTextAlignment="Center"/>
-                                    <Button Text="Choose"  
+                                    <Button Text="Choose Language"  
                                             CommandParameter="{Binding .}"
                                             HorizontalOptions="Center"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vms:SettingsViewModel}}, Path=ChangeCultureCommand}"/>
@@ -60,6 +60,42 @@
                                     HorizontalOptions="Center"/>
                             </Grid>
                         </DataTemplate> 
+                    </BindableLayout.ItemTemplate>
+                </layouts:HorizontalWrapLayout>
+                <VerticalStackLayout Grid.Row="2">
+                    <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,24"/>
+                    <Label  Text="Themes" Style="{StaticResource Title1}"/>
+                </VerticalStackLayout>
+                <layouts:HorizontalWrapLayout Grid.Row="3" Spacing="20" 
+                                              BindableLayout.ItemsSource="{Binding Themes}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:ThemeModel">
+                            <Grid RowDefinitions="30, 230, 40" WidthRequest="200">
+                                <Border Background="{StaticResource DarkBg2Brush}"
+                                        Stroke="{Binding Color}"
+                                        StrokeThickness="1"
+                                        Grid.Row="1">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="16" />
+                                    </Border.StrokeShape>
+                                </Border>
+                                <VerticalStackLayout Grid.RowSpan="2" Margin="20,0,20,20"
+                                                     VerticalOptions="End"
+                                                     Spacing="6">
+                                    <Label Text="{Binding Theme}" HorizontalOptions="Center" Style="{StaticResource Title2}"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Button Text="Choose Theme"  
+                                            CommandParameter="{Binding .}"
+                                            HorizontalOptions="Center"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vms:SettingsViewModel}}, Path=ChangeThemeCommand}"/>
+                                </VerticalStackLayout>
+                                <Image 
+                                    Grid.RowSpan="2" VerticalOptions="Start"
+                                    Source="{Binding ImageSource}" WidthRequest="140" 
+                                    BackgroundColor="Transparent" HeightRequest="140" Aspect="AspectFit" 
+                                    HorizontalOptions="Center"/>
+                            </Grid>
+                        </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </layouts:HorizontalWrapLayout>
             </Grid>
