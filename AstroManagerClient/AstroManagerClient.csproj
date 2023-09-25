@@ -72,6 +72,7 @@
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Images\identity_icon_gif.gif" />
 	  <None Remove="Resources\Images\indonesia_flag.png" />
+	  <None Remove="Resources\Images\kitty.png" />
 	  <None Remove="Resources\Images\light_mode.png" />
 	  <None Remove="Resources\Images\login_icon_gif.gif" />
 	  <None Remove="Resources\Images\logo.svg" />

@@ -1,4 +1,5 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
+using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
@@ -25,10 +26,15 @@ public partial class SettingsViewModel : BaseViewModel
 
         LoadLanguages();
         LoadThemes();
+
+        User = (UserModel)_loggedInUser;
     }
 
     [ObservableProperty]
     private string _selectedLanguage;
+
+    [ObservableProperty]
+    private UserModel _user;
 
     [ObservableProperty]
     private ObservableCollection<LanguageModel> _languages;
@@ -111,5 +117,11 @@ public partial class SettingsViewModel : BaseViewModel
         {
             t.Color = t.Theme == theme.Theme ? PrimaryColor : DarkBg2Brush;
         }
+    }
+
+    [RelayCommand]
+    private void OpenSettingsDialog()
+    {
+
     }
 }
