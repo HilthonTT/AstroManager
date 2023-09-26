@@ -31,6 +31,8 @@ public static class RegisterServices
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddMemoryCache();
 
+        builder.Services.AddHttpClient();
+
         builder.Services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = builder.Configuration.GetConnectionString("Redis");
