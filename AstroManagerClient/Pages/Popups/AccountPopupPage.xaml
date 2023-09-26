@@ -8,5 +8,80 @@
     x:DataType="vms:AccountPopupViewModel"
     CanBeDismissedByTappingOutsideOfPopup="True"
     Color="{StaticResource DarkBg1}">
+
+    <Grid RowDefinitions="*">
+
+        <VerticalStackLayout>
+            <Grid RowDefinitions="30, 250, 40">
+                <Border Background="{StaticResource DarkBg2Brush}"
+                        Stroke="{StaticResource DarkBg2Brush}"
+                        StrokeThickness="1"
+                        Grid.Row="1"
+                        Margin="20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="16" />
+                    </Border.StrokeShape>
+                </Border>
+
+                <VerticalStackLayout Grid.RowSpan="2" Margin="20,0,20,20"
+                                    VerticalOptions="End" Spacing="6">
+
+                    <VerticalStackLayout IsVisible="{Binding IsVerifyPasswordVisible}">
+                        <Label 
+                            Text="{Binding ErrorMessage}"
+                            TextColor="{StaticResource Error}" 
+                            Style="{StaticResource Title1}" 
+                            HorizontalOptions="Center"/>
+                        <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
+                            <Entry 
+                                Background="Transparent"
+                                Placeholder="Master Password"
+                                Text="{Binding MasterPassword}"
+                                PlaceholderColor="{StaticResource TextSecondary}"
+                                TextColor="White"
+                                Margin="8,10,8,0"
+                                WidthRequest="450"
+                                FontSize="14"
+                                IsPassword="True"/>
+                            <Button Text="Verify Password" 
+                                    Margin="0,0,0,5"
+                                    Command="{Binding VerifyPasswordCommand}"
+                                    HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout IsVisible="{Binding IsCorrectPassword}">
+                        <Label 
+                            Text="{Binding ErrorMessage}"
+                            TextColor="{StaticResource Error}" 
+                            Style="{StaticResource Title1}" 
+                            HorizontalOptions="Center"/>
+                        <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
+                            <Entry 
+                                Background="Transparent"
+                                Placeholder="New Password"
+                                Text="{Binding NewPassword}"
+                                PlaceholderColor="{StaticResource TextSecondary}"
+                                TextColor="White"
+                                Margin="8,10,8,0"
+                                WidthRequest="450"
+                                FontSize="14"
+                                IsPassword="True"/>
+                            <Button Text="Confirm New Password" 
+                                    Margin="0,0,0,5"
+                                    Command="{Binding ChangePasswordCommand}"
+                                    HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                        
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <Image Grid.RowSpan="2" VerticalOptions="Start" Source="kitty.png" 
+                        WidthRequest="120" HeightRequest="120"
+                        Aspect="AspectFit" HorizontalOptions="Center"/>
+            </Grid>
+        </VerticalStackLayout>
+
+    </Grid>
     
 </toolkit:Popup>

@@ -61,6 +61,8 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
     {
         try
         {
+            LogRequestSource();
+
             string sha1Hash = ComputeSHA1Hash(password);
             string sha1HashPrefix = sha1Hash.Substring(0, 5);
             string sha1HashSuffix = sha1Hash.Substring(5);

@@ -120,8 +120,9 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void OpenSettingsDialog()
+    private static void OpenSettingsDialog()
     {
-
+        var message = new OpenAccountPopupMessage(true);
+        WeakReferenceMessenger.Default.Send(message);
     }
 }

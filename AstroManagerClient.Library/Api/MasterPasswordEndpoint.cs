@@ -2,6 +2,7 @@
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Storage.Interfaces;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace AstroManagerClient.Library.Api;
 public class MasterPasswordEndpoint : IMasterPasswordEndpoint

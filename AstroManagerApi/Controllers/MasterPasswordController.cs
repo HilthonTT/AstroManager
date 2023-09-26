@@ -97,11 +97,6 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
         var userMasterPassword = await _passwordData.GetUsersMasterPasswordAsync(master.User.Id);
         string inputedPassword = master.HashedPassword;
 
-        if (userMasterPassword.Equals(inputedPassword) is false)
-        {
-            return BadRequest("Incorrect master password.");
-        }
-
         userMasterPassword.HashedPassword = _hasher.HashPlainText(inputedPassword);
         await _passwordData.UpdateMasterPasswordAsync(userMasterPassword);
 

@@ -1,8 +1,10 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Messages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient.ViewModels;
 public partial class AccountPopupViewModel : BaseViewModel
@@ -14,6 +16,8 @@ public partial class AccountPopupViewModel : BaseViewModel
     {
         _passwordEndpoint = App.Services.GetService<IMasterPasswordEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
+
+        User = (UserModel)_loggedInUser;
     }
 
     [ObservableProperty]
@@ -26,15 +30,21 @@ public partial class AccountPopupViewModel : BaseViewModel
     private string _newPassword;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsVerifyPasswordVisible))]
     private bool _isCorrectPassword = false;
 
     [ObservableProperty]
     private bool _incorrectPassword = false;
 
-    [RelayCommand]
-    private void CloseErrorMessage()
+    [ObservableProperty]
+    private UserModel _user;
+
+    public bool IsVerifyPasswordVisible => !IsCorrectPassword;
+
+    private static void ClosePopup()
     {
-        ErrorMessage = "";
+        var message = new OpenAccountPopupMessage(false);
+        WeakReferenceMessenger.Default.Send(message);
     }
 
     [RelayCommand]
@@ -84,6 +94,8 @@ public partial class AccountPopupViewModel : BaseViewModel
             };
 
             await _passwordEndpoint.UpdateMasterPasswordAsync(passwordResetRequest);
+
+            ClosePopup();
         }
         catch (Exception ex)
         {
