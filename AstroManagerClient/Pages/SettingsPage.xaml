@@ -17,7 +17,7 @@
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadRecoveryKeysCommand}"/>
     </ContentPage.Behaviors>
 
-    <Grid RowDefinitions="100, 160, *"
+    <Grid RowDefinitions="100, *"
           ColumnDefinitions="*,400"
           Margin="24,24,0,0"
           x:Name="PageGrid">
@@ -27,39 +27,38 @@
             <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,0"/>
         </VerticalStackLayout>
 
-        <Grid Grid.Row="1" HorizontalOptions="Center">
-            <VerticalStackLayout HorizontalOptions="Center">
-                <Grid RowDefinitions="30, 140, 40">
-                    <Border Background="{StaticResource DarkBg2Brush}"
-                            Stroke="{StaticResource DarkBg2Brush}"
-                            StrokeThickness="1"
-                            Grid.Row="1">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="16" />
-                        </Border.StrokeShape>
-                    </Border>
-
-                    <VerticalStackLayout Grid.RowSpan="2" Margin="20,30,20,20"
-                                         VerticalOptions="End" Spacing="6">
-                        <Label Text="{Binding User.DisplayName}"
-                               HorizontalOptions="Center" Style="{StaticResource Title2}"/>
-                    </VerticalStackLayout>
-
-                    <Image Grid.RowSpan="2" VerticalOptions="Start" Source="kitty.png" 
-                            WidthRequest="120" HeightRequest="120"
-                            Aspect="AspectFit" HorizontalOptions="Center"/>
-                </Grid>
-
-                <VerticalStackLayout.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenSettingsDialogCommand}"/>
-                </VerticalStackLayout.GestureRecognizers>
-            </VerticalStackLayout>
-        </Grid>
 
         <ScrollView Grid.Row="2">
-            <Grid RowDefinitions="70,*,70,*">
-                <Label Text="Languages" Style="{StaticResource Title1}"/>
-                <layouts:HorizontalWrapLayout Grid.Row="1" Spacing="20"
+
+            <Grid RowDefinitions="140, 70,*,70,*">
+                <VerticalStackLayout HorizontalOptions="Center">
+                    <Grid RowDefinitions="30, 140, 40">
+                        <Border Background="{StaticResource DarkBg2Brush}"
+                                Stroke="{StaticResource DarkBg2Brush}"
+                                StrokeThickness="1"
+                                Grid.Row="1">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="16" />
+                            </Border.StrokeShape>
+                        </Border>
+
+                        <VerticalStackLayout Grid.RowSpan="2" Margin="20,30,20,20"
+                             VerticalOptions="End" Spacing="6">
+                            <Label Text="{Binding User.DisplayName}"
+                                HorizontalOptions="Center" Style="{StaticResource Title2}"/>
+                        </VerticalStackLayout>
+
+                        <Image Grid.RowSpan="2" VerticalOptions="Start" Source="kitty.png" 
+                            WidthRequest="120" HeightRequest="120"
+                            Aspect="AspectFit" HorizontalOptions="Center"/>
+                    </Grid>
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenSettingsDialogCommand}"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                </VerticalStackLayout>
+                <Label Grid.Row="1" Text="Languages" Style="{StaticResource Title1}"/>
+                <layouts:HorizontalWrapLayout Grid.Row="2" Spacing="20"
                                               BindableLayout.ItemsSource="{Binding Languages}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:LanguageModel">
@@ -91,11 +90,11 @@
                         </DataTemplate> 
                     </BindableLayout.ItemTemplate>
                 </layouts:HorizontalWrapLayout>
-                <VerticalStackLayout Grid.Row="2">
+                <VerticalStackLayout Grid.Row="3">
                     <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,24"/>
                     <Label  Text="Themes" Style="{StaticResource Title1}"/>
                 </VerticalStackLayout>
-                <layouts:HorizontalWrapLayout Grid.Row="3" Spacing="20" 
+                <layouts:HorizontalWrapLayout Grid.Row="4" Spacing="20" 
                                               BindableLayout.ItemsSource="{Binding Themes}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:ThemeModel">

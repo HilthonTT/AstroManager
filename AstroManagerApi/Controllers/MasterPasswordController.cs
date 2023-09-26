@@ -71,37 +71,56 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
     }
 
     [HttpPut]
-    public async Task<IActionResult> UpdateMasterPassswordAsync([FromBody] PasswordResetModel reset)
+    public async Task<IActionResult> UpdateMasterPasswordAsync([FromBody] PasswordResetModel reset)
     {
         try
         {
             LogRequestSource();
 
-            var recoveryKey = await _recoveryKeyData.GetUsersRecoveryKeyAsync(reset.Master.User.Id);
-            var hashedResetRecoveryKeys = new HashSet<string>();
-
-            foreach (var resetRecoveryKey in reset.RecoveryKeys)
+            if (reset.RecoveryKeys.Count <= 0)
             {
-                hashedResetRecoveryKeys.Add(_hasher.HashPlainText(resetRecoveryKey));
-            }
-
-            bool recoveryKeysMatch = HashSet<string>
-                .CreateSetComparer()
-                .Equals(hashedResetRecoveryKeys, recoveryKey.RecoveryKeys);
-
-            if (recoveryKeysMatch)
-            {
-                await _passwordData.UpdateMasterPasswordAsync(reset.Master);
-                return Ok("Master password resetted.");
+                return await ResetMasterPassword(reset.Master);
             }
             else
             {
-                return BadRequest("Your recovery keys do not match.");
+                return await ResetMasterPasswordWithRecoveryKeys(reset);
             }
         }
         catch (Exception ex)
         {
             return ServerErrorCode(ex);
+        }
+    }
+
+    private async Task<IActionResult> ResetMasterPassword(MasterPasswordModel master)
+    {
+        var userMasterPassword = await _passwordData.GetUsersMasterPasswordAsync(master.User.Id);
+        string inputedPassword = master.HashedPassword;
+
+        if (userMasterPassword.Equals(inputedPassword) is false)
+        {
+            return BadRequest("Incorrect master password.");
+        }
+
+        userMasterPassword.HashedPassword = _hasher.HashPlainText(inputedPassword);
+        await _passwordData.UpdateMasterPasswordAsync(userMasterPassword);
+
+        return Ok("Master Password resetted.");
+    }
+
+    private async Task<IActionResult> ResetMasterPasswordWithRecoveryKeys(PasswordResetModel reset)
+    {
+        var recoveryKey = await _recoveryKeyData.GetUsersRecoveryKeyAsync(reset.Master.User.Id);
+        var hashedResetRecoveryKeys = reset.RecoveryKeys.Select(key => _hasher.HashPlainText(key)).ToHashSet();
+
+        if (HashSet<string>.CreateSetComparer().Equals(hashedResetRecoveryKeys, recoveryKey.RecoveryKeys))
+        {
+            await _passwordData.UpdateMasterPasswordAsync(reset.Master);
+            return Ok("Master password resetted.");
+        }
+        else
+        {
+            return BadRequest("Your recovery keys do not match.");
         }
     }
 
