@@ -78,6 +78,7 @@
 	  <None Remove="Resources\Images\logo.svg" />
 	  <None Remove="Resources\Images\logout.svg" />
 	  <None Remove="Resources\Images\mars_icon_gif.gif" />
+	  <None Remove="Resources\Images\message.svg" />
 	  <None Remove="Resources\Images\night_mode.png" />
 	  <None Remove="Resources\Images\note_icon_gif.gif" />
 	  <None Remove="Resources\Images\order.svg" />
@@ -113,6 +114,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\BreachedCredentialsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\DashboardPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -13,13 +13,13 @@ using SkiaSharp.Views.Maui.Controls.Hosting;
 using AstroManagerClient.Pages.Popups;
 
 #if WINDOWS
-using Microsoft.UI;
-using Microsoft.UI.Windowing;
-using Windows.Graphics;
+    using Microsoft.UI;
+    using Microsoft.UI.Windowing;
+    using Windows.Graphics;
 #endif
 
 #if ANDROID
-[assembly: Android.App.UsesPermission(Android.Manifest.Permission.Camera)]
+    [assembly: Android.App.UsesPermission(Android.Manifest.Permission.Camera)]
 #endif
 
 namespace AstroManagerClient;
@@ -38,11 +38,10 @@ public static class RegisterServices
     private static IConfiguration AddConfiguration()
     {
         string configFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
-        string developpmentFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.dev.json");
-
         var builder = new ConfigurationBuilder()
             .AddJsonFile(configFilePath, optional: false, reloadOnChange: true);
 #if DEBUG
+        string developpmentFilePath = Path.Combine(AppContext.BaseDirectory, "appsettings.dev.json");
         builder.AddJsonFile(developpmentFilePath, optional: false, reloadOnChange: true);
 #endif
 
@@ -79,23 +78,27 @@ public static class RegisterServices
         builder.Services.AddTransient<IRecoveryKeyEndpoint, RecoveryKeyEndpoint>();
         builder.Services.AddTransient<ITypeEndpoint, TypeEndpoint>();
         builder.Services.AddTransient<IUserEndpoint, UserEndpoint>();
+        builder.Services.AddTransient<IPasswordBreacherEndpoint, PasswordBreacherEndpoint>();
 
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddTransient<DashboardPage>();
         builder.Services.AddTransient<FilterPopupPage>();
+        builder.Services.AddTransient<BreachedCredentialsPage>();
 
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<HomeViewModel>();
         builder.Services.AddTransient<DashboardViewModel>();
         builder.Services.AddTransient<SettingsViewModel>();
         builder.Services.AddTransient<FilterPopupViewModel>();
+        builder.Services.AddTransient<BreachedAccountViewModel>();
 
         Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
         Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
         Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
+        Routing.RegisterRoute(nameof(BreachedCredentialsPage), typeof(BreachedCredentialsPage));
 
         ModifyEntry();
     }

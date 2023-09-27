@@ -4,7 +4,7 @@ using AstroManagerClient.Library.Storage.Interfaces;
 using System.Net.Http.Json;
 
 namespace AstroManagerClient.Library.Api;
-public class PasswordBreacherEndpoint
+public class PasswordBreacherEndpoint : IPasswordBreacherEndpoint
 {
     private const string CacheName = nameof(PasswordBreacherEndpoint);
     private const string ApiUrl = "/api/PasswordBreacher";
