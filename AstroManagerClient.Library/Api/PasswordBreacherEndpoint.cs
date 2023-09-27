@@ -29,7 +29,7 @@ public class PasswordBreacherEndpoint : IPasswordBreacherEndpoint
         if (response.IsSuccessStatusCode)
         {
             output = await response.Content.ReadFromJsonAsync<List<CredentialModel>>();
-            await _storage.SetRecordAsync(CacheName, output, TimeSpan.FromMinutes(5));
+            await _storage.SetRecordAsync(CacheName, output);
 
             return output;
         }

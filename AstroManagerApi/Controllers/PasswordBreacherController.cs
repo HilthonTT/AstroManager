@@ -62,8 +62,8 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
         }
     }
 
-    [HttpPost("{password}")]
-    public async Task<IActionResult> CheckBreachAsync(List<CredentialModel> credentials)
+    [HttpPost]
+    public async Task<IActionResult> CheckBreachAsync([FromBody] List<CredentialModel> credentials)
     {
         try
         {

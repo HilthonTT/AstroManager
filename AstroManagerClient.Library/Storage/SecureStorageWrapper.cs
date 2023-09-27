@@ -30,6 +30,7 @@ public class SecureStorageWrapper : ISecureStorageWrapper
 
         if (cachedData?.Expiration > DateTimeOffset.UtcNow)
         {
+            SecureStorage.Remove(recordId);
             return default;
         }
 
