@@ -1,5 +1,6 @@
 ﻿using AstroManagerClient.Messages;
 using AstroManagerClient.MsalClient;
+using AstroManagerClient.Pages;
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient;
@@ -46,14 +47,16 @@ public partial class AppShell : Shell
     {
         if (string.IsNullOrWhiteSpace(SelectedRoute) is false)
         {
-            await Current.GoToAsync($"//{SelectedRoute}");
+            await Current.GoToAsync($"//{SelectedRoute}", true);
         }
     }
 
     public async void OnLogoutImageTapped(object sender, EventArgs e)
     {
         await PCAWrapper.Instance.SignOutAsync();
-        await Current.GoToAsync($"//login");
+
+        var loginpage = App.Services.GetService<LoginPage>();
+        await Current.Navigation.PushAsync(loginpage, true);
 
         IsLoggedIn = false;
     }

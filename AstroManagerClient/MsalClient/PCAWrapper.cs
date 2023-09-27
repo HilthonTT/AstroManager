@@ -81,6 +81,7 @@ public class PCAWrapper
 
     public async Task SignOutAsync()
     {
+        SecureStorage.RemoveAll();
         var accounts = await PCA.GetAccountsAsync();
         foreach (var acct in accounts)
         {

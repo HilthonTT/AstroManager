@@ -47,38 +47,77 @@
                                     WidthRequest="250"/>
                         </Grid>
                         <Grid IsVisible="{Binding IsAbleToEnterMasterPassword}">
-                            <VerticalStackLayout>
-                                <Entry Background="Transparent" 
-                                       TextColor="White"
-                                       PlaceholderColor="{StaticResource TextSecondary}"
-                                       Placeholder="Master Password"
-                                       WidthRequest="300" HeightRequest="40" 
-                                       IsPassword="True" 
-                                       Margin="0,0,0,8"
-                                       Text="{Binding MasterPassword}"/>
+                            <VerticalStackLayout Spacing="5">
+                                <Border 
+                                    HeightRequest="48"
+                                    HorizontalOptions="Fill"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+
+                                    <Entry Background="Transparent" 
+                                           TextColor="White"
+                                           PlaceholderColor="{StaticResource TextSecondary}"
+                                           Placeholder="Master Password"
+                                           WidthRequest="370" HeightRequest="40" 
+                                           IsPassword="True" 
+                                           Margin="8,0"
+                                           Text="{Binding MasterPassword}"/>
+                                </Border>
                                 <Button Text="Login" Command="{Binding VerifyMasterPasswordCommand}" 
                                         HorizontalOptions="Center"
                                         WidthRequest="250"/>
                             </VerticalStackLayout>
                         </Grid>
                         <Grid IsVisible="{Binding IsNotAbleToEnterMasterPassword}">
-                            <VerticalStackLayout>
-                                <Entry Background="Transparent" 
+                            <VerticalStackLayout Spacing="5">
+
+                                <Border 
+                                    HeightRequest="48"
+                                    HorizontalOptions="Fill"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+
+                                    <Entry Background="Transparent" 
                                        TextColor="White"
                                        PlaceholderColor="{StaticResource TextSecondary}"
-                                       Placeholder="Enter Master Password"
-                                       WidthRequest="300" HeightRequest="40" 
+                                       Placeholder="Master Password"
+                                       WidthRequest="370" HeightRequest="40" 
                                        IsPassword="True" 
-                                       Margin="0,0,0,8"
+                                       Margin="8,0"
                                        Text="{Binding MasterPassword}"/>
-                                <Entry Background="Transparent" 
+                                </Border>
+
+
+                                <Border 
+                                    HeightRequest="48"
+                                    HorizontalOptions="Fill"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+
+                                    <Entry Background="Transparent" 
                                        TextColor="White"
                                        PlaceholderColor="{StaticResource TextSecondary}"
                                        Placeholder="Enter Master Password Again"
-                                       WidthRequest="300" HeightRequest="40" 
+                                       WidthRequest="370" HeightRequest="40" 
                                        IsPassword="True" 
-                                       Margin="0,0,0,8"
+                                       Margin="8,0"
                                        Text="{Binding ReEnteredMasterPassword}"/>
+                                </Border>
                                 <Button Text="Login" Command="{Binding CreateMasterPasswordCommand}" 
                                         HorizontalOptions="Center"
                                         WidthRequest="250"/>

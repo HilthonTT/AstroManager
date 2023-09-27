@@ -33,16 +33,28 @@
                             Style="{StaticResource Title1}" 
                             HorizontalOptions="Center"/>
                         <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
-                            <Entry 
-                                Background="Transparent"
-                                Placeholder="Master Password"
-                                Text="{Binding MasterPassword}"
-                                PlaceholderColor="{StaticResource TextSecondary}"
-                                TextColor="White"
-                                Margin="8,10,8,0"
-                                WidthRequest="450"
-                                FontSize="14"
-                                IsPassword="True"/>
+
+                            <Border 
+                                HeightRequest="48"
+                                HorizontalOptions="Fill"
+                                Background="{StaticResource DarkBg1Brush}"
+                                Stroke="{StaticResource SecondaryBrush}"
+                                StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry 
+                                    Background="Transparent"
+                                    Placeholder="Master Password"
+                                    Text="{Binding MasterPassword}"
+                                    PlaceholderColor="{StaticResource TextSecondary}"
+                                    TextColor="White"
+                                    Margin="8,0"
+                                    WidthRequest="450"
+                                    FontSize="14"
+                                    IsPassword="True"/>
+                            </Border>
+                            
                             <Button Text="Verify Password" 
                                     Margin="0,0,0,5"
                                     Command="{Binding VerifyPasswordCommand}"
@@ -57,16 +69,26 @@
                             Style="{StaticResource Title1}" 
                             HorizontalOptions="Center"/>
                         <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
-                            <Entry 
-                                Background="Transparent"
-                                Placeholder="New Password"
-                                Text="{Binding NewPassword}"
-                                PlaceholderColor="{StaticResource TextSecondary}"
-                                TextColor="White"
-                                Margin="8,10,8,0"
-                                WidthRequest="450"
-                                FontSize="14"
-                                IsPassword="True"/>
+                            <Border 
+                                    HeightRequest="48"
+                                    HorizontalOptions="Fill"
+                                    Background="{StaticResource DarkBg1Brush}"
+                                    Stroke="{StaticResource SecondaryBrush}"
+                                    StrokeThickness="1">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry 
+                                    Background="Transparent"
+                                    Placeholder="New Password"
+                                    Text="{Binding NewPassword}"
+                                    PlaceholderColor="{StaticResource TextSecondary}"
+                                    TextColor="White"
+                                    Margin="8,0"
+                                    WidthRequest="450"
+                                    FontSize="14"
+                                    IsPassword="True"/>
+                            </Border>
                             <Button Text="Confirm New Password" 
                                     Margin="0,0,0,5"
                                     Command="{Binding ChangePasswordCommand}"
