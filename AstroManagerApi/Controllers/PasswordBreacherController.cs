@@ -1,11 +1,15 @@
 ﻿using AstroManagerApi.Common;
+using AstroManagerApi.Library.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Concurrent;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class PasswordBreacherController : CustomController<PasswordBreacherController>
 {
     private readonly HttpClient _httpClient;
@@ -21,9 +25,11 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
         _config = config;
     }
 
-    private static string ComputeSHA1Hash(string input)
+    private static async Task<string> ComputeSHA1HashAsync(string input)
     {
-        byte[] hashBytes = SHA1.HashData(Encoding.UTF8.GetBytes(input));
+        var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(input));
+
+        byte[] hashBytes = await SHA1.HashDataAsync(memoryStream);
         return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
     }
 
@@ -56,25 +62,36 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
         }
     }
 
-    [HttpGet("{password}")]
-    public async Task<IActionResult> CheckBreachAsync(string password)
+    [HttpPost("{password}")]
+    public async Task<IActionResult> CheckBreachAsync(List<CredentialModel> credentials)
     {
         try
         {
             LogRequestSource();
 
-            string sha1Hash = ComputeSHA1Hash(password);
-            string sha1HashPrefix = sha1Hash.Substring(0, 5);
-            string sha1HashSuffix = sha1Hash.Substring(5);
+            var breachedAccounts = new ConcurrentBag<CredentialModel>();
 
-            bool isPasswordCompromised = await CheckPasswordBreachAsync(sha1HashPrefix, sha1HashSuffix);
-
-            if (isPasswordCompromised)
+            await Parallel.ForEachAsync(credentials, async (credential, token) =>
             {
-                return Ok("This password has been compromised.");
-            }
+                var passwordField = credential.Fields.FirstOrDefault(x => x.Name.Equals(
+                    "Password", StringComparison.InvariantCultureIgnoreCase));
 
-            return Ok("This password has not been compromised.");
+                if (string.IsNullOrWhiteSpace(passwordField?.Value) is false)
+                {
+                    string sha1Hash = await ComputeSHA1HashAsync(passwordField.Value);
+                    string sha1HashPrefix = sha1Hash.Substring(0, 5);
+                    string sha1HashSuffix = sha1Hash.Substring(5);
+
+                    bool isPasswordCompromised = await CheckPasswordBreachAsync(sha1HashPrefix, sha1HashSuffix);
+
+                    if (isPasswordCompromised)
+                    {
+                        breachedAccounts.Add(credential);
+                    }
+                }
+            });
+
+            return Ok(breachedAccounts.ToList());
         }
         catch (Exception ex)
         {
