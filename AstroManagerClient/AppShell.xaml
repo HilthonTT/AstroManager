@@ -80,14 +80,18 @@
                     </Style>
                 </Grid.Resources>
 
-                <Image Source="logo.png"
-                   Grid.Row="0"
-                   Margin="0,15,0,15"/>
+                <Image Source="astronaut.png"
+                       WidthRequest="56"
+                       HeightRequest="56"
+                       Aspect="AspectFit"
+                       Grid.Row="0"
+                       Margin="0,15,0,15"/>
 
                 <RadioButton Value="home" IsChecked="True" Grid.Row="1"
                          CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
-                        <Image Source="home.png">
+                        <Image Source="home.png" WidthRequest="30" HeightRequest="30" 
+                               Aspect="AspectFit">
                             <!--<Image.Behaviors>
                             <mct:IconTintColorBehavior
                                 TintColor="{Binding IsChecked,
@@ -101,7 +105,8 @@
                 <RadioButton Value="dashboard" Grid.Row="2"
                                 CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
-                        <Image Source="graph.png">
+                        <Image Source="dashboard.png" WidthRequest="30" HeightRequest="30" 
+                               Aspect="AspectFit">
                             <!--<Image.Behaviors>
                             <mct:IconTintColorBehavior
                                 TintColor="{Binding IsChecked,
@@ -116,7 +121,8 @@
                 <RadioButton Value="breached" Grid.Row="3"
                              CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
-                        <Image Source="message.png">
+                        <Image Source="message.png" WidthRequest="30" HeightRequest="30" 
+                               Aspect="AspectFit">
                             <!--<Image.Behaviors>
                                 <mct:IconTintColorBehavior
                                     TintColor="{Binding IsChecked,
@@ -131,7 +137,8 @@
                 <RadioButton Value="settings" Grid.Row="4"
                             CheckedChanged="OnMenuItemChanged" IsVisible="{Binding Path=IsLoggedIn}">
                     <RadioButton.Content>
-                        <Image Source="setting.png">
+                        <Image Source="settings.png" WidthRequest="30" HeightRequest="30" 
+                               Aspect="AspectFit">
                             <!--<Image.Behaviors>
                             <mct:IconTintColorBehavior
                                 TintColor="{Binding IsChecked,
@@ -143,7 +150,9 @@
                     </RadioButton.Content>
                 </RadioButton>
 
-                <Image Source="logout.png" Margin="15,15,0,15" Grid.Row="5" IsVisible="{Binding Path=IsLoggedIn}">
+                <Image Source="logout.png"  Margin="15,15,0,15" Grid.Row="5" IsVisible="{Binding Path=IsLoggedIn}" 
+                       WidthRequest="30" HeightRequest="30" 
+                       Aspect="AspectFit">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnLogoutImageTapped" />
                     </Image.GestureRecognizers>

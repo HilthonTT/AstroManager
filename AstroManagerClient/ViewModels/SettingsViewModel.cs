@@ -12,7 +12,7 @@ using System.Globalization;
 namespace AstroManagerClient.ViewModels;
 public partial class SettingsViewModel : BaseViewModel
 {
-    private static readonly Color PrimaryColor = Color.FromArgb("#EA7C69");
+    private static readonly Color PrimaryColor = Color.FromArgb("#6983EA");
     private static readonly Color DarkBg2Brush = Color.FromArgb("#1F1D2B");
     private readonly ILoggedInUser _loggedInUser;
     private readonly IRecoveryKeyEndpoint _recoveryKeyEndpoint;

@@ -47,12 +47,12 @@ public partial class CredentialDisplayModel : ObservableObject
     {
         return Type.Name.ToLower() switch
         {
-            "logins" => "login_icon_gif.gif",
-            "passwords" => "password_icon_gif.gif",
-            "secure notes" or "secure note" => "note_icon_gif.gif",
-            "credit card" or "creditcard" => "credit_card_gif.gif",
-            "identity" => "identity_icon_gif.gif",
-            _ => "food_01.png"
+            "logins" => "login.png",
+            "passwords" => "password.png",
+            "secure notes" or "secure note" => "secure_note.png",
+            "credit card" or "creditcard" => "credit_card.png",
+            "identity" => "identity.png",
+            _ => "astronaut.png"
         };
     }
 }

@@ -73,23 +73,23 @@ public partial class DashboardPage : ContentPage
             {
                 new ChartEntry(CalculateCount(loginsCount, totalCount))
                 {
-                    Color = Color.FromArgb("#EA7C69").ToSKColor(),
+                    Color = Color.FromArgb("#0074FF").ToSKColor(),
                 },
                 new ChartEntry(CalculateCount(passwordsCount, totalCount))
                 {
-                    Color = Color.FromArgb("#50D1AA").ToSKColor()
+                    Color = Color.FromArgb("#3498DB").ToSKColor(), 
                 },
                 new ChartEntry(CalculateCount(secureNoteCount, totalCount))
                 {
-                    Color = Color.FromArgb("#FF7CA3").ToSKColor()
+                    Color = Color.FromArgb("#66B2FF").ToSKColor(), 
                 },
                 new ChartEntry(CalculateCount(creditCardCount, totalCount))
                 {
-                    Color = Colors.WhiteSmoke.ToSKColor()
+                    Color = Color.FromArgb("#3399FF").ToSKColor(),
                 },
                 new ChartEntry(CalculateCount(identityCount, totalCount))
                 {
-                    Color = Colors.PaleVioletRed.ToSKColor()
+                    Color = Color.FromArgb("#0033CC").ToSKColor(), 
                 }
             },
         };

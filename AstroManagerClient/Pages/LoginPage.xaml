@@ -126,7 +126,7 @@
                     </VerticalStackLayout>
                     <Image 
                         Grid.RowSpan="2" VerticalOptions="Start"
-                        Source="mars_icon_gif.gif" WidthRequest="250" 
+                        Source="astronaut.png" WidthRequest="250" 
                         BackgroundColor="Transparent" HeightRequest="250" Aspect="AspectFit" 
                         HorizontalOptions="Center"/>
                 </Grid>
