@@ -84,7 +84,7 @@
 
         <Border 
             HorizontalOptions="End"
-            Margin="0,0,24,0"
+            Margin="0,0,60,0"
             HeightRequest="48"
             WidthRequest="300"
             Background="{StaticResource DarkBg1Brush}"
@@ -106,6 +106,13 @@
                        FontSize="14"/>
             </HorizontalStackLayout>
         </Border>
+
+        <HorizontalStackLayout HorizontalOptions="End" Margin="0,0,14,0">
+            <ImageButton Source="plus.png" WidthRequest="35" HeightRequest="35" 
+                         VerticalOptions="Center" HorizontalOptions="Center" 
+                         BackgroundColor="Transparent" BorderColor="Transparent"
+                         Command="{Binding CreateCredentialPopupCommand}"/>
+        </HorizontalStackLayout>
         
         <!-- Tab Control -->
 

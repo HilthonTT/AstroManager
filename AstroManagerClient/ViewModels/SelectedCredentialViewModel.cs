@@ -20,15 +20,6 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         {
             Credential = m.Value;
         });
-
-        WeakReferenceMessenger.Default.Register<AddCredentialMessage>(this, (r, m) =>
-        {
-            if (m.Value is false)
-            {
-                IsCreating = false;
-                CloseCredential();
-            }
-        });
     }
 
     [ObservableProperty]
@@ -136,16 +127,5 @@ public partial class SelectedCredentialViewModel : BaseViewModel
         await _credentialEndpoint.UpdateCredentialAsync(credential);
 
         await Shell.Current.DisplayAlert("Saved Credential", "Your credential have been saved!", "OK");
-    }
-
-    [RelayCommand]
-    private void CreateCredential()
-    {
-        Credential = new();
-
-        IsCreating = true;
-
-        var message = new AddCredentialMessage(true);
-        WeakReferenceMessenger.Default.Send(message);
     }
 }

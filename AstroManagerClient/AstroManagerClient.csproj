@@ -63,7 +63,7 @@
 	  <None Remove="Resources\Images\arrow_down.svg" />
 	  <None Remove="Resources\Images\arrow_up.svg" />
 	  <None Remove="Resources\Images\astronaut.png" />
-	  <None Remove="Resources\Images\astronaut_landing.png" />
+	  <None Remove="Resources\Images\astronaut_fishing.png" />
 	  <None Remove="Resources\Images\coin.svg" />
 	  <None Remove="Resources\Images\credit_card.png" />
 	  <None Remove="Resources\Images\customer.svg" />
@@ -84,6 +84,7 @@
 	  <None Remove="Resources\Images\night_mode.png" />
 	  <None Remove="Resources\Images\order.svg" />
 	  <None Remove="Resources\Images\password.png" />
+	  <None Remove="Resources\Images\plus.png" />
 	  <None Remove="Resources\Images\secure_note.png" />
 	  <None Remove="Resources\Images\settings.png" />
 	</ItemGroup>

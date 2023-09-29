@@ -74,11 +74,4 @@ public partial class AddCredentialViewModel : BaseViewModel
         Title = "";
         IsVisible = false;
     }
-
-    [RelayCommand]
-    private static void Close()
-    {
-        var message = new AddCredentialMessage(false);
-        WeakReferenceMessenger.Default.Send(message);
-    }
 }

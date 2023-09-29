@@ -126,8 +126,8 @@
                     </VerticalStackLayout>
                     <Image 
                         Grid.RowSpan="2" VerticalOptions="Start"
-                        Source="astronaut.png" WidthRequest="250" 
-                        BackgroundColor="Transparent" HeightRequest="250" Aspect="AspectFit" 
+                        Source="astronaut.png" WidthRequest="230" 
+                        BackgroundColor="Transparent" HeightRequest="230" Aspect="AspectFit" 
                         HorizontalOptions="Center"/>
                 </Grid>
             </VerticalStackLayout>

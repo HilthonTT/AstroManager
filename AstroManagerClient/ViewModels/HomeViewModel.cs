@@ -93,13 +93,6 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private static void AddCredential()
-    {
-        var message = new AddCredentialMessage(true);
-        WeakReferenceMessenger.Default.Send(message);
-    }
-
-    [RelayCommand]
     private async Task PreferencesAsync()
     {
         await Shell.Current.GoToAsync($"{nameof(SettingsPage)}?sub=appearance");
@@ -114,5 +107,12 @@ public partial class HomeViewModel : BaseViewModel
         {
             Credentials = Credentials.OrderByDescending(x => x.Title.Contains(SearchText)).ToObservableCollection();
         }
+    }
+
+    [RelayCommand]
+    private static void CreateCredentialPopup()
+    {
+        var message = new OpenCreateCredentialPopup(true);
+        WeakReferenceMessenger.Default.Send(message);
     }
 }
