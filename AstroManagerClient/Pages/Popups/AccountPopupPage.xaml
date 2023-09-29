@@ -32,7 +32,8 @@
                             TextColor="{StaticResource Error}" 
                             Style="{StaticResource Title1}" 
                             HorizontalOptions="Center"/>
-                        <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
+                        <VerticalStackLayout Spacing="20" HorizontalOptions="Center"
+                                             Margin="20,20">
 
                             <Border 
                                 HeightRequest="48"

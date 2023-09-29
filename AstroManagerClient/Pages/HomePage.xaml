@@ -108,10 +108,13 @@
         </Border>
 
         <HorizontalStackLayout HorizontalOptions="End" Margin="0,0,14,0">
-            <ImageButton Source="plus.png" WidthRequest="35" HeightRequest="35" 
+            <Image Source="plus.png" WidthRequest="35" HeightRequest="35" 
                          VerticalOptions="Center" HorizontalOptions="Center" 
-                         BackgroundColor="Transparent" BorderColor="Transparent"
-                         Command="{Binding CreateCredentialPopupCommand}"/>
+                         BackgroundColor="Transparent" Aspect="AspectFit">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CreateCredentialPopupCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
         </HorizontalStackLayout>
         
         <!-- Tab Control -->

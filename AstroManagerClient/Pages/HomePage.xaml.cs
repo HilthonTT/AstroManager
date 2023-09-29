@@ -1,5 +1,9 @@
+using AstroManagerClient.Messages;
+using AstroManagerClient.Pages.Popups;
 using AstroManagerClient.Pages.Views;
 using AstroManagerClient.ViewModels;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient.Pages;
 
@@ -9,13 +13,21 @@ public partial class HomePage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
+
+        WeakReferenceMessenger.Default.Register<OpenCreateCredentialMessage>(this, async (r, m) =>
+        {
+            if (m.Value)
+            {
+                await this.ShowPopupAsync(new AddCredentialPopupPage());
+            }
+        });
     }
 
     public void MenuFlyoutItem_ParentChanged(object sender, EventArgs e)
     {
         if (sender is BindableObject bo)
         {
-            bo.BindingContext = this.BindingContext;
+            bo.BindingContext = BindingContext;
         }
     }
 

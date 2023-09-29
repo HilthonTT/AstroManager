@@ -112,7 +112,7 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     private static void CreateCredentialPopup()
     {
-        var message = new OpenCreateCredentialPopup(true);
+        var message = new OpenCreateCredentialMessage(true);
         WeakReferenceMessenger.Default.Send(message);
     }
 }
