@@ -64,6 +64,7 @@
 	  <None Remove="Resources\Images\arrow_up.svg" />
 	  <None Remove="Resources\Images\astronaut.png" />
 	  <None Remove="Resources\Images\astronaut_fishing.png" />
+	  <None Remove="Resources\Images\close.png" />
 	  <None Remove="Resources\Images\coin.svg" />
 	  <None Remove="Resources\Images\credit_card.png" />
 	  <None Remove="Resources\Images\customer.svg" />
@@ -129,6 +130,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Popups\AccountPopupPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Popups\AddCredentialPopupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage.xaml">

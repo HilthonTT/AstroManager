@@ -23,6 +23,7 @@ public partial class HomePage : ContentPage
         });
     }
 
+
     public void MenuFlyoutItem_ParentChanged(object sender, EventArgs e)
     {
         if (sender is BindableObject bo)

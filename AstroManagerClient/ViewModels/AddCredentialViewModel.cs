@@ -1,9 +1,11 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
+using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient.ViewModels;
 public partial class AddCredentialViewModel : BaseViewModel
@@ -17,6 +19,8 @@ public partial class AddCredentialViewModel : BaseViewModel
         _templateEndpoint = App.Services.GetService<ICredentialTemplateEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
         _credentialEndpoint = App.Services.GetService<ICredentialEndpoint>();
+
+        Height = GetHeight();
     }
 
     [ObservableProperty]
@@ -26,12 +30,12 @@ public partial class AddCredentialViewModel : BaseViewModel
     private string _title;
 
     [ObservableProperty]
-    private string _selectedType;
+    private string _type;
 
     [ObservableProperty]
-    private bool _isVisible;
+    private double _height;
 
-    async partial void OnSelectedTypeChanged(string value)
+    async partial void OnTypeChanged(string value)
     {
         var templates = await _templateEndpoint.GetAllTemplatesAsync();
 
@@ -39,11 +43,19 @@ public partial class AddCredentialViewModel : BaseViewModel
             templates.FirstOrDefault(x =>
                 x.Type.Name.Equals(value, StringComparison.InvariantCultureIgnoreCase))
         );
+    }
 
-        if (string.IsNullOrWhiteSpace(Template?.Id) is false)
+    private static double GetHeight()
+    {
+        double? height = Application.Current.Windows[0]?.Height;
+
+        // Get 80% of the height 
+        if (height is not null)
         {
-            IsVisible = true;
+            return (height / 100 * 80).GetValueOrDefault();
         }
+
+        return 500;
     }
 
     [RelayCommand]
@@ -70,6 +82,12 @@ public partial class AddCredentialViewModel : BaseViewModel
 
         Template = new();
         Title = "";
-        IsVisible = false;
+    }
+
+    [RelayCommand]
+    private static void Close()
+    {
+        var message = new OpenCreateCredentialMessage(false);
+        WeakReferenceMessenger.Default.Send(message);
     }
 }

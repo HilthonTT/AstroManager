@@ -12,12 +12,12 @@ public partial class AddCredentialPopupPage : Popup
 		InitializeComponent();
 		BindingContext = new AddCredentialViewModel();
 
-		WeakReferenceMessenger.Default.Register<OpenCreateCredentialMessage>(this, async (r, m) =>
+        WeakReferenceMessenger.Default.Register<OpenCreateCredentialMessage>(this, async (r, m) =>
 		{
 			if (m.Value is false)
 			{
                 await CloseAsync();
             }
-        });
+		});
 	}
 }
