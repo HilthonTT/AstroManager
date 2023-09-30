@@ -1,7 +1,9 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Storage.Interfaces;
+using System.Net;
 using System.Net.Http.Json;
+using System.Net.NetworkInformation;
 
 namespace AstroManagerClient.Library.Api;
 public class PasswordBreacherEndpoint : IPasswordBreacherEndpoint
@@ -37,5 +39,18 @@ public class PasswordBreacherEndpoint : IPasswordBreacherEndpoint
         {
             return _api.NotFoundError<List<CredentialModel>>(response);
         }
+    }
+
+    public async Task<string> GeneratePasswordAsync(int length = 20)
+    {
+        using var response = await _api.HttpClient.GetAsync($"{ApiUrl}/{length}");
+        if (response.IsSuccessStatusCode)
+        {
+            string password = await response.Content.ReadAsStringAsync();
+
+            return password.Trim('"');
+        }
+
+        return _api.NotFoundError<string>(response);
     }
 }

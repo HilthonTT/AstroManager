@@ -1,6 +1,5 @@
 using AstroManagerClient.Messages;
 using AstroManagerClient.Pages.Popups;
-using AstroManagerClient.Pages.Views;
 using AstroManagerClient.ViewModels;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;
@@ -32,24 +31,24 @@ public partial class HomePage : ContentPage
         }
     }
 
-    public void NavSubContent(bool show)
+    public void NavSubContent<T>(bool show) where T : ContentView, new()
     {
         var displayWidth = DeviceDisplay.Current.MainDisplayInfo.Width;
 
         if (show)
         {
-            var addForm = new AddCredentialView();
-            PageGrid.Add(addForm, 1);
-            Grid.SetRowSpan(addForm, 3);
+            var contentView = new T();
+            PageGrid.Add(contentView, 1);
+            Grid.SetRowSpan(contentView, 3);
             // translate off screen right
-            addForm.TranslationX = displayWidth - addForm.X;
-            addForm.TranslateTo(0, 0, 800, easing: Easing.CubicOut);
+            contentView.TranslationX = displayWidth - contentView.X;
+            contentView.TranslateTo(0, 0, 800, easing: Easing.CubicOut);
         }
         else
         {
             // remove the product window
 
-            var view = (AddCredentialView)PageGrid.Children.Where(v => v.GetType() == typeof(AddCredentialView)).SingleOrDefault();
+            var view = PageGrid.Children.OfType<T>().SingleOrDefault();
 
             var x = DeviceDisplay.Current.MainDisplayInfo.Width;  
 

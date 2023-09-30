@@ -9,7 +9,8 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace AstroManagerClient.ViewModels;
 public partial class AddCredentialViewModel : BaseViewModel
-{ 
+{
+    private readonly IPasswordBreacherEndpoint _breacherEndpoint;
     private readonly ICredentialTemplateEndpoint _templateEndpoint;
     private readonly ICredentialEndpoint _credentialEndpoint;
     private readonly ILoggedInUser _loggedInUser;
@@ -19,6 +20,7 @@ public partial class AddCredentialViewModel : BaseViewModel
         _templateEndpoint = App.Services.GetService<ICredentialTemplateEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
         _credentialEndpoint = App.Services.GetService<ICredentialEndpoint>();
+        _breacherEndpoint = App.Services.GetService<IPasswordBreacherEndpoint>();
 
         Height = GetHeight();
     }
@@ -37,6 +39,8 @@ public partial class AddCredentialViewModel : BaseViewModel
 
     async partial void OnTypeChanged(string value)
     {
+        Template = new();
+
         var templates = await _templateEndpoint.GetAllTemplatesAsync();
 
         Template = new TemplateDisplayModel(
@@ -89,5 +93,22 @@ public partial class AddCredentialViewModel : BaseViewModel
     {
         var message = new OpenCreateCredentialMessage(false);
         WeakReferenceMessenger.Default.Send(message);
+    }
+
+    [RelayCommand]
+    private async Task GeneratePasswordAsync()
+    {
+        if (Template is null || Template.Fields.Any() is false)
+        {
+            return;
+        }
+
+        var passwordField = Template.Fields.FirstOrDefault(x => x.Name.Equals(
+            "Password", StringComparison.InvariantCultureIgnoreCase));
+
+        passwordField.Value = await _breacherEndpoint.GeneratePasswordAsync();
+        
+        Template.Fields.FirstOrDefault(x => x.Name.Equals(
+            "Password", StringComparison.InvariantCultureIgnoreCase)).Value = passwordField.Value;
     }
 }

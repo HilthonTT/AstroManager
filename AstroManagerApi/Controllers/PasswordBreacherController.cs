@@ -12,6 +12,7 @@ namespace AstroManagerApi.Controllers;
 [Authorize]
 public class PasswordBreacherController : CustomController<PasswordBreacherController>
 {
+    private const string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _config;
 
@@ -62,6 +63,32 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
         }
     }
 
+    private static string GenerateRandomPassword(int length)
+    {
+        using var rng = RandomNumberGenerator.Create();
+        var bytes = new byte[length];
+        rng.GetBytes(bytes);
+
+        var password = new char[length];
+        for (int i = 0; i < length; i++)
+        {
+            int index = bytes[i] % ValidChars.Length;
+            password[i] = ValidChars[index];
+        }
+
+        return new string(password);
+    }
+
+    private static async Task<(string sha1Hash, string sha1HashPrefix, string sha1HashSuffix)> GenerateSHA1HashAndPrefixSuffixAsync(string input)
+    {
+        string sha1Hash = await ComputeSHA1HashAsync(input);
+        string sha1HashPrefix = sha1Hash.Substring(0, 5);
+        string sha1HashSuffix = sha1Hash.Substring(5);
+
+        return (sha1Hash, sha1HashPrefix, sha1HashSuffix);
+    }
+
+
     [HttpPost]
     public async Task<IActionResult> CheckBreachAsync([FromBody] List<CredentialModel> credentials)
     {
@@ -78,9 +105,7 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
 
                 if (string.IsNullOrWhiteSpace(passwordField?.Value) is false)
                 {
-                    string sha1Hash = await ComputeSHA1HashAsync(passwordField.Value);
-                    string sha1HashPrefix = sha1Hash.Substring(0, 5);
-                    string sha1HashSuffix = sha1Hash.Substring(5);
+                    var (sha1Hash, sha1HashPrefix, sha1HashSuffix) = await GenerateSHA1HashAndPrefixSuffixAsync(passwordField.Value);
 
                     bool isPasswordCompromised = await CheckPasswordBreachAsync(sha1HashPrefix, sha1HashSuffix);
 
@@ -92,6 +117,30 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
             });
 
             return Ok(breachedAccounts.ToList());
+        }
+        catch (Exception ex)
+        {
+            return ServerErrorCode(ex);
+        }
+    }
+
+    [HttpGet("{length}")]
+    public async Task<IActionResult> GeneratePasswordAsync(int length)
+    {
+        try
+        {
+           while (true)
+           {
+                string password = GenerateRandomPassword(length);
+
+                var (sha1Hash, sha1HashPrefix, sha1HashSuffix) = await GenerateSHA1HashAndPrefixSuffixAsync(password);
+                bool isPasswordCompromised = await CheckPasswordBreachAsync(sha1HashPrefix, sha1HashSuffix);
+
+                if (isPasswordCompromised is false)
+                {
+                    return Ok(password);
+                }           
+           }
         }
         catch (Exception ex)
         {

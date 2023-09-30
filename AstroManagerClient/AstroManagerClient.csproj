@@ -85,6 +85,7 @@
 	  <None Remove="Resources\Images\night_mode.png" />
 	  <None Remove="Resources\Images\order.svg" />
 	  <None Remove="Resources\Images\password.png" />
+	  <None Remove="Resources\Images\pencil.png" />
 	  <None Remove="Resources\Images\plus.png" />
 	  <None Remove="Resources\Images\secure_note.png" />
 	  <None Remove="Resources\Images\settings.png" />
@@ -136,9 +137,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\Views\AddCredentialView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Views\CredentialView.xaml">
