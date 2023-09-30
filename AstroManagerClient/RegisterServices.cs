@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using AstroManagerClient.Pages.Popups;
+using AstroManagerClient.Models.Interfaces;
+using AstroManagerClient.Models;
 
 #if WINDOWS
     using Microsoft.UI;
@@ -68,6 +70,7 @@ public static class RegisterServices
         builder.Services.AddHttpClient();
         builder.Configuration.AddConfiguration(AddConfiguration());
 
+        builder.Services.AddSingleton<IErrorDisplayModel, ErrorDisplayModel>();
         builder.Services.AddSingleton<ILoggedInUser, UserModel>();
         builder.Services.AddSingleton<IApiHelper, ApiHelper>();
 

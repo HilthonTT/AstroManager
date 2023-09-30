@@ -3,6 +3,7 @@ using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -14,12 +15,16 @@ public partial class DashboardViewModel : BaseViewModel
 {
     private readonly ILoggedInUser _loggedInUser;
     private readonly ICredentialEndpoint _credentialEndpoint;
+    private readonly IErrorDisplayModel _error;
 
-    public DashboardViewModel(ILoggedInUser loggedInUser, ICredentialEndpoint credentialEndpoint)
+    public DashboardViewModel(
+        ILoggedInUser loggedInUser,
+        ICredentialEndpoint credentialEndpoint,
+        IErrorDisplayModel error)
     {
         _loggedInUser = loggedInUser;
         _credentialEndpoint = credentialEndpoint;
-
+        _error = error;
         WeakReferenceMessenger.Default.Register<CloseFilterPopupMessage>(this, async (r, m) =>
         {
             await LoadCredentialsAsync();
@@ -55,11 +60,19 @@ public partial class DashboardViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadCredentialsAsync()
     {
-        var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
-        var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
+        try
+        {
+            var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
+            var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
 
-        Credentials = new(mappedCredentials);
-        FilterableCredentials = new(mappedCredentials);
+            Credentials = new(mappedCredentials);
+            FilterableCredentials = new(mappedCredentials);
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        } 
     }
 
     [RelayCommand]

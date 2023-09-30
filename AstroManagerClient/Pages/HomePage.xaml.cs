@@ -13,6 +13,12 @@ public partial class HomePage : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
 
+        RegisterMessages();
+    }
+
+
+    private void RegisterMessages()
+    {
         WeakReferenceMessenger.Default.Register<OpenCreateCredentialMessage>(this, async (r, m) =>
         {
             if (m.Value)
@@ -20,8 +26,15 @@ public partial class HomePage : ContentPage
                 await this.ShowPopupAsync(new AddCredentialPopupPage());
             }
         });
-    }
 
+        WeakReferenceMessenger.Default.Register<OpenErrorPopupMessage>(this, async (r, m) =>
+        {
+            if (m.Value)
+            {
+                await this.ShowPopupAsync(new ErrorPopupPage());
+            }
+        });
+    }
 
     public void MenuFlyoutItem_ParentChanged(object sender, EventArgs e)
     {

@@ -1,6 +1,7 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Maui.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,10 +11,12 @@ using System.Text.Json;
 namespace AstroManagerClient.ViewModels;
 public partial class SelectedCredentialViewModel : BaseViewModel
 {
+    private readonly IErrorDisplayModel _error;
     private readonly ICredentialEndpoint _credentialEndpoint;
 
     public SelectedCredentialViewModel()
     {
+        _error = App.Services.GetService<IErrorDisplayModel>();
         _credentialEndpoint = App.Services.GetService<ICredentialEndpoint>();
 
         WeakReferenceMessenger.Default.Register<ViewCredentialMessage>(this, (r, m) =>
@@ -89,7 +92,6 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     private async Task ExportDataAsync()
     {
         var credential = ModelConverter.GetCredential(Credential);
-
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -122,10 +124,18 @@ public partial class SelectedCredentialViewModel : BaseViewModel
     [RelayCommand]
     private async Task SaveChangesAsync()
     {
-        var credential = ModelConverter.GetCredential(Credential);
+        try
+        {
+            var credential = ModelConverter.GetCredential(Credential);
 
-        await _credentialEndpoint.UpdateCredentialAsync(credential);
+            await _credentialEndpoint.UpdateCredentialAsync(credential);
 
-        await Shell.Current.DisplayAlert("Saved Credential", "Your credential have been saved!", "OK");
+            await Shell.Current.DisplayAlert("Saved Credential", "Your credential have been saved!", "OK");
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 }

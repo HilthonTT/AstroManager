@@ -3,6 +3,7 @@ using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using AstroManagerClient.Pages;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -16,15 +17,18 @@ public partial class HomeViewModel : BaseViewModel
     private readonly ILoggedInUser _loggedInUser;
     private readonly ICredentialEndpoint _credentialEndpoint;
     private readonly ITypeEndpoint _typeEndpoint;
+    private readonly IErrorDisplayModel _error;
 
     public HomeViewModel(
         ILoggedInUser loggedInUser,
         ICredentialEndpoint credentialEndpoint,
-        ITypeEndpoint typeEndpoint)
+        ITypeEndpoint typeEndpoint,
+        IErrorDisplayModel error)
     {
         _loggedInUser = loggedInUser;
         _credentialEndpoint = credentialEndpoint;
         _typeEndpoint = typeEndpoint;
+        _error = error;
     }
 
     [ObservableProperty]
@@ -46,43 +50,80 @@ public partial class HomeViewModel : BaseViewModel
     private string _selectedType;
     async partial void OnSelectedTypeChanged(string value)
     {
-        var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
-        var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
-
-        if (value == "All")
+        try
         {
-            Credentials = new(mappedCredentials);
-            return;
+            var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
+            var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
+
+            if (value == "All")
+            {
+                Credentials = new(mappedCredentials);
+                return;
+            }
+
+            var types = await _typeEndpoint.GetAllTypesAsync();
+            var selectedType = types.Where(x => x.Name.Equals(value)).FirstOrDefault();
+
+            Credentials = mappedCredentials.Where(x => x.Type.Id == selectedType.Id).ToObservableCollection();
         }
-
-        var types = await _typeEndpoint.GetAllTypesAsync();
-        var selectedType = types.Where(x => x.Name.Equals(value)).FirstOrDefault();
-
-        Credentials = mappedCredentials.Where(x => x.Type.Id == selectedType.Id).ToObservableCollection();
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 
     [RelayCommand]
+    private async Task LoadAllDataAsync()
+    {
+        try
+        {
+            await LoadCredentialsAsync();
+            await LoadTypesAsync();
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
+    }
+
     private async Task LoadCredentialsAsync()
     {
-        var loadedCredentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
-        Credentials = new(loadedCredentials.Select(x => new CredentialDisplayModel(x)));
+        try
+        {
+            var loadedCredentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
+            Credentials = new(loadedCredentials.Select(x => new CredentialDisplayModel(x)));
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 
-    [RelayCommand]
     private async Task LoadTypesAsync()
     {
-        var baseTypes = new List<TypeModel>
+        try
         {
-            new TypeModel
+            var baseTypes = new List<TypeModel>
             {
-                Name = "All",
-                Description = "Shows all the credentials."
-            }
-        };
+                new TypeModel
+                {
+                    Name = "All",
+                    Description = "Shows all the credentials."
+                }
+            };
 
-        var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
+            var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
 
-        Types = new(baseTypes.Concat(loadedTypes));
+            Types = new(baseTypes.Concat(loadedTypes));
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 
     [RelayCommand]
@@ -101,11 +142,19 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     private async Task SearchCredentialsAsync()
     {
-        await LoadCredentialsAsync();
-
-        if (string.IsNullOrWhiteSpace(SearchText) is false)
+        try
         {
-            Credentials = Credentials.OrderByDescending(x => x.Title.Contains(SearchText)).ToObservableCollection();
+            await LoadCredentialsAsync();
+
+            if (string.IsNullOrWhiteSpace(SearchText) is false)
+            {
+                Credentials = Credentials.OrderByDescending(x => x.Title.Contains(SearchText)).ToObservableCollection();
+            }
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
         }
     }
 

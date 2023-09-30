@@ -13,12 +13,26 @@ public partial class SettingsPage : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
 
-		WeakReferenceMessenger.Default.Register<OpenAccountPopupMessage>(this, async (r, m) =>
+		RegisterMessages();
+
+    }
+
+	private void RegisterMessages()
+	{
+		WeakReferenceMessenger.Default.Register<OpenErrorPopupMessage>(this, async (r, m) =>
 		{
 			if (m.Value)
 			{
+				await this.ShowPopupAsync(new ErrorPopupPage());
+			}
+		});
+
+        WeakReferenceMessenger.Default.Register<OpenAccountPopupMessage>(this, async (r, m) =>
+        {
+            if (m.Value)
+            {
                 await this.ShowPopupAsync(new AccountPopupPage());
             }
-		});
-	}
+        });
+    }
 }

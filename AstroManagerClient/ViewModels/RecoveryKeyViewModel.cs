@@ -2,6 +2,7 @@
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,11 +11,13 @@ using System.Text;
 namespace AstroManagerClient.ViewModels;
 public partial class RecoveryKeyViewModel : BaseViewModel
 {
+    private readonly IErrorDisplayModel _error;
     private readonly IRecoveryKeyEndpoint _recoveryKeyEndpoint;
     private readonly ILoggedInUser _loggedInUser;
 
     public RecoveryKeyViewModel()
     {
+        _error = App.Services.GetService<IErrorDisplayModel>();
         _recoveryKeyEndpoint = App.Services.GetService<IRecoveryKeyEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
 
@@ -37,17 +40,25 @@ public partial class RecoveryKeyViewModel : BaseViewModel
     private string _isHidden;
     async partial void OnIsHiddenChanged(string value)
     {
-        IsPassword = value.ToLower() switch
+        try
         {
-            "show" => false,
-            "hidden" => true,
-            _ => true,
-        };
+            IsPassword = value.ToLower() switch
+            {
+                "show" => false,
+                "hidden" => true,
+                _ => true,
+            };
 
-        var recovery = await _recoveryKeyEndpoint.GetUsersRecoveryKeyAsync(_loggedInUser.Id);
-        var mappedRecovery = new RecoveryKeyDisplayModel(recovery);
+            var recovery = await _recoveryKeyEndpoint.GetUsersRecoveryKeyAsync(_loggedInUser.Id);
+            var mappedRecovery = new RecoveryKeyDisplayModel(recovery);
 
-        LoadRecoveryKeys(mappedRecovery);
+            LoadRecoveryKeys(mappedRecovery);
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 
     private void LoadRecoveryKeys(RecoveryKeyDisplayModel recovery)

@@ -3,6 +3,7 @@ using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -12,17 +13,20 @@ using System.Collections.ObjectModel;
 namespace AstroManagerClient.ViewModels;
 public partial class BreachedAccountViewModel : BaseViewModel
 {
+    private readonly IErrorDisplayModel _error;
     private readonly IPasswordBreacherEndpoint _breacherEndpoint;
     private readonly ILoggedInUser _loggedInUser;
     private readonly ICredentialEndpoint _credentialEndpoint;
     private readonly ITypeEndpoint _typeEndpoint;
 
     public BreachedAccountViewModel(
+        IErrorDisplayModel error,
         IPasswordBreacherEndpoint breacherEndpoint,
         ILoggedInUser loggedInUser,
         ICredentialEndpoint credentialEndpoint,
         ITypeEndpoint typeEndpoint)
     {
+        _error = error;
         _breacherEndpoint = breacherEndpoint;
         _loggedInUser = loggedInUser;
         _credentialEndpoint = credentialEndpoint;
@@ -56,6 +60,20 @@ public partial class BreachedAccountViewModel : BaseViewModel
     public ObservableCollection<string> TypeNames => Types?.Select(x => x.Name).ToObservableCollection();
 
     [RelayCommand]
+    private async Task LoadDataAsync()
+    {
+        try
+        {
+            await LoadBreachedCredentialsAsync();
+            await LoadTypesAsync();
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
+    }
+
     private async Task LoadBreachedCredentialsAsync()
     {
         IsLoading = true;
@@ -74,7 +92,8 @@ public partial class BreachedAccountViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            // Implement error message popup
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
         }
         finally
         {
@@ -82,10 +101,11 @@ public partial class BreachedAccountViewModel : BaseViewModel
         }
     }
 
-    [RelayCommand]
     private async Task LoadTypesAsync()
     {
-        var baseTypes = new List<TypeModel>
+        try
+        {
+            var baseTypes = new List<TypeModel>
         {
             new TypeModel
             {
@@ -94,9 +114,15 @@ public partial class BreachedAccountViewModel : BaseViewModel
             }
         };
 
-        var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
+            var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
 
-        Types = new(baseTypes.Concat(loadedTypes));
+            Types = new(baseTypes.Concat(loadedTypes));
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 
     [RelayCommand]

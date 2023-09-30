@@ -14,8 +14,7 @@
              Title="HomePage">
 
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadCredentialsCommand}"/>
-        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadTypesCommand}"/>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadAllDataCommand}"/>
     </ContentPage.Behaviors>
 
     <ContentPage.MenuBarItems>

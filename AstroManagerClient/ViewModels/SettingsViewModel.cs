@@ -3,6 +3,7 @@ using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -14,13 +15,16 @@ public partial class SettingsViewModel : BaseViewModel
 {
     private static readonly Color PrimaryColor = Color.FromArgb("#6983EA");
     private static readonly Color DarkBg2Brush = Color.FromArgb("#1F1D2B");
+    private readonly IErrorDisplayModel _error;
     private readonly ILoggedInUser _loggedInUser;
     private readonly IRecoveryKeyEndpoint _recoveryKeyEndpoint;
 
     public SettingsViewModel(
+        IErrorDisplayModel error,
         ILoggedInUser loggedInUser,
         IRecoveryKeyEndpoint recoveryKeyEndpoint)
     {
+        _error = error;
         _loggedInUser = loggedInUser;
         _recoveryKeyEndpoint = recoveryKeyEndpoint;
 
@@ -69,11 +73,19 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private async Task LoadRecoveryKeysAsync()
     {
-        var recovery = await _recoveryKeyEndpoint.GetUsersRecoveryKeyAsync(_loggedInUser.Id);
-        var mappedRecovery = new RecoveryKeyDisplayModel(recovery);
+        try
+        {
+            var recovery = await _recoveryKeyEndpoint.GetUsersRecoveryKeyAsync(_loggedInUser.Id);
+            var mappedRecovery = new RecoveryKeyDisplayModel(recovery);
 
-        var message = new ViewRecoveryMessage(mappedRecovery);
-        WeakReferenceMessenger.Default.Send(message);
+            var message = new ViewRecoveryMessage(mappedRecovery);
+            WeakReferenceMessenger.Default.Send(message);
+        }
+        catch (Exception ex)
+        {
+            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenErrorPopup();
+        }
     }
 
     [RelayCommand]

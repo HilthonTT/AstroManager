@@ -26,15 +26,28 @@ public partial class DashboardPage : ContentPage
         _credentialEndpoint = credentialEndpoint;
         _loggedInUser = loggedInUser;
 
-        WeakReferenceMessenger.Default.Register<OpenFilterPopupMessage>(this, async (r, m) =>
-        {
-            await this.ShowPopupAsync(new FilterPopupPage());
-        });
+        RegisterMessages();
     }
 
     protected override async void OnAppearing()
     {
         await DrawChartAsync();
+    }
+
+    private void RegisterMessages()
+    {
+        WeakReferenceMessenger.Default.Register<OpenErrorPopupMessage>(this, async (r, m) =>
+        {
+            if (m.Value)
+            {
+                await this.ShowPopupAsync(new ErrorPopupPage());
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<OpenFilterPopupMessage>(this, async (r, m) =>
+        {
+            await this.ShowPopupAsync(new FilterPopupPage());
+        });
     }
 
     private static float CalculateCount(float dataCount, int totalCount)
