@@ -117,169 +117,169 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alle" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
   <data name="BreachedCredentials" xml:space="preserve">
-    <value>Identifiants compromis</value>
+    <value>Identifizierte Zugangsdaten</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
-    <value>Choisir la langue</value>
+    <value>Sprache wählen</value>
   </data>
   <data name="ChooseTheme" xml:space="preserve">
-    <value>Choisir le thème</value>
+    <value>Thema auswählen</value>
   </data>
   <data name="ChooseType" xml:space="preserve">
-    <value>Choisir un type</value>
+    <value>Typ auswählen</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Fermer</value>
+    <value>Schließen</value>
   </data>
   <data name="ConfirmNewPassword" xml:space="preserve">
-    <value>Confirmer le nouveau mot de passe</value>
+    <value>Neues Passwort bestätigen</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copier</value>
+    <value>Kopieren</value>
   </data>
   <data name="CredentialReport" xml:space="preserve">
-    <value>Rapport des identifiants</value>
+    <value>Zugangsdatenbericht</value>
   </data>
   <data name="CredentialTypes" xml:space="preserve">
-    <value>Types d'identifiants</value>
+    <value>Zugangstypen</value>
   </data>
   <data name="CreditCard" xml:space="preserve">
-    <value>Carte de crédit</value>
+    <value>Kreditkarte</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Tableau de bord</value>
+    <value>Dashboard</value>
   </data>
   <data name="DateAdded" xml:space="preserve">
-    <value>Date d'ajout</value>
+    <value>Hinzugefügtes Datum</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Modifier</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Exporter</value>
+    <value>Exportieren</value>
   </data>
   <data name="Field" xml:space="preserve">
-    <value>Champ</value>
+    <value>Feld</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filtre</value>
+    <value>Filter</value>
   </data>
   <data name="FilterButtonDescription" xml:space="preserve">
-    <value>Bouton qui ouvre une boîte de dialogue de filtre</value>
+    <value>Schaltfläche, die ein Filterdialogfeld öffnet</value>
   </data>
   <data name="HideValues" xml:space="preserve">
-    <value>Masquer les valeurs</value>
+    <value>Werte ausblenden</value>
   </data>
   <data name="Identity" xml:space="preserve">
-    <value>Identité</value>
+    <value>Identität</value>
   </data>
   <data name="Index" xml:space="preserve">
     <value>Index</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Informationen</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Langues</value>
+    <value>Sprachen</value>
   </data>
   <data name="LastModified" xml:space="preserve">
-    <value>Dernière modification</value>
+    <value>Zuletzt geändert</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Connexion</value>
+    <value>Anmeldung</value>
   </data>
   <data name="Logins" xml:space="preserve">
-    <value>Connexions</value>
+    <value>Anmeldungen</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Mot de passe principal</value>
+    <value>Master-Passwort</value>
   </data>
   <data name="MasterPasswordAgain" xml:space="preserve">
-    <value>Entrez à nouveau le mot de passe principal</value>
+    <value>Master-Passwort erneut eingeben</value>
   </data>
   <data name="MustBeLoggedIn" xml:space="preserve">
-    <value>Vous devez être connecté</value>
+    <value>Sie müssen angemeldet sein</value>
   </data>
   <data name="MustEnterPassword" xml:space="preserve">
-    <value>Vous devez entrer un mot de passe</value>
+    <value>Sie müssen ein Passwort eingeben</value>
   </data>
   <data name="MustReEnterPassword" xml:space="preserve">
-    <value>Vous devez entrer à nouveau votre mot de passe</value>
+    <value>Sie müssen Ihr Passwort erneut eingeben</value>
   </data>
   <data name="MyCredentials" xml:space="preserve">
-    <value>Mes identifiants</value>
+    <value>Meine Zugangsdaten</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>Nouveau mot de passe</value>
+    <value>Neues Passwort</value>
   </data>
   <data name="NoTitle" xml:space="preserve">
-    <value>Aucun titre fourni</value>
+    <value>Kein Titel vorhanden</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="PasswordDontMatch" xml:space="preserve">
-    <value>Vos mots de passe ne correspondent pas</value>
+    <value>Ihre Passwörter stimmen nicht überein</value>
   </data>
   <data name="PasswordIncorrect" xml:space="preserve">
-    <value>Votre mot de passe est incorrect</value>
+    <value>Ihr Passwort ist inkorrekt</value>
   </data>
   <data name="Passwords" xml:space="preserve">
-    <value>Mots de passe</value>
+    <value>Passwörter</value>
   </data>
   <data name="RecentlyUpdated" xml:space="preserve">
-    <value>Récemment mis à jour</value>
+    <value>Kürzlich aktualisiert</value>
   </data>
   <data name="RecoveryKeys" xml:space="preserve">
-    <value>Clés de récupération</value>
+    <value>Wiederherstellungsschlüssel</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Enregistrer</value>
+    <value>Speichern</value>
   </data>
   <data name="SearchHomePage" xml:space="preserve">
-    <value>Rechercher une connexion, une identité, etc...</value>
+    <value>Suche nach Verbindung, Identität usw...</value>
   </data>
   <data name="SecureNote" xml:space="preserve">
-    <value>Note sécurisée</value>
+    <value>Sicherheitsnotiz</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Paramètres</value>
+    <value>Einstellungen</value>
   </data>
   <data name="ShowData" xml:space="preserve">
-    <value>Afficher les données</value>
+    <value>Daten anzeigen</value>
   </data>
   <data name="ShowValues" xml:space="preserve">
-    <value>Afficher les valeurs</value>
+    <value>Werte anzeigen</value>
   </data>
   <data name="Themes" xml:space="preserve">
-    <value>Thèmes</value>
+    <value>Themen</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Titres</value>
+    <value>Titel</value>
   </data>
   <data name="Today" xml:space="preserve">
-    <value>Aujourd'hui</value>
+    <value>Heute</value>
   </data>
   <data name="Total2FAPasswords" xml:space="preserve">
-    <value>Total des mots de passe 2FA</value>
+    <value>Gesamte 2FA-Passwörter</value>
   </data>
   <data name="TotalReusedPasswords" xml:space="preserve">
-    <value>Total des mots de passe réutilisés</value>
+    <value>Gesamte wiederverwendete Passwörter</value>
   </data>
   <data name="TotalWeakPasswords" xml:space="preserve">
-    <value>Total des mots de passe faibles</value>
+    <value>Gesamte schwache Passwörter</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Typ</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Valeur</value>
+    <value>Wert</value>
   </data>
   <data name="VerifyPassword" xml:space="preserve">
-    <value>Vérifier le mot de passe</value>
-  </data>
-  <data name="ViewAll" xml:space="preserve">
-    <value>Tout Voir</value>
+    <value>Passwort überprüfen</value>
   </data>
 </root>

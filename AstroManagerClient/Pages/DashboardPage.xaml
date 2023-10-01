@@ -209,7 +209,8 @@
                             <HorizontalStackLayout Margin="14,12" Spacing="12">
                                 <Label Text="{x:Static fonts:IconFont.ChevronDown}" 
                                        FontFamily="FontAwesome" VerticalOptions="Center"/>
-                                <Label Text="Today" VerticalOptions="Center"/>
+                                <Label Text="{Binding LocalizationResourceManager[Today], Mode=OneWay}" 
+                                       VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </Border>
                         <BoxView Style="{StaticResource HRule}" Grid.Row="1"/>
@@ -237,7 +238,8 @@
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
-                        <Button Text="View All" HorizontalOptions="Fill" Margin="0,24,0,0"
+                        <Button Text="{Binding LocalizationResourceManager[ViewAll], Mode=OneWay}" 
+                                HorizontalOptions="Fill" Margin="0,24,0,0"
                                 Style="{StaticResource PrimaryButtonOutline}"
                                 Grid.Row="3"
                                 Command="{Binding OpenHomePageCommand}"/>

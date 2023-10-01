@@ -237,9 +237,6 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="SaveFilter" xml:space="preserve">
-    <value>Sa</value>
-  </data>
   <data name="SearchHomePage" xml:space="preserve">
     <value>Search for login, identity, etc...</value>
   </data>
@@ -281,5 +278,8 @@
   </data>
   <data name="VerifyPassword" xml:space="preserve">
     <value>Verify Password</value>
+  </data>
+  <data name="ViewAll" xml:space="preserve">
+    <value>View All</value>
   </data>
 </root>

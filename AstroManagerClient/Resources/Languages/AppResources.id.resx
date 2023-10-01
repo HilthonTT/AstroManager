@@ -118,168 +118,168 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BreachedCredentials" xml:space="preserve">
-    <value>Identifiants compromis</value>
+    <value>Kredensial Tercompromi</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
-    <value>Choisir la langue</value>
+    <value>Pilih Bahasa</value>
   </data>
   <data name="ChooseTheme" xml:space="preserve">
-    <value>Choisir le thème</value>
+    <value>Pilih Tema</value>
   </data>
   <data name="ChooseType" xml:space="preserve">
-    <value>Choisir un type</value>
+    <value>Pilih Jenis</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Fermer</value>
+    <value>Tutup</value>
   </data>
   <data name="ConfirmNewPassword" xml:space="preserve">
-    <value>Confirmer le nouveau mot de passe</value>
+    <value>Konfirmasi Kata Sandi Baru</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copier</value>
+    <value>Salin</value>
   </data>
   <data name="CredentialReport" xml:space="preserve">
-    <value>Rapport des identifiants</value>
+    <value>Laporan Kredensial</value>
   </data>
   <data name="CredentialTypes" xml:space="preserve">
-    <value>Types d'identifiants</value>
+    <value>Jenis Kredensial</value>
   </data>
   <data name="CreditCard" xml:space="preserve">
-    <value>Carte de crédit</value>
+    <value>Kartu Kredit</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
-    <value>Tableau de bord</value>
+    <value>Dasbor</value>
   </data>
   <data name="DateAdded" xml:space="preserve">
-    <value>Date d'ajout</value>
+    <value>Tanggal Ditambahkan</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Modifier</value>
+    <value>Edit</value>
   </data>
   <data name="Export" xml:space="preserve">
-    <value>Exporter</value>
+    <value>Ekspor</value>
   </data>
   <data name="Field" xml:space="preserve">
-    <value>Champ</value>
+    <value>Lapangan</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>Filtre</value>
+    <value>Filter</value>
   </data>
   <data name="FilterButtonDescription" xml:space="preserve">
-    <value>Bouton qui ouvre une boîte de dialogue de filtre</value>
+    <value>Tombol yang membuka kotak dialog filter</value>
   </data>
   <data name="HideValues" xml:space="preserve">
-    <value>Masquer les valeurs</value>
+    <value>Sembunyikan Nilai</value>
   </data>
   <data name="Identity" xml:space="preserve">
-    <value>Identité</value>
+    <value>Identitas</value>
   </data>
   <data name="Index" xml:space="preserve">
-    <value>Index</value>
+    <value>Indeks</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Informasi</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Langues</value>
+    <value>Bahasa</value>
   </data>
   <data name="LastModified" xml:space="preserve">
-    <value>Dernière modification</value>
+    <value>Terakhir Diubah</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>Connexion</value>
+    <value>Masuk</value>
   </data>
   <data name="Logins" xml:space="preserve">
-    <value>Connexions</value>
+    <value>Masuk</value>
   </data>
   <data name="MasterPassword" xml:space="preserve">
-    <value>Mot de passe principal</value>
+    <value>Kata Sandi Utama</value>
   </data>
   <data name="MasterPasswordAgain" xml:space="preserve">
-    <value>Entrez à nouveau le mot de passe principal</value>
+    <value>Masukkan Ulang Kata Sandi Utama</value>
   </data>
   <data name="MustBeLoggedIn" xml:space="preserve">
-    <value>Vous devez être connecté</value>
+    <value>Anda Harus Masuk</value>
   </data>
   <data name="MustEnterPassword" xml:space="preserve">
-    <value>Vous devez entrer un mot de passe</value>
+    <value>Anda Harus Masukkan Kata Sandi</value>
   </data>
   <data name="MustReEnterPassword" xml:space="preserve">
-    <value>Vous devez entrer à nouveau votre mot de passe</value>
+    <value>Anda Harus Masukkan Ulang Kata Sandi Anda</value>
   </data>
   <data name="MyCredentials" xml:space="preserve">
-    <value>Mes identifiants</value>
+    <value>Kredensial Saya</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
-    <value>Nouveau mot de passe</value>
+    <value>Kata Sandi Baru</value>
   </data>
   <data name="NoTitle" xml:space="preserve">
-    <value>Aucun titre fourni</value>
+    <value>Tidak Ada Judul</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="PasswordDontMatch" xml:space="preserve">
-    <value>Vos mots de passe ne correspondent pas</value>
+    <value>Kata Sandi Anda Tidak Cocok</value>
   </data>
   <data name="PasswordIncorrect" xml:space="preserve">
-    <value>Votre mot de passe est incorrect</value>
+    <value>Kata Sandi Anda Salah</value>
   </data>
   <data name="Passwords" xml:space="preserve">
-    <value>Mots de passe</value>
+    <value>Kata Sandi</value>
   </data>
   <data name="RecentlyUpdated" xml:space="preserve">
-    <value>Récemment mis à jour</value>
+    <value>Diperbarui Baru-baru Ini</value>
   </data>
   <data name="RecoveryKeys" xml:space="preserve">
-    <value>Clés de récupération</value>
+    <value>Kunci Pemulihan</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Enregistrer</value>
+    <value>Simpan</value>
   </data>
   <data name="SearchHomePage" xml:space="preserve">
-    <value>Rechercher une connexion, une identité, etc...</value>
+    <value>Cari Koneksi, Identitas, dll...</value>
   </data>
   <data name="SecureNote" xml:space="preserve">
-    <value>Note sécurisée</value>
+    <value>Catatan Aman</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Paramètres</value>
+    <value>Pengaturan</value>
   </data>
   <data name="ShowData" xml:space="preserve">
-    <value>Afficher les données</value>
+    <value>Tampilkan Data</value>
   </data>
   <data name="ShowValues" xml:space="preserve">
-    <value>Afficher les valeurs</value>
+    <value>Tampilkan Nilai</value>
   </data>
   <data name="Themes" xml:space="preserve">
-    <value>Thèmes</value>
+    <value>Tema</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Titres</value>
+    <value>Judul</value>
   </data>
   <data name="Today" xml:space="preserve">
-    <value>Aujourd'hui</value>
+    <value>Hari Ini</value>
   </data>
   <data name="Total2FAPasswords" xml:space="preserve">
-    <value>Total des mots de passe 2FA</value>
+    <value>Total Kata Sandi 2FA</value>
   </data>
   <data name="TotalReusedPasswords" xml:space="preserve">
-    <value>Total des mots de passe réutilisés</value>
+    <value>Total Kata Sandi yang Digunakan Kembali</value>
   </data>
   <data name="TotalWeakPasswords" xml:space="preserve">
-    <value>Total des mots de passe faibles</value>
+    <value>Total Kata Sandi Lemah</value>
   </data>
   <data name="Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Tipe</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Valeur</value>
+    <value>Nilai</value>
   </data>
   <data name="VerifyPassword" xml:space="preserve">
-    <value>Vérifier le mot de passe</value>
+    <value>Verifikasi Kata Sandi</value>
   </data>
   <data name="ViewAll" xml:space="preserve">
-    <value>Tout Voir</value>
+    <value>Lihat Semua</value>
   </data>
 </root>

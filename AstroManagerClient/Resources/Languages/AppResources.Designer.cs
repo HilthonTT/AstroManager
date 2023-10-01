@@ -421,15 +421,6 @@ namespace AstroManagerClient.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sa.
-        /// </summary>
-        internal static string SaveFilter {
-            get {
-                return ResourceManager.GetString("SaveFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Search for login, identity, etc....
         /// </summary>
         internal static string SearchHomePage {
@@ -552,6 +543,15 @@ namespace AstroManagerClient.Resources.Languages {
         internal static string VerifyPassword {
             get {
                 return ResourceManager.GetString("VerifyPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View All.
+        /// </summary>
+        internal static string ViewAll {
+            get {
+                return ResourceManager.GetString("ViewAll", resourceCulture);
             }
         }
     }

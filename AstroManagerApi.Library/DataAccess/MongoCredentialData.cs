@@ -1,10 +1,7 @@
-﻿using Amazon.Runtime.Internal.Util;
-using AstroManagerApi.Library.DataAccess.Interfaces;
+﻿using AstroManagerApi.Library.DataAccess.Interfaces;
 using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Extensions;
 using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
