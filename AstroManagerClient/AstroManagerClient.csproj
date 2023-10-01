@@ -54,10 +54,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Remove="Resources\Languages\AppResources.fr.resx" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Resources\Fonts\fabmdl2.ttf" />
 	  <None Remove="Resources\Fonts\fa_solid.ttf" />
 	  <None Remove="Resources\Images\arrow_down.svg" />
@@ -178,15 +174,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="Resources\Languages\AppResources.fr.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
-	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
-	  </None>
-	</ItemGroup>
-
-	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Languages\AppResources.resx">
-	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>

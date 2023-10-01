@@ -238,7 +238,7 @@
     <value>Enregistrer</value>
   </data>
   <data name="SearchHomePage" xml:space="preserve">
-    <value>echercher une connexion, une identité, etc...</value>
+    <value>Rechercher une connexion, une identité, etc...</value>
   </data>
   <data name="SecureNote" xml:space="preserve">
     <value>Note sécurisée</value>

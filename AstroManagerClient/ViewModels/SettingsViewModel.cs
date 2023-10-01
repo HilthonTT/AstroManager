@@ -91,20 +91,10 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private void ChangeCulture(LanguageModel language)
     {
-        string culture;
-
-        if (language.Language == "English-US")
-        {
-            culture = "en-US";
-        }
-        else
-        {
-            culture = "fr-FR";
-        }
-
         language.Color = PrimaryColor;
 
-        var cultureToSwitch = new CultureInfo(culture);
+        var cultureToSwitch = language.Language.Equals("English-US", StringComparison.InvariantCultureIgnoreCase) 
+            ? new CultureInfo("en-US") : new CultureInfo("fr-FR");
 
         LocalizationResourceManager.Instance.SetCulture(cultureToSwitch);
 
