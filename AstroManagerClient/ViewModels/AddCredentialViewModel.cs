@@ -3,6 +3,7 @@ using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -10,6 +11,7 @@ using CommunityToolkit.Mvvm.Messaging;
 namespace AstroManagerClient.ViewModels;
 public partial class AddCredentialViewModel : BaseViewModel
 {
+    private readonly IErrorDisplayModel _error;
     private readonly IPasswordBreacherEndpoint _breacherEndpoint;
     private readonly ICredentialTemplateEndpoint _templateEndpoint;
     private readonly ICredentialEndpoint _credentialEndpoint;
@@ -17,6 +19,7 @@ public partial class AddCredentialViewModel : BaseViewModel
 
     public AddCredentialViewModel()
     {
+        _error = App.Services.GetService<IErrorDisplayModel>();
         _templateEndpoint = App.Services.GetService<ICredentialTemplateEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
         _credentialEndpoint = App.Services.GetService<ICredentialEndpoint>();
@@ -62,12 +65,14 @@ public partial class AddCredentialViewModel : BaseViewModel
         return 500;
     }
 
+
     [RelayCommand]
     private async Task SaveAsync()
     {
         if (string.IsNullOrWhiteSpace(Title))
         {
-            await Shell.Current.DisplayAlert("No title provided", "You must provide a title.", "OK");
+            _error.SetErrorMessage(LocalizationResourceManager["NoTitle"].ToString());
+            OpenErrorPopup();
             return;
         }
 

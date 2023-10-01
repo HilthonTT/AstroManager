@@ -17,19 +17,19 @@
     </ContentPage.Behaviors>
     
     <Grid RowDefinitions="100,*" RowSpacing="24"
-      ColumnDefinitions="*,400"
-      Margin="24,0,0,0">
+          ColumnDefinitions="*,400"
+          Margin="24,0,0,0">
 
         <!-- left column -->
         <VerticalStackLayout Margin="0,24,0,0">
-            <Label Text="Dashboard" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding LocalizationResourceManager[Dashboard], Mode=OneWay}" Style="{StaticResource LargeTitle}"/>
             <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
             <BoxView Style="{StaticResource HRule}" Margin="0,24,0,0"/>
         </VerticalStackLayout>
 
         <ScrollView Grid.Row="1" Margin="0,24,0,24">
             <Grid RowDefinitions="150,*" RowSpacing="24"
-              ColumnDefinitions="*,*,*" ColumnSpacing="24">
+                  ColumnDefinitions="*,*,*" ColumnSpacing="24">
                 <Grid.Resources>
                     <Style TargetType="Label" Class="Percent">
                         <Setter Property="TextColor" Value="#50D1AA"/>
@@ -78,13 +78,14 @@
                             <Image Source="arrow_up.png"/>
                         </HorizontalStackLayout>
                         <Label Text="{Binding ReusedCredentials.Count}" Grid.Row="1" class="Data"/>
-                        <Label Text="Total of reused passwords" Grid.Row="2" class="Label"/>
+                        <Label Text="{Binding LocalizationResourceManager[TotalReusedPasswords], Mode=OneWay}" 
+                               Grid.Row="2" class="Label"/>
                     </Grid>
                 </Border>
 
                 <Border
-                Grid.Row="0" Grid.Column="1"
-                Style="{StaticResource DarkBorderView}">
+                    Grid.Row="0" Grid.Column="1"
+                    Style="{StaticResource DarkBorderView}">
                     <Grid RowDefinitions="45,*,24" Margin="16" IsClippedToBounds="False">
                         <HorizontalStackLayout Spacing="12">
                             <Border WidthRequest="38" HeightRequest="38"
@@ -96,13 +97,14 @@
                             <Image Source="arrow_down.png"/>
                         </HorizontalStackLayout>
                         <Label Text="{Binding WeakCredentials.Count}" Grid.Row="1" class="Data"/>
-                        <Label Text="Total of weak passwords" Grid.Row="2" class="Label"/>
+                        <Label Text="{Binding LocalizationResourceManager[TotalWeakPasswords], Mode=OneWay}" 
+                               Grid.Row="2" class="Label"/>
                     </Grid>
                 </Border>
 
                 <Border
-                Grid.Row="0" Grid.Column="2"
-                Style="{StaticResource DarkBorderView}">
+                    Grid.Row="0" Grid.Column="2"
+                    Style="{StaticResource DarkBorderView}">
                     <Grid RowDefinitions="45,*,24" Margin="16" IsClippedToBounds="False">
                         <HorizontalStackLayout Spacing="12">
                             <Border WidthRequest="38" HeightRequest="38"
@@ -114,7 +116,8 @@
                             <Image Source="arrow_up.png"/>
                         </HorizontalStackLayout>
                         <Label Text="{Binding TwoFactorCredentials.Count}" Grid.Row="1" class="Data"/>
-                        <Label Text="Total of 2FA passwords" Grid.Row="2" class="Label"/>
+                        <Label Text="{Binding LocalizationResourceManager[Total2FAPasswords], Mode=OneWay}" 
+                               Grid.Row="2" class="Label"/>
                     </Grid>
                 </Border>
 
@@ -123,18 +126,19 @@
                 Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
                 Style="{StaticResource DarkBorderView}">
                     <Grid Margin="24" RowDefinitions="80,*">
-                        <Label Text="Credential Report" Style="{StaticResource Title1}"/>
+                        <Label Text="{Binding LocalizationResourceManager[CredentialReport], Mode=OneWay}"
+                               Style="{StaticResource Title1}"/>
                         <Border Stroke="{StaticResource SecondaryBrush}" 
                             StrokeThickness="1" Background="Transparent"
                             Grid.Row="0" HorizontalOptions="End" VerticalOptions="Start"
-                            SemanticProperties.Description="Button that opens a filter dialog"
-                            >
+                            SemanticProperties.Description="{Binding LocalizationResourceManager[FilterButtonDescription], Mode=OneWay}">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="8"/>
                             </Border.StrokeShape>
                             <HorizontalStackLayout Margin="14,12" Spacing="12">
                                 <Image Source="filter.png" VerticalOptions="Center" />
-                                <Label Text="Filter" VerticalOptions="Center"/>
+                                <Label Text="{Binding LocalizationResourceManager[Filter], Mode=OneWay}" 
+                                       VerticalOptions="Center"/>
                             </HorizontalStackLayout>
 
                             <Border.GestureRecognizers>
@@ -147,10 +151,14 @@
                             <VerticalStackLayout Spacing="16">
                                 <!-- heading -->
                                 <Grid ColumnDefinitions="200,*,150,150">
-                                    <Label Text="Title" Style="{StaticResource Headline}"/>
-                                    <Label Text="Type" Grid.Column="1" Style="{StaticResource Headline}"/>
-                                    <Label Text="Date Added" Grid.Column="2" Style="{StaticResource Headline}"/>
-                                    <Label Text="Last Modified" Grid.Column="3" Style="{StaticResource Headline}"/>
+                                    <Label Text="{Binding LocalizationResourceManager[Title], Mode=OneWay}"
+                                           Style="{StaticResource Headline}"/>
+                                    <Label Text="{Binding LocalizationResourceManager[Type], Mode=OneWay}" 
+                                           Grid.Column="1" Style="{StaticResource Headline}"/>
+                                    <Label Text="{Binding LocalizationResourceManager[DateAdded], Mode=OneWay}" 
+                                           Grid.Column="2" Style="{StaticResource Headline}"/>
+                                    <Label Text="{Binding LocalizationResourceManager[LastModified], Mode=OneWay}" 
+                                           Grid.Column="3" Style="{StaticResource Headline}"/>
                                 </Grid>
 
                                 <BoxView Style="{StaticResource HRule}"/>
@@ -187,7 +195,8 @@
                     <Grid Margin="24" RowDefinitions="50,1,*,84" RowSpacing="20">
                         <Label
                             Grid.Row="0" VerticalOptions="Center"
-                            Text="Recently Updated" Style="{StaticResource Title1}"/>
+                            Text="{Binding LocalizationResourceManager[RecentlyUpdated], Mode=OneWay}" 
+                            Style="{StaticResource Title1}"/>
                         <Border Stroke="{StaticResource SecondaryBrush}" 
                                 StrokeThickness="1" Background="Transparent"
                                 Grid.Row="0" HorizontalOptions="End">
@@ -198,7 +207,8 @@
                                 <TapGestureRecognizer />
                             </Border.GestureRecognizers>
                             <HorizontalStackLayout Margin="14,12" Spacing="12">
-                                <Label Text="{x:Static fonts:IconFont.ChevronDown}" FontFamily="FontAwesome" VerticalOptions="Center"/>
+                                <Label Text="{x:Static fonts:IconFont.ChevronDown}" 
+                                       FontFamily="FontAwesome" VerticalOptions="Center"/>
                                 <Label Text="Today" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </Border>
@@ -229,7 +239,8 @@
                         </VerticalStackLayout>
                         <Button Text="View All" HorizontalOptions="Fill" Margin="0,24,0,0"
                                 Style="{StaticResource PrimaryButtonOutline}"
-                                Grid.Row="3" />
+                                Grid.Row="3"
+                                Command="{Binding OpenHomePageCommand}"/>
                     </Grid>
                 </Border>
 
@@ -238,7 +249,8 @@
                     <Grid Margin="24" RowDefinitions="50,1,*" RowSpacing="20">
                         <Label
                             Grid.Row="0" VerticalOptions="Center"
-                            Text="Credentials Types" Style="{StaticResource Title1}"/>
+                            Text="{Binding LocalizationResourceManager[CredentialTypes], Mode=OneWay}" 
+                            Style="{StaticResource Title1}"/>
 
                         <Border Stroke="{StaticResource SecondaryBrush}" 
                                 StrokeThickness="1" Background="Transparent"
@@ -251,7 +263,8 @@
                             </Border.GestureRecognizers>
                             <HorizontalStackLayout Margin="14,12" Spacing="12">
                                 <Label Text="{x:Static fonts:IconFont.ChevronDown}" FontFamily="FontAwesome" VerticalOptions="Center"/>
-                                <Label Text="Today" VerticalOptions="Center"/>
+                                <Label Text="{Binding LocalizationResourceManager[Today], Mode=OneWay}" 
+                                       VerticalOptions="Center"/>
                             </HorizontalStackLayout>
                         </Border>
                         <BoxView Style="{StaticResource HRule}" Grid.Row="1"/>

@@ -5,22 +5,19 @@
     xmlns:vms="clr-namespace:AstroManagerClient.ViewModels"
     xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:toolkit="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:layouts="clr-namespace:AstroManagerClient.Layouts"
     x:Class="AstroManagerClient.Pages.Popups.FilterPopupPage"
     x:DataType="vms:FilterPopupViewModel"
     CanBeDismissedByTappingOutsideOfPopup="True"
     Color="{StaticResource DarkBg1}">
-    
-    <Grid RowDefinitions="108,*">
-        <VerticalStackLayout VerticalOptions="Center" Margin="24">
-            <Label Text="Choose a type" Style="{StaticResource LargeTitle}"/>
-            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
-            <BoxView Style="{StaticResource HRule}" Margin="0,24,0,0"/>
-        </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center">
-            <Picker SelectedItem="{Binding Type}" Margin="0,24,0,0"
-                    WidthRequest="320" HeightRequest="45"
-                    HorizontalOptions="FillAndExpand">
-                <Picker.ItemsSource>
+
+    <Grid RowDefinitions="*,108">
+        <VerticalStackLayout HorizontalOptions="Center" Margin="20">
+            <layouts:HorizontalWrapLayout 
+                 Spacing="20"
+                 RadioButtonGroup.GroupName="CredentialTypes"
+                 RadioButtonGroup.SelectedValue="{Binding Type}">
+                <BindableLayout.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Logins</x:String>
                         <x:String>Passwords</x:String>
@@ -28,10 +25,67 @@
                         <x:String>Credit Card</x:String>
                         <x:String>Identity</x:String>
                     </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-            <Button Margin="24" Text="Save Filter" HorizontalOptions="Center"
-                    Command="{Binding FilterCredentialCommand}"/>
+                </BindableLayout.ItemsSource>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton ControlTemplate="{StaticResource ButtonRadioTemplate}"
+                                Value="{Binding .}">
+                            <RadioButton.Triggers>
+                                <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
+                                            Value="Logins">
+                                    <Setter Property="Content" 
+                                             Value="{Binding 
+                                                 Source={RelativeSource 
+                                                 AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                                 Path=LocalizationResourceManager[Logins], 
+                                                 Mode=OneWay}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
+                                            Value="Passwords">
+                                    <Setter Property="Content" 
+                                             Value="{Binding 
+                                                 Source={RelativeSource 
+                                                 AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                                 Path=LocalizationResourceManager[Passwords], 
+                                                 Mode=OneWay}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
+                                             Value="Secure Note">
+                                    <Setter Property="Content" 
+                                             Value="{Binding 
+                                                 Source={RelativeSource 
+                                                 AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                                 Path=LocalizationResourceManager[SecureNote], 
+                                                 Mode=OneWay}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
+                                             Value="Credit Card">
+                                    <Setter Property="Content" 
+                                             Value="{Binding 
+                                                 Source={RelativeSource 
+                                                 AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                                 Path=LocalizationResourceManager[CreditCard], 
+                                                 Mode=OneWay}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
+                                             Value="Identity">
+                                    <Setter Property="Content" 
+                                             Value="{Binding 
+                                                 Source={RelativeSource 
+                                                 AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                                 Path=LocalizationResourceManager[Identity], 
+                                                 Mode=OneWay}"/>
+                                </DataTrigger>
+                            </RadioButton.Triggers>
+                        </RadioButton>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </layouts:HorizontalWrapLayout>
+            
         </VerticalStackLayout>
+        <Button Grid.Row="1" Margin="24" 
+                Text="{Binding LocalizationResourceManager[Save], Mode=OneWay}" 
+                HorizontalOptions="Center"
+                Command="{Binding FilterCredentialCommand}"/>
     </Grid>
 </toolkit:Popup>

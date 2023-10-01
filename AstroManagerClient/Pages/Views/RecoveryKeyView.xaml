@@ -13,7 +13,8 @@
     <Grid RowDefinitions="*,108">
         <ScrollView>
             <VerticalStackLayout Margin="24" Spacing="20">
-                <Label Text="Recovery Keys" Style="{StaticResource Title1}"/>
+                <Label Text="{Binding LocalizationResourceManager[RecoveryKeys], Mode=OneWay}" 
+                       Style="{StaticResource Title1}"/>
                 <HorizontalStackLayout Spacing="12" 
                                        RadioButtonGroup.GroupName="Key Visibility"
                                        RadioButtonGroup.SelectedValue="{Binding IsHidden}">
@@ -22,13 +23,17 @@
                             <Setter Property="ControlTemplate" Value="{StaticResource ButtonRadioTemplate}"/>
                         </Style>
                     </HorizontalStackLayout.Resources>
-                    <RadioButton Content="Hide Values" Value="Hide" IsChecked="True" />
-                    <RadioButton Content="Show Values" Value="Show"/>
+                    <RadioButton Content="{Binding LocalizationResourceManager[HideValues], Mode=OneWay}" 
+                                 Value="Hide" IsChecked="True" />
+                    <RadioButton Content="{Binding LocalizationResourceManager[ShowValues], Mode=OneWay}" 
+                                 Value="Show"/>
                 </HorizontalStackLayout>
 
                 <Grid ColumnDefinitions="60*,20*">
-                    <Label Text="Value" Style="{StaticResource Headline}"/>
-                    <Label Text="Index" Style="{StaticResource Headline}" Grid.Column="1"/>
+                    <Label Text="{Binding LocalizationResourceManager[Value], Mode=OneWay}" 
+                           Style="{StaticResource Headline}"/>
+                    <Label Text="{Binding LocalizationResourceManager[Index], Mode=OneWay}" 
+                           Style="{StaticResource Headline}" Grid.Column="1"/>
                 </Grid>
                 <BoxView Style="{StaticResource HRule}"/>
 
@@ -75,7 +80,8 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
-        <Button Text="Copy" HorizontalOptions="Fill" Margin="24" Grid.Row="1"
+        <Button Text="{Binding LocalizationResourceManager[Copy], Mode=OneWay}" 
+                HorizontalOptions="Fill" Margin="24" Grid.Row="1"
                 Command="{Binding CopyCommand}"/>
     </Grid>
 </ContentView>

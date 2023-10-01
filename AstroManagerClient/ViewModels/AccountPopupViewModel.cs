@@ -2,6 +2,7 @@
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
+using AstroManagerClient.Models.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -9,11 +10,13 @@ using CommunityToolkit.Mvvm.Messaging;
 namespace AstroManagerClient.ViewModels;
 public partial class AccountPopupViewModel : BaseViewModel
 {
+    private readonly IErrorDisplayModel _error;
     private readonly IMasterPasswordEndpoint _passwordEndpoint;
     private readonly ILoggedInUser _loggedInUser;
 
     public AccountPopupViewModel()
     {
+        _error = App.Services.GetService<IErrorDisplayModel>();
         _passwordEndpoint = App.Services.GetService<IMasterPasswordEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
 
@@ -47,6 +50,14 @@ public partial class AccountPopupViewModel : BaseViewModel
         WeakReferenceMessenger.Default.Send(message);
     }
 
+    private void OpenError(string message)
+    {
+        ClosePopup();
+
+        _error.SetErrorMessage(message);
+        OpenErrorPopup();
+    }
+
     [RelayCommand]
     private async Task VerifyPasswordAsync()
     {
@@ -66,7 +77,7 @@ public partial class AccountPopupViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenError(ex.Message);
         }
     }
 
@@ -99,7 +110,7 @@ public partial class AccountPopupViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            OpenError(ex.Message);
         }
     }
 }

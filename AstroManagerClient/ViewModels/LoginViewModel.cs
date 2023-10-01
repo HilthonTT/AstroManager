@@ -30,8 +30,6 @@ public partial class LoginViewModel : BaseViewModel
         _error = error;
     }
 
-    public LocalizationResourceManager LocalizationResourceManager => LocalizationResourceManager.Instance;
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsNotAbleToEnterMasterPassword))]
     [NotifyPropertyChangedFor(nameof(IsNotLoggedIn))]
@@ -60,7 +58,7 @@ public partial class LoginViewModel : BaseViewModel
 
     private void ShowMessage(string message)
     {
-        _error.ErrorMessage = $"{message}";
+        _error.SetErrorMessage(message);
         OpenErrorPopup();
     }
 
@@ -108,17 +106,16 @@ public partial class LoginViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(MasterPassword))
         {
-            ShowMessage("You must enter a password.");
+            ShowMessage(LocalizationResourceManager["MustEnterPassword"].ToString());
             return;
         }
 
         try
         {
             bool isPasswordCorrect = await _passwordEndpoint.VerifyPasswordAsync(_loggedInUser.Id, MasterPassword);
-
             if (isPasswordCorrect is false)
             {
-                ShowMessage("Your password is incorrect.");
+                ShowMessage(LocalizationResourceManager["PasswordIncorrect"].ToString());
                 return;
             }
 
@@ -141,25 +138,25 @@ public partial class LoginViewModel : BaseViewModel
     {
         if (string.IsNullOrWhiteSpace(_loggedInUser.Id))
         {
-            ShowMessage("You must be logged in to create a master password.");
+            ShowMessage(LocalizationResourceManager["MustBeLoggedIn"].ToString());
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(MasterPassword))
         {
-            ShowMessage("You must enter a master password.");
+            ShowMessage(LocalizationResourceManager["MustEnterPassword"].ToString());
             return false;
         }
 
         if (string.IsNullOrWhiteSpace(ReEnteredMasterPassword))
         {
-            ShowMessage("You must enter your master password again.");
+            ShowMessage(LocalizationResourceManager["MustReEnterPassword"].ToString());
             return false;
         }
 
         if (MasterPassword.Equals(ReEnteredMasterPassword) is false)
         {
-            ShowMessage("You've inputed the wrong master password.");
+            ShowMessage(LocalizationResourceManager["PasswordDontMatch"].ToString());
             return false;
         }
 

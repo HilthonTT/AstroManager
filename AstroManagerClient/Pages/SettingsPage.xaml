@@ -22,7 +22,8 @@
           Margin="24,24,0,0"
           x:Name="PageGrid">
         <VerticalStackLayout VerticalOptions="Center">
-            <Label Text="Settings" Style="{StaticResource LargeTitle}"/>
+            <Label Text="{Binding LocalizationResourceManager[Settings], Mode=OneWay}" 
+                   Style="{StaticResource LargeTitle}"/>
             <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
             <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,0"/>
         </VerticalStackLayout>
@@ -48,7 +49,7 @@
                                 HorizontalOptions="Center" Style="{StaticResource Title2}"/>
                         </VerticalStackLayout>
 
-                        <Image Grid.RowSpan="2" VerticalOptions="Start" Source="kitty.png" 
+                        <Image Grid.RowSpan="2" VerticalOptions="Start" Source="astronaut.png" 
                             WidthRequest="120" HeightRequest="120"
                             Aspect="AspectFit" HorizontalOptions="Center"/>
                     </Grid>
@@ -57,7 +58,8 @@
                         <TapGestureRecognizer Command="{Binding OpenSettingsDialogCommand}"/>
                     </VerticalStackLayout.GestureRecognizers>
                 </VerticalStackLayout>
-                <Label Grid.Row="1" Text="Languages" Style="{StaticResource Title1}"/>
+                <Label Grid.Row="1" Text="{Binding LocalizationResourceManager[Languages], Mode=OneWay}"
+                       Style="{StaticResource Title1}"/>
                 <layouts:HorizontalWrapLayout Grid.Row="2" Spacing="20"
                                               BindableLayout.ItemsSource="{Binding Languages}">
                     <BindableLayout.ItemTemplate>
@@ -76,7 +78,11 @@
                                                      Spacing="6">
                                     <Label Text="{Binding Language}" HorizontalOptions="Center" Style="{StaticResource Title2}"
                                            HorizontalTextAlignment="Center"/>
-                                    <Button Text="Choose Language"  
+                                    <Button Text="{Binding 
+                                                Source={RelativeSource 
+                                                AncestorType={x:Type vms:SettingsViewModel}}, 
+                                                Path=LocalizationResourceManager[ChooseLanguage], 
+                                                Mode=OneWay}"  
                                             CommandParameter="{Binding .}"
                                             HorizontalOptions="Center"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vms:SettingsViewModel}}, Path=ChangeCultureCommand}"/>
@@ -92,7 +98,7 @@
                 </layouts:HorizontalWrapLayout>
                 <VerticalStackLayout Grid.Row="3">
                     <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,24"/>
-                    <Label  Text="Themes" Style="{StaticResource Title1}"/>
+                    <Label  Text="{Binding LocalizationResourceManager[Themes]}" Style="{StaticResource Title1}"/>
                 </VerticalStackLayout>
                 <layouts:HorizontalWrapLayout Grid.Row="4" Spacing="20" 
                                               BindableLayout.ItemsSource="{Binding Themes}">
@@ -112,7 +118,11 @@
                                                      Spacing="6">
                                     <Label Text="{Binding Theme}" HorizontalOptions="Center" Style="{StaticResource Title2}"
                                            HorizontalTextAlignment="Center"/>
-                                    <Button Text="Choose Theme"  
+                                    <Button Text="{Binding 
+                                                Source={RelativeSource 
+                                                AncestorType={x:Type vms:SettingsViewModel}}, 
+                                                Path=LocalizationResourceManager[ChooseTheme], 
+                                                Mode=OneWay}"  
                                             CommandParameter="{Binding .}"
                                             HorizontalOptions="Center"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vms:SettingsViewModel}}, Path=ChangeThemeCommand}"/>

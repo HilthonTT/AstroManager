@@ -46,7 +46,7 @@
                                 </Border.StrokeShape>
                                 <Entry 
                                     Background="Transparent"
-                                    Placeholder="Master Password"
+                                    Placeholder="{Binding LocalizationResourceManager[MasterPassword], Mode=OneWay}"
                                     Text="{Binding MasterPassword}"
                                     PlaceholderColor="{StaticResource TextSecondary}"
                                     TextColor="White"
@@ -55,8 +55,8 @@
                                     FontSize="14"
                                     IsPassword="True"/>
                             </Border>
-                            
-                            <Button Text="Verify Password" 
+
+                            <Button Text="{Binding LocalizationResourceManager[VerifyPassword], Mode=OneWay}" 
                                     Margin="0,0,0,5"
                                     Command="{Binding VerifyPasswordCommand}"
                                     HorizontalOptions="Center"/>
@@ -81,7 +81,7 @@
                                 </Border.StrokeShape>
                                 <Entry 
                                     Background="Transparent"
-                                    Placeholder="New Password"
+                                    Placeholder="{Binding LocalizationResourceManager[NewPassword], Mode=OneWay}"
                                     Text="{Binding NewPassword}"
                                     PlaceholderColor="{StaticResource TextSecondary}"
                                     TextColor="White"
@@ -90,7 +90,7 @@
                                     FontSize="14"
                                     IsPassword="True"/>
                             </Border>
-                            <Button Text="Confirm New Password" 
+                            <Button Text="{Binding LocalizationResourceManager[ConfirmNewPassword], Mode=OneWay}" 
                                     Margin="0,0,0,5"
                                     Command="{Binding ChangePasswordCommand}"
                                     HorizontalOptions="Center"/>
@@ -99,7 +99,7 @@
                     </VerticalStackLayout>
                 </VerticalStackLayout>
 
-                <Image Grid.RowSpan="2" VerticalOptions="Start" Source="kitty.png" 
+                <Image Grid.RowSpan="2" VerticalOptions="Start" Source="astronaut.png" 
                         WidthRequest="120" HeightRequest="120"
                         Aspect="AspectFit" HorizontalOptions="Center"/>
             </Grid>

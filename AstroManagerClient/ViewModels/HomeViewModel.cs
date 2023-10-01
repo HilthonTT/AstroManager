@@ -68,7 +68,7 @@ public partial class HomeViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }
@@ -83,7 +83,7 @@ public partial class HomeViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }
@@ -97,7 +97,7 @@ public partial class HomeViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }
@@ -121,7 +121,7 @@ public partial class HomeViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }
@@ -153,7 +153,7 @@ public partial class HomeViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }

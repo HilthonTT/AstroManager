@@ -117,7 +117,169 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BreachedCredentials" xml:space="preserve">
+    <value>Breached Credentials</value>
+  </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Choose Language</value>
+  </data>
+  <data name="ChooseTheme" xml:space="preserve">
+    <value>Choose Theme</value>
+  </data>
+  <data name="ChooseType" xml:space="preserve">
+    <value>Choose a type</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="ConfirmNewPassword" xml:space="preserve">
+    <value>Confirm New Password</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CredentialReport" xml:space="preserve">
+    <value>Credential Report</value>
+  </data>
+  <data name="CredentialTypes" xml:space="preserve">
+    <value>Credential Types</value>
+  </data>
+  <data name="CreditCard" xml:space="preserve">
+    <value>Credit Card</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="DateAdded" xml:space="preserve">
+    <value>Date Added</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Field" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="FilterButtonDescription" xml:space="preserve">
+    <value>Button that opens a filter dialog</value>
+  </data>
+  <data name="HideValues" xml:space="preserve">
+    <value>Hide Values</value>
+  </data>
+  <data name="Identity" xml:space="preserve">
+    <value>Identity</value>
+  </data>
+  <data name="Index" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="LastModified" xml:space="preserve">
+    <value>Last Modified</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="Logins" xml:space="preserve">
+    <value>Logins</value>
+  </data>
+  <data name="MasterPassword" xml:space="preserve">
+    <value>Master Password</value>
+  </data>
+  <data name="MasterPasswordAgain" xml:space="preserve">
+    <value>Enter Master Password Again</value>
+  </data>
+  <data name="MustBeLoggedIn" xml:space="preserve">
+    <value>You must be logged in</value>
+  </data>
+  <data name="MustEnterPassword" xml:space="preserve">
+    <value>You must enter a password</value>
+  </data>
+  <data name="MustReEnterPassword" xml:space="preserve">
+    <value>You must enter your password again</value>
+  </data>
+  <data name="MyCredentials" xml:space="preserve">
+    <value>My Credentials</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="NoTitle" xml:space="preserve">
+    <value>No title provided</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="PasswordDontMatch" xml:space="preserve">
+    <value>Your passwords don't match</value>
+  </data>
+  <data name="PasswordIncorrect" xml:space="preserve">
+    <value>Your password is incorrect</value>
+  </data>
+  <data name="Passwords" xml:space="preserve">
+    <value>Passwords</value>
+  </data>
+  <data name="RecentlyUpdated" xml:space="preserve">
+    <value>Recently Updated</value>
+  </data>
+  <data name="RecoveryKeys" xml:space="preserve">
+    <value>Recovery Keys</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveFilter" xml:space="preserve">
+    <value>Sa</value>
+  </data>
+  <data name="SearchHomePage" xml:space="preserve">
+    <value>Search for login, identity, etc...</value>
+  </data>
+  <data name="SecureNote" xml:space="preserve">
+    <value>Secure Note</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ShowData" xml:space="preserve">
+    <value>Show Data</value>
+  </data>
+  <data name="ShowValues" xml:space="preserve">
+    <value>Show Values</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Total2FAPasswords" xml:space="preserve">
+    <value>Total of 2FA passwords</value>
+  </data>
+  <data name="TotalReusedPasswords" xml:space="preserve">
+    <value>Total of reused passwords</value>
+  </data>
+  <data name="TotalWeakPasswords" xml:space="preserve">
+    <value>Total of weak passwords</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="VerifyPassword" xml:space="preserve">
+    <value>Verify Password</value>
   </data>
 </root>

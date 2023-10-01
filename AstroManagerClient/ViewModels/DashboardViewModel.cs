@@ -4,6 +4,7 @@ using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
 using AstroManagerClient.Models.Interfaces;
+using AstroManagerClient.Pages;
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -70,9 +71,15 @@ public partial class DashboardViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         } 
+    }
+
+    [RelayCommand]
+    private async Task OpenHomePageAsync()
+    {
+        await Shell.Current.GoToAsync(nameof(HomePage), true);
     }
 
     [RelayCommand]

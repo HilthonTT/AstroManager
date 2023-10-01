@@ -62,13 +62,14 @@
                                     <Entry Background="Transparent" 
                                            TextColor="White"
                                            PlaceholderColor="{StaticResource TextSecondary}"
-                                           Placeholder="Master Password"
+                                           Placeholder="{Binding LocalizationResourceManager[MasterPassword], Mode=OneWay}"
                                            WidthRequest="370" HeightRequest="40" 
                                            IsPassword="True" 
                                            Margin="8,0"
                                            Text="{Binding MasterPassword}"/>
                                 </Border>
-                                <Button Text="Login" Command="{Binding VerifyMasterPasswordCommand}" 
+                                <Button Text="{Binding LocalizationResourceManager[Login], Mode=OneWay}" 
+                                        Command="{Binding VerifyMasterPasswordCommand}" 
                                         HorizontalOptions="Center"
                                         WidthRequest="250"/>
                             </VerticalStackLayout>
@@ -90,7 +91,7 @@
                                     <Entry Background="Transparent" 
                                        TextColor="White"
                                        PlaceholderColor="{StaticResource TextSecondary}"
-                                       Placeholder="Master Password"
+                                       Placeholder="{Binding LocalizationResourceManager[MasterPassword], Mode=OneWay}"
                                        WidthRequest="370" HeightRequest="40" 
                                        IsPassword="True" 
                                        Margin="8,0"
@@ -112,13 +113,14 @@
                                     <Entry Background="Transparent" 
                                        TextColor="White"
                                        PlaceholderColor="{StaticResource TextSecondary}"
-                                       Placeholder="Enter Master Password Again"
+                                       Placeholder="{Binding LocalizationResourceManager[MasterPasswordAgain], Mode=OneWay}"
                                        WidthRequest="370" HeightRequest="40" 
                                        IsPassword="True" 
                                        Margin="8,0"
                                        Text="{Binding ReEnteredMasterPassword}"/>
                                 </Border>
-                                <Button Text="Login" Command="{Binding CreateMasterPasswordCommand}" 
+                                <Button Text="{Binding LocalizationResourceManager[Login], Mode=OneWay}" 
+                                        Command="{Binding CreateMasterPasswordCommand}" 
                                         HorizontalOptions="Center"
                                         WidthRequest="250"/>
                             </VerticalStackLayout>

@@ -69,7 +69,7 @@ public partial class BreachedAccountViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }
@@ -92,7 +92,7 @@ public partial class BreachedAccountViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
         finally
@@ -120,7 +120,7 @@ public partial class BreachedAccountViewModel : BaseViewModel
         }
         catch (Exception ex)
         {
-            _error.ErrorMessage = $"Something went wrong on our side. {ex.Message}";
+            _error.SetErrorMessage(ex.Message);
             OpenErrorPopup();
         }
     }
