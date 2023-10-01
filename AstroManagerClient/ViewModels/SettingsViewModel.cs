@@ -48,12 +48,13 @@ public partial class SettingsViewModel : BaseViewModel
 
     private void LoadLanguages()
     {
+        string currentLanguageCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
         var languages = new ObservableCollection<LanguageModel>()
         {
-            new() { Language = "English-US", Color = PrimaryColor },
-            new() { Language = "French-FR" },
-            new() { Language = "German-DE" },
-            new() { Language = "Indonesian-ID" },
+            new() { Language = "English", Color = GetColorForLanguage("en", currentLanguageCode) },
+            new() { Language = "Français", Color = GetColorForLanguage("fr", currentLanguageCode) },
+            new() { Language = "Deutsch", Color = GetColorForLanguage("de", currentLanguageCode) },
+            new() { Language = "Bahasa Indonesia", Color = GetColorForLanguage("id", currentLanguageCode) },
         };
 
         Languages = new(languages);
@@ -68,6 +69,11 @@ public partial class SettingsViewModel : BaseViewModel
         };
 
         Themes = new(themes);
+    }
+
+    private static Color GetColorForLanguage(string languageCode, string selectedLanguageCode)
+    {
+        return languageCode.Equals(selectedLanguageCode, StringComparison.OrdinalIgnoreCase) ? PrimaryColor : DarkBg2Brush;
     }
 
     [RelayCommand]
@@ -91,13 +97,24 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private void ChangeCulture(LanguageModel language)
     {
+        // Set the color for the selected language
         language.Color = PrimaryColor;
 
-        var cultureToSwitch = language.Language.Equals("English-US", StringComparison.InvariantCultureIgnoreCase) 
-            ? new CultureInfo("en-US") : new CultureInfo("fr-FR");
+        var languageCultureMap = new Dictionary<string, string>
+        {
+            { "English", "en-US" },
+            { "Français", "fr-FR" }, // French (France) in native language
+            { "Deutsch", "de-DE" },  // German (Germany) in native language
+            { "Bahasa Indonesia", "id-ID" }, // Indonesian (Indonesia) in native language
+        };
 
-        LocalizationResourceManager.Instance.SetCulture(cultureToSwitch);
+        if (languageCultureMap.TryGetValue(language.Language, out string cultureCode))
+        {
+            var cultureToSwitch = new CultureInfo(cultureCode);
+            LocalizationResourceManager.Instance.SetCulture(cultureToSwitch);
+        }
 
+        // Set colors for all languages based on selection
         foreach (var lang in Languages)
         {
             lang.Color = lang.Language == language.Language ? PrimaryColor : DarkBg2Brush;
