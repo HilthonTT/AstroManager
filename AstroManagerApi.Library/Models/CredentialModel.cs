@@ -20,7 +20,7 @@ public class CredentialModel
 
     [Required(ErrorMessage = "The fields are required.")]
     public List<FieldModel> Fields { get; set; } = new();
-    public string Notes { get; set; }
+    public bool Favorited { get; set; } = false;
     public DateTime DateAdded { get; set; } = DateTime.UtcNow;
     public DateTime DateModified { get; set; } = DateTime.UtcNow;
 }

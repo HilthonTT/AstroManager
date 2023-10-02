@@ -36,7 +36,6 @@ public partial class CredentialDisplayModel : ObservableObject
         Id = credential.Id;
         Title = credential.Title;
         Fields = credential.Fields.Select(x => new FieldDisplayModel(x)).ToObservableCollection();
-        Notes = credential.Notes;
         Type = credential.Type;
         User = credential.User;
         DateAdded = credential.DateAdded;

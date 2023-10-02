@@ -12,19 +12,16 @@ public class MongoMasterPasswordData : IMasterPasswordData
     private readonly IDbConnection _db;
     private readonly IRecoveryKeyGenerator _keyGenerator;
     private readonly IDistributedCacheHelper _cache;
-    private readonly ITextHasher _hasher;
 
     public MongoMasterPasswordData(
         IDbConnection db,
         IRecoveryKeyGenerator keyGenerator,
-        IDistributedCacheHelper cache,
-        ITextHasher hasher)
+        IDistributedCacheHelper cache)
     {
         _passwords = db.MasterPasswordCollection;
         _db = db;
         _keyGenerator = keyGenerator;
         _cache = cache;
-        _hasher = hasher;
     }
 
     public async Task<MasterPasswordModel> GetUsersMasterPasswordAsync(string userId)
@@ -55,7 +52,6 @@ public class MongoMasterPasswordData : IMasterPasswordData
             var db = client.GetDatabase(_db.DbName);
             var passwordInTransaction = db.GetCollection<MasterPasswordModel>(_db.MasterPasswordCollectionName);
 
-            password.HashedPassword = _hasher.HashPlainText(password.HashedPassword);
             await passwordInTransaction.InsertOneAsync(session, password);
 
             var recoveryKeyInTransaction = db.GetCollection<RecoveryKeyModel>(_db.RecoveryKeyCollectionName);

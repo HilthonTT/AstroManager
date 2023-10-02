@@ -25,6 +25,8 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
         _passwordData = passwordData;
         _recoveryKeyData = recoveryKeyData;
         _hasher = hasher;
+
+        _hasher.HashPlainText("e");
     }
 
     [HttpGet("{userId}")]
@@ -61,7 +63,8 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
                 return BadRequest("You already have a master password defined.");
             }
 
-            var createdPassword = await _passwordData.CreateMasterPasswordAsync(password);
+            var hashedMaster = _hasher.HashMasterPassword(password);
+            var createdPassword = await _passwordData.CreateMasterPasswordAsync(hashedMaster);
             return Ok(createdPassword);
         }
         catch (Exception ex)
@@ -95,10 +98,10 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
     private async Task<IActionResult> ResetMasterPassword(MasterPasswordModel master)
     {
         var userMasterPassword = await _passwordData.GetUsersMasterPasswordAsync(master.User.Id);
-        string inputedPassword = master.HashedPassword;
+        userMasterPassword.HashedPassword = master.HashedPassword;
 
-        userMasterPassword.HashedPassword = _hasher.HashPlainText(inputedPassword);
-        await _passwordData.UpdateMasterPasswordAsync(userMasterPassword);
+        var hashedMaster = _hasher.HashMasterPassword(userMasterPassword);
+        await _passwordData.UpdateMasterPasswordAsync(hashedMaster);
 
         return Ok("Master Password resetted.");
     }
@@ -106,7 +109,7 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
     private async Task<IActionResult> ResetMasterPasswordWithRecoveryKeys(PasswordResetModel reset)
     {
         var recoveryKey = await _recoveryKeyData.GetUsersRecoveryKeyAsync(reset.Master.User.Id);
-        var hashedResetRecoveryKeys = reset.RecoveryKeys.Select(key => _hasher.HashPlainText(key)).ToHashSet();
+        var hashedResetRecoveryKeys = reset.RecoveryKeys.ToHashSet();
 
         if (HashSet<string>.CreateSetComparer().Equals(hashedResetRecoveryKeys, recoveryKey.RecoveryKeys))
         {
@@ -126,8 +129,7 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
         {
             LogRequestSource();
 
-            var hashedMasterPassword = await _passwordData.GetUsersMasterPasswordAsync(userId);
-            bool isCorrect = _hasher.VerifyPassword(password, hashedMasterPassword.HashedPassword);
+            bool isCorrect = await _hasher.VerifyPasswordAsync(userId, password);
 
             return Ok(isCorrect);
         }

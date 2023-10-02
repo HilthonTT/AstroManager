@@ -24,7 +24,6 @@ public static class ModelConverter
             Title = credentialDisplay.Title,
             Type = credentialDisplay.Type,
             Fields = listOfFields,
-            Notes = credentialDisplay.Notes,
             User = credentialDisplay.User,
             DateAdded = credentialDisplay.DateAdded,
             DateModified = DateTime.UtcNow,

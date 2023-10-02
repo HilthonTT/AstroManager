@@ -75,7 +75,7 @@
                             </VerticalStackLayout>
                         </Grid>
                         <Grid IsVisible="{Binding IsNotAbleToEnterMasterPassword}">
-                            <VerticalStackLayout Spacing="5">
+                            <VerticalStackLayout Spacing="10">
 
                                 <Border 
                                     HeightRequest="48"

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace AstroManagerApi.Library.Extensions;
@@ -53,6 +54,8 @@ public class DistributedCacheHelper : IDistributedCacheHelper
     {
         try
         {
+            await _redisCache.RemoveAsync(recordId);
+
             string jsonData = await _redisCache.GetStringAsync(recordId);
 
             if (string.IsNullOrWhiteSpace(jsonData))

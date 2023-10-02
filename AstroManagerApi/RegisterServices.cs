@@ -41,7 +41,7 @@ public static class RegisterServices
         
         builder.Services.AddTransient<IDistributedCacheHelper, DistributedCacheHelper>();
         builder.Services.AddTransient<IRecoveryKeyGenerator, RecoveryKeyGenerator>();
-        builder.Services.AddTransient<ITextHasher, TextHasher>();
+        builder.Services.AddSingleton<ITextHasher, TextHasher>();
 
         builder.Services.AddSingleton<IAesEncryptor, AesEncryptor>();
         builder.Services.AddSingleton<IDbConnection, DbConnection>();

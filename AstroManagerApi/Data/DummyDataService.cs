@@ -248,7 +248,6 @@ public class DummyDataService : IDummyDataService
             Type = loginType,
             User = new BasicUserModel(user),
             Fields = loginTemplate?.Fields,
-            Notes = "",
         };
 
         await _credentialData.CreateCredentialAsync(credential);

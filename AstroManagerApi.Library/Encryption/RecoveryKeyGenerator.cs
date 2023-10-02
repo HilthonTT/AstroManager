@@ -6,12 +6,6 @@ namespace AstroManagerApi.Library.Encryption;
 public class RecoveryKeyGenerator : IRecoveryKeyGenerator
 {
     private const int NumberOfKeys = 3;
-    private readonly ITextHasher _hasher;
-
-    public RecoveryKeyGenerator(ITextHasher hasher)
-    {
-        _hasher = hasher;
-    }
 
     private static string GenerateRecoveryKey()
     {
@@ -36,15 +30,9 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
 
         foreach (var key in request.PlainRecoveryKeys)
         {
-            string hashedKey = _hasher.HashPlainText(key);
-            request.Recovery.RecoveryKeys.Add(hashedKey);
+            request.Recovery.RecoveryKeys.Add(key);
         }
 
         return request;
-    }
-
-    public bool VerifyKey(string key, string hashedKey)
-    {
-        return _hasher.VerifyPassword(key, hashedKey);
     }
 }
