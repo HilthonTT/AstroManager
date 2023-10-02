@@ -55,7 +55,7 @@ public class MongoMasterPasswordData : IMasterPasswordData
             await passwordInTransaction.InsertOneAsync(session, password);
 
             var recoveryKeyInTransaction = db.GetCollection<RecoveryKeyModel>(_db.RecoveryKeyCollectionName);
-            var recoveryRequest = _keyGenerator.GenerateRequest();
+            var recoveryRequest = _keyGenerator.GenerateRecoveryRequest();
             recoveryRequest.Recovery.User = password.User;
             var recoveryKey = new RecoveryKeyModel(recoveryRequest);
 

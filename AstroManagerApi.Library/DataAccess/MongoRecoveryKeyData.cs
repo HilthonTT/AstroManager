@@ -45,8 +45,9 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
     {
         string key = CacheNamePrefix + user.Id;
 
-        var recoveryRequest = _keyGenerator.GenerateRequest();
+        var recoveryRequest = _keyGenerator.GenerateRecoveryRequest();
         recoveryRequest.Recovery.User = new BasicUserModel(user);
+
         var recoveryKey = new RecoveryKeyModel(recoveryRequest);
 
         await _recoveryKeys.InsertOneAsync(recoveryKey);

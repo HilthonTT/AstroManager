@@ -7,7 +7,7 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
 {
     private const int NumberOfKeys = 3;
 
-    private static string GenerateRecoveryKey()
+    private static string GenerateRandomBase64Key()
     {
         byte[] keyBytes = new byte[32];
 
@@ -19,12 +19,12 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
         return Convert.ToBase64String(keyBytes);
     }
 
-    public RecoveryRequestModel GenerateRequest()
+    public RecoveryRequestModel GenerateRecoveryRequest()
     {
         var request = new RecoveryRequestModel();
         for (int i = 0; i < NumberOfKeys; i++)
         {
-            string plainkey = GenerateRecoveryKey();
+            string plainkey = GenerateRandomBase64Key();
             request.PlainRecoveryKeys.Add(plainkey);
         }
 
