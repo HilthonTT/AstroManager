@@ -28,7 +28,7 @@
 
         <Grid Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Center">
             <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                <Grid RowDefinitions="60, 300, 80" WidthRequest="420">
+                <Grid RowDefinitions="60, 350, 80" WidthRequest="420">
                     <Border Background="{StaticResource DarkBg2Brush}"
                         Stroke="{StaticResource DarkBg2Brush}"
                         StrokeThickness="1"
