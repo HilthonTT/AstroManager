@@ -2,7 +2,6 @@
 using AstroManagerApi.Library.Encryption.Interfaces;
 using AstroManagerApi.Library.Extensions.Interfaces;
 using AstroManagerApi.Library.Models;
-using AstroManagerApi.Library.Models.Request;
 using MongoDB.Driver;
 
 namespace AstroManagerApi.Library.DataAccess;
@@ -13,17 +12,20 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
     private readonly IUserData _userData;
     private readonly IDistributedCacheHelper _cache;
     private readonly IRecoveryKeyGenerator _keyGenerator;
+    private readonly ITextHasher _hasher;
 
     public MongoRecoveryKeyData(
         IDbConnection db,
         IUserData userData,
         IDistributedCacheHelper cache,
-        IRecoveryKeyGenerator keyGenerator)
+        IRecoveryKeyGenerator keyGenerator,
+        ITextHasher hasher)
     {
         _recoveryKeys = db.RecoveryKeyCollection;
         _userData = userData;
         _cache = cache;
         _keyGenerator = keyGenerator;
+        _hasher = hasher;
     }
     
     public async Task<RecoveryKeyModel> GetUsersRecoveryKeyAsync(string userId)
@@ -41,20 +43,23 @@ public class MongoRecoveryKeyData : IRecoveryKeyData
         return output;
     }
 
-    public async Task<RecoveryRequestModel> CreateRecoveryKeysAsync(UserModel user)
+    public async Task<RecoveryKeyModel> CreateRecoveryKeysAsync(UserModel user)
     {
         string key = CacheNamePrefix + user.Id;
 
-        var recoveryRequest = _keyGenerator.GenerateRecoveryRequest();
-        recoveryRequest.Recovery.User = new BasicUserModel(user);
+        var keyHashSet = _keyGenerator.GenerateBase64Keys();
+        var recovery = new RecoveryKeyModel
+        {
+            User = new(user),
+            RecoveryKeys = keyHashSet,
+        };
 
-        var recoveryKey = new RecoveryKeyModel(recoveryRequest);
+        var hashedRecovery = _hasher.HashRecoveryKeys(recovery);
 
-        await _recoveryKeys.InsertOneAsync(recoveryKey);
+        await _recoveryKeys.InsertOneAsync(hashedRecovery);
         await _cache.RemoveAsync(key);
 
-        recoveryRequest.Recovery = recoveryKey;
-
-        return recoveryRequest;
+        recovery.Id = hashedRecovery.Id;
+        return recovery;
     }
 }

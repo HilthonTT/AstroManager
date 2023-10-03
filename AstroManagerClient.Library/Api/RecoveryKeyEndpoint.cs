@@ -33,22 +33,18 @@ public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
 
             return output;
         }
-        else
-        {
-            return _api.NotFoundError<RecoveryKeyModel>(response);
-        }
+
+        return _api.NotFoundError<RecoveryKeyModel>(response);
     }
 
-    public async Task<RecoveryRequestModel> CreateRecoveryKeyAsync(UserModel user)
+    public async Task<RecoveryKeyModel> CreateRecoveryKeyAsync(UserModel user)
     {
         using var response = await _api.HttpClient.PostAsJsonAsync(Uri, user);
         if (response.IsSuccessStatusCode)
         {
-            return await response.Content.ReadFromJsonAsync<RecoveryRequestModel>();
+            return await response.Content.ReadFromJsonAsync<RecoveryKeyModel>();
         }
-        else
-        {
-            return _api.NotFoundError<RecoveryRequestModel>(response);
-        }
+
+        return _api.NotFoundError<RecoveryKeyModel>(response);
     }
 }

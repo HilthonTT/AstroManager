@@ -1,18 +1,10 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Encryption.Interfaces;
+﻿using AstroManagerApi.Library.Encryption.Interfaces;
 using AstroManagerApi.Library.Models;
 using BC = BCrypt.Net.BCrypt;
 
 namespace AstroManagerApi.Library.Encryption;
 public class TextHasher : ITextHasher
 {
-    private readonly IMasterPasswordData _passwordData;
-
-    public TextHasher(IMasterPasswordData passwordData)
-    {
-        _passwordData = passwordData;
-    }
-
     public MasterPasswordModel HashMasterPassword(MasterPasswordModel master)
     {
         string salt = BC.GenerateSalt();
@@ -24,9 +16,25 @@ public class TextHasher : ITextHasher
         return master;
     }
 
-    public async Task<bool> VerifyPasswordAsync(string userId, string password)
+    public RecoveryKeyModel HashRecoveryKeys(RecoveryKeyModel recoveryKey)
     {
-        var masterPassword = await _passwordData.GetUsersMasterPasswordAsync(userId);
+        var hashedKeys = new HashSet<string>();
+        string salt = BC.GenerateSalt();
+
+        recoveryKey.Salt = salt;
+
+        Parallel.ForEach(recoveryKey.RecoveryKeys, k =>
+        {
+            hashedKeys.Add(BC.HashPassword(k, salt));
+        });
+
+        recoveryKey.RecoveryKeys = hashedKeys;
+
+        return recoveryKey;
+    }
+
+    public bool VerifyPassword(string password, MasterPasswordModel masterPassword)
+    {
         if (masterPassword is null || string.IsNullOrWhiteSpace(masterPassword.Salt))
         {
             return false;
@@ -35,17 +43,5 @@ public class TextHasher : ITextHasher
         string saltedPassword = BC.HashPassword(password, masterPassword.Salt);
 
         return saltedPassword.Equals(masterPassword.HashedPassword);
-    }
-
-    public string HashPlainText(string plainText)
-    {
-        string salt = BC.GenerateSalt();
-
-        return BC.HashPassword(plainText, salt);
-    }
-
-    public bool VerifyPassword(string plainText, string hashedText)
-    {
-        return BC.Verify(plainText, hashedText);
     }
 }

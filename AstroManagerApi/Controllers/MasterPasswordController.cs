@@ -25,8 +25,6 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
         _passwordData = passwordData;
         _recoveryKeyData = recoveryKeyData;
         _hasher = hasher;
-
-        _hasher.HashPlainText("e");
     }
 
     [HttpGet("{userId}")]
@@ -129,7 +127,8 @@ public class MasterPasswordController : CustomController<MasterPasswordControlle
         {
             LogRequestSource();
 
-            bool isCorrect = await _hasher.VerifyPasswordAsync(userId, password);
+            var masterPassword = await _passwordData.GetUsersMasterPasswordAsync(userId);
+            bool isCorrect = _hasher.VerifyPassword(password, masterPassword);
 
             return Ok(isCorrect);
         }

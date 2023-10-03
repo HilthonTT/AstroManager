@@ -1,5 +1,4 @@
 ﻿using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Models.Request;
 using System.Security.Cryptography;
 
 namespace AstroManagerApi.Library.Encryption;
@@ -19,20 +18,19 @@ public class RecoveryKeyGenerator : IRecoveryKeyGenerator
         return Convert.ToBase64String(keyBytes);
     }
 
-    public RecoveryRequestModel GenerateRecoveryRequest()
+    public HashSet<string> GenerateBase64Keys()
     {
-        var request = new RecoveryRequestModel();
-        for (int i = 0; i < NumberOfKeys; i++)
+        var keys = new HashSet<string>();
+
+        while (keys.Count <= NumberOfKeys)
         {
-            string plainkey = GenerateRandomBase64Key();
-            request.PlainRecoveryKeys.Add(plainkey);
+            string key = GenerateRandomBase64Key();
+            if (keys.Contains(key) is false)
+            {
+                keys.Add(key);
+            }
         }
 
-        foreach (var key in request.PlainRecoveryKeys)
-        {
-            request.Recovery.RecoveryKeys.Add(key);
-        }
-
-        return request;
+        return keys;
     }
 }

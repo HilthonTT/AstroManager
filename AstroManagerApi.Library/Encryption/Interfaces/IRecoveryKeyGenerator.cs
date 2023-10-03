@@ -3,5 +3,5 @@
 namespace AstroManagerApi.Library.Encryption.Interfaces;
 public interface IRecoveryKeyGenerator
 {
-    RecoveryRequestModel GenerateRecoveryRequest();
+    HashSet<string> GenerateBase64Keys();
 }
