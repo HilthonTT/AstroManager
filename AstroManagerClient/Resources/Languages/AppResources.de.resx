@@ -120,8 +120,14 @@
   <data name="Alle" xml:space="preserve">
     <value>Anzeigen</value>
   </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>Geburtsdatum</value>
+  </data>
   <data name="BreachedCredentials" xml:space="preserve">
     <value>Identifizierte Zugangsdaten</value>
+  </data>
+  <data name="CardholderName" xml:space="preserve">
+    <value>Name des Karteninhabers</value>
   </data>
   <data name="ChooseLanguage" xml:space="preserve">
     <value>Sprache wählen</value>
@@ -134,6 +140,9 @@
   </data>
   <data name="Close" xml:space="preserve">
     <value>Schließen</value>
+  </data>
+  <data name="Company" xml:space="preserve">
+    <value>Unternehmen</value>
   </data>
   <data name="ConfirmNewPassword" xml:space="preserve">
     <value>Neues Passwort bestätigen</value>
@@ -156,8 +165,14 @@
   <data name="DateAdded" xml:space="preserve">
     <value>Hinzugefügtes Datum</value>
   </data>
+  <data name="Department" xml:space="preserve">
+    <value>Abteilung</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Bearbeiten</value>
+  </data>
+  <data name="ExpiryDate" xml:space="preserve">
+    <value>Ablaufdatum</value>
   </data>
   <data name="Export" xml:space="preserve">
     <value>Exportieren</value>
@@ -170,6 +185,12 @@
   </data>
   <data name="FilterButtonDescription" xml:space="preserve">
     <value>Schaltfläche, die ein Filterdialogfeld öffnet</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>Vorname</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Geschlecht</value>
   </data>
   <data name="HideValues" xml:space="preserve">
     <value>Werte ausblenden</value>
@@ -188,6 +209,9 @@
   </data>
   <data name="LastModified" xml:space="preserve">
     <value>Zuletzt geändert</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>Nachname</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Anmeldung</value>
@@ -216,11 +240,20 @@
   <data name="NewPassword" xml:space="preserve">
     <value>Neues Passwort</value>
   </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Anmerkungen</value>
+  </data>
   <data name="NoTitle" xml:space="preserve">
     <value>Kein Titel vorhanden</value>
   </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>Beruf</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passwort</value>
   </data>
   <data name="PasswordDontMatch" xml:space="preserve">
     <value>Ihre Passwörter stimmen nicht überein</value>
@@ -276,10 +309,22 @@
   <data name="Type" xml:space="preserve">
     <value>Typ</value>
   </data>
+  <data name="Username" xml:space="preserve">
+    <value>Benutzername</value>
+  </data>
+  <data name="ValidFrom" xml:space="preserve">
+    <value>Gültig ab</value>
+  </data>
   <data name="Value" xml:space="preserve">
     <value>Wert</value>
   </data>
+  <data name="VerificationNumber" xml:space="preserve">
+    <value>Prüfnummer</value>
+  </data>
   <data name="VerifyPassword" xml:space="preserve">
     <value>Passwort überprüfen</value>
+  </data>
+  <data name="Website" xml:space="preserve">
+    <value>Webseite</value>
   </data>
 </root>

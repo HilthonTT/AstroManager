@@ -61,11 +61,29 @@ namespace AstroManagerClient.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Birth Date.
+        /// </summary>
+        internal static string BirthDate {
+            get {
+                return ResourceManager.GetString("BirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Breached Credentials.
         /// </summary>
         internal static string BreachedCredentials {
             get {
                 return ResourceManager.GetString("BreachedCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cardholder Name.
+        /// </summary>
+        internal static string CardholderName {
+            get {
+                return ResourceManager.GetString("CardholderName", resourceCulture);
             }
         }
         
@@ -102,6 +120,15 @@ namespace AstroManagerClient.Resources.Languages {
         internal static string Close {
             get {
                 return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Company.
+        /// </summary>
+        internal static string Company {
+            get {
+                return ResourceManager.GetString("Company", resourceCulture);
             }
         }
         
@@ -169,11 +196,29 @@ namespace AstroManagerClient.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        internal static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expiry Date.
+        /// </summary>
+        internal static string ExpiryDate {
+            get {
+                return ResourceManager.GetString("ExpiryDate", resourceCulture);
             }
         }
         
@@ -210,6 +255,24 @@ namespace AstroManagerClient.Resources.Languages {
         internal static string FilterButtonDescription {
             get {
                 return ResourceManager.GetString("FilterButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First Name.
+        /// </summary>
+        internal static string FirstName {
+            get {
+                return ResourceManager.GetString("FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gender.
+        /// </summary>
+        internal static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
             }
         }
         
@@ -264,6 +327,15 @@ namespace AstroManagerClient.Resources.Languages {
         internal static string LastModified {
             get {
                 return ResourceManager.GetString("LastModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Name.
+        /// </summary>
+        internal static string LastName {
+            get {
+                return ResourceManager.GetString("LastName", resourceCulture);
             }
         }
         
@@ -349,6 +421,15 @@ namespace AstroManagerClient.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        internal static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No title provided.
         /// </summary>
         internal static string NoTitle {
@@ -358,11 +439,29 @@ namespace AstroManagerClient.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Occupation.
+        /// </summary>
+        internal static string Occupation {
+            get {
+                return ResourceManager.GetString("Occupation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         internal static string Ok {
             get {
                 return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        internal static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
@@ -529,11 +628,38 @@ namespace AstroManagerClient.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        internal static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Valid From.
+        /// </summary>
+        internal static string ValidFrom {
+            get {
+                return ResourceManager.GetString("ValidFrom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         internal static string Value {
             get {
                 return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verifaction Number.
+        /// </summary>
+        internal static string VerificationNumber {
+            get {
+                return ResourceManager.GetString("VerificationNumber", resourceCulture);
             }
         }
         
@@ -552,6 +678,15 @@ namespace AstroManagerClient.Resources.Languages {
         internal static string ViewAll {
             get {
                 return ResourceManager.GetString("ViewAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website.
+        /// </summary>
+        internal static string Website {
+            get {
+                return ResourceManager.GetString("Website", resourceCulture);
             }
         }
     }
