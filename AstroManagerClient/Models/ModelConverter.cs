@@ -26,6 +26,7 @@ public static class ModelConverter
             Fields = listOfFields,
             User = credentialDisplay.User,
             DateAdded = credentialDisplay.DateAdded,
+            Favorited = credentialDisplay.Favorited,
             DateModified = DateTime.UtcNow,
         };
 

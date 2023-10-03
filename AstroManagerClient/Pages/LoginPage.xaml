@@ -9,7 +9,7 @@
              x:DataType="vms:LoginViewModel"
              x:Class="AstroManagerClient.Pages.LoginPage"
              Shell.NavBarIsVisible="False"
-             Title="LoginPage">
+             Title="Login">
     <Grid RowDefinitions="100, 40, *"
           ColumnDefinitions="*"
           Margin="24,24,0,0"

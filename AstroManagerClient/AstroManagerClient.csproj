@@ -86,6 +86,8 @@
 	  <None Remove="Resources\Images\plus.png" />
 	  <None Remove="Resources\Images\secure_note.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\star.png" />
+	  <None Remove="Resources\Images\star_black.png" />
 	</ItemGroup>
 
 	<ItemGroup>

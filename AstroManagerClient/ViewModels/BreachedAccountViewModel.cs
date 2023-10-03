@@ -131,4 +131,21 @@ public partial class BreachedAccountViewModel : BaseViewModel
         var message = new ViewCredentialMessage(credential);
         WeakReferenceMessenger.Default.Send(message);
     }
+
+    [RelayCommand]
+    private async Task FavoriteCredentialAsync(CredentialDisplayModel credential)
+    {
+        try
+        {
+            credential.Favorited = !credential.Favorited;
+            var mappedCredential = ModelConverter.GetCredential(credential);
+
+            await _credentialEndpoint.UpdateCredentialAsync(mappedCredential);
+        }
+        catch (Exception ex)
+        {
+            _error.SetErrorMessage(ex.Message);
+            OpenErrorPopup();
+        }
+    }
 }

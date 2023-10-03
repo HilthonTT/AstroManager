@@ -11,7 +11,7 @@
              x:Class="AstroManagerClient.Pages.SettingsPage"
              x:DataType="vms:SettingsViewModel"
              Shell.NavBarIsVisible="False"
-             Title="SettingsPage">
+             Title="Settings">
 
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding LoadRecoveryKeysCommand}"/>

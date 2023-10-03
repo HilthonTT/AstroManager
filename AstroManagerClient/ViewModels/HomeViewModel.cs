@@ -134,6 +134,23 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private async Task FavoriteCredentialAsync(CredentialDisplayModel credential)
+    {
+        try
+        {
+            credential.Favorited = !credential.Favorited;
+            var mappedCredential = ModelConverter.GetCredential(credential);
+
+            await _credentialEndpoint.UpdateCredentialAsync(mappedCredential);
+        }
+        catch (Exception ex)
+        {
+            _error.SetErrorMessage(ex.Message);
+            OpenErrorPopup();
+        }
+    }
+
+    [RelayCommand]
     private async Task PreferencesAsync()
     {
         await Shell.Current.GoToAsync($"{nameof(SettingsPage)}?sub=appearance");

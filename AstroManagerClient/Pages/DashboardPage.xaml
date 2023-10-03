@@ -9,7 +9,7 @@
              xmlns:models="clr-namespace:AstroManagerClient.Models"
              x:Class="AstroManagerClient.Pages.DashboardPage"
              x:DataType="vms:DashboardViewModel"
-             Title="DashboardPage"
+             Title="Dashboard"
              Shell.NavBarIsVisible="False">
 
     <ContentPage.Behaviors>
