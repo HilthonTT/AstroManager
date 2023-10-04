@@ -80,7 +80,7 @@ public partial class AddCredentialViewModel : BaseViewModel
         {
             Title = Title,
             Fields = Template.Fields,
-            Type = Template.Type,
+            Type = new TypeDisplayModel(Template.Type),
             User = new BasicUserModel((UserModel)_loggedInUser),
             Notes = "",
         };

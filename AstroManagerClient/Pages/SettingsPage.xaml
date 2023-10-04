@@ -24,7 +24,7 @@
         <VerticalStackLayout VerticalOptions="Center">
             <Label Text="{Binding LocalizationResourceManager[Settings], Mode=OneWay}" 
                    Style="{StaticResource LargeTitle}"/>
-            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <Label Text="{Binding LocalizationResourceManager.Today}"/>
             <BoxView Style="{StaticResource HRule}" VerticalOptions="Start" Margin="0,24,0,0"/>
         </VerticalStackLayout>
 

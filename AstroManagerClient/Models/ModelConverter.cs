@@ -22,7 +22,12 @@ public static class ModelConverter
         {
             Id = credentialDisplay.Id,
             Title = credentialDisplay.Title,
-            Type = credentialDisplay.Type,
+            Type = new TypeModel()
+            {
+                Id = credentialDisplay.Type.Id,
+                Name = credentialDisplay.Type.Name,
+                Description = credentialDisplay.Type.Name,
+            },
             Fields = listOfFields,
             User = credentialDisplay.User,
             DateAdded = credentialDisplay.DateAdded,

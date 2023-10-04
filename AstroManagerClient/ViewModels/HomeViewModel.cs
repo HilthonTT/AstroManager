@@ -36,7 +36,7 @@ public partial class HomeViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TypeNames))]
-    private ObservableCollection<TypeModel> _types;
+    private ObservableCollection<TypeDisplayModel> _types;
 
     [ObservableProperty]
     private CredentialDisplayModel _selectedCredential;
@@ -50,7 +50,7 @@ public partial class HomeViewModel : BaseViewModel
 
     public string FavoriteImageSource => IsFavorited ? "star.png" : "star_black.png";
 
-    public ObservableCollection<string> TypeNames => Types?.Select(x => x.Name).ToObservableCollection() ?? new();
+    public ObservableCollection<string> TypeNames => Types?.Select(x => x.TranslatedName).ToObservableCollection() ?? new();
 
     [ObservableProperty]
     private string _selectedType;
@@ -103,7 +103,7 @@ public partial class HomeViewModel : BaseViewModel
 
             var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
 
-            Types = new(baseTypes.Concat(loadedTypes));
+            Types = new(baseTypes.Concat(loadedTypes).Select(x => new TypeDisplayModel(x)));
         }
         catch (Exception ex)
         {

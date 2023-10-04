@@ -8,7 +8,24 @@ public class LocalizationResourceManager : INotifyPropertyChanged
     private LocalizationResourceManager()
     {
         AppResources.Culture = CultureInfo.CurrentCulture;
+        Today = DateTime.Now.ToString("dddd, MMMM dd yyyy", AppResources.Culture);
     }
+
+    private string _today;
+
+    public string Today
+    {
+        get { return _today; }
+        set 
+        {
+            _today = value; 
+            if (_today != value)
+            {
+                PropertyChanged?.Invoke(nameof(Today), new PropertyChangedEventArgs(null));
+            }
+        }
+    }
+
 
     public static LocalizationResourceManager Instance { get; } = new();
 
@@ -20,6 +37,9 @@ public class LocalizationResourceManager : INotifyPropertyChanged
     public void SetCulture(CultureInfo culture) 
     {
         AppResources.Culture = culture;
+        Today = DateTime.Now.ToString("dddd, MMMM dd yyyy", AppResources.Culture);
+
+
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
     }
 }

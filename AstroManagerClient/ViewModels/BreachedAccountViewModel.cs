@@ -38,7 +38,7 @@ public partial class BreachedAccountViewModel : BaseViewModel
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(TypeNames))]
-    private ObservableCollection<TypeModel> _types = new();
+    private ObservableCollection<TypeDisplayModel> _types = new();
 
     [ObservableProperty]
     private ObservableCollection<CredentialDisplayModel> _credentials = new();
@@ -57,7 +57,7 @@ public partial class BreachedAccountViewModel : BaseViewModel
         Credentials = new(filteredCredentials);
     }
 
-    public ObservableCollection<string> TypeNames => Types?.Select(x => x.Name).ToObservableCollection();
+    public ObservableCollection<string> TypeNames => Types?.Select(x => x.TranslatedName).ToObservableCollection();
 
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -116,7 +116,7 @@ public partial class BreachedAccountViewModel : BaseViewModel
 
             var loadedTypes = await _typeEndpoint.GetAllTypesAsync();
 
-            Types = new(baseTypes.Concat(loadedTypes));
+            Types = new(baseTypes.Concat(loadedTypes).Select(x => new TypeDisplayModel(x)));
         }
         catch (Exception ex)
         {

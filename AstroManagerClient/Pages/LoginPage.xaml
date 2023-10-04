@@ -17,7 +17,7 @@
 
         <VerticalStackLayout VerticalOptions="Center">
             <Label Text="AstroManager" Style="{StaticResource LargeTitle}"/>
-            <Label Text="{Binding Source={x:Static system:DateTime.Now}, StringFormat='{0:dddd, MMMM dd yyyy}'}"/>
+            <Label Text="{Binding LocalizationResourceManager.Today}"/>
         </VerticalStackLayout>
 
         <Grid Grid.Row="1">

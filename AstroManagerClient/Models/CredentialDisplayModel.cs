@@ -28,7 +28,7 @@ public partial class CredentialDisplayModel : ObservableObject
     private DateTime _dateAdded;
 
     [ObservableProperty]
-    private TypeModel _type;
+    private TypeDisplayModel _type;
 
     [ObservableProperty]
     private BasicUserModel _user;
@@ -48,7 +48,7 @@ public partial class CredentialDisplayModel : ObservableObject
         Id = credential.Id;
         Title = credential.Title;
         Fields = credential.Fields.Select(x => new FieldDisplayModel(x)).ToObservableCollection();
-        Type = credential.Type;
+        Type = new TypeDisplayModel(credential.Type);
         User = credential.User;
         DateAdded = credential.DateAdded;
         DateModified = credential.DateModified;

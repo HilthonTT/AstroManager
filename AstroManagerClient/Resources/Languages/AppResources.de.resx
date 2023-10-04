@@ -306,6 +306,9 @@
   <data name="TotalWeakPasswords" xml:space="preserve">
     <value>Gesamte schwache Passwörter</value>
   </data>
+  <data name="Tout" xml:space="preserve">
+    <value>Alles</value>
+  </data>
   <data name="Type" xml:space="preserve">
     <value>Typ</value>
   </data>
