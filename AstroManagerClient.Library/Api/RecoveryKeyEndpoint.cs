@@ -34,7 +34,7 @@ public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
             return output;
         }
 
-        return _api.NotFoundError<RecoveryKeyModel>(response);
+        return _api.ServerError<RecoveryKeyModel>(response);
     }
 
     public async Task<RecoveryKeyModel> CreateRecoveryKeyAsync(UserModel user)
@@ -45,6 +45,6 @@ public class RecoveryKeyEndpoint : IRecoveryKeyEndpoint
             return await response.Content.ReadFromJsonAsync<RecoveryKeyModel>();
         }
 
-        return _api.NotFoundError<RecoveryKeyModel>(response);
+        return _api.ServerError<RecoveryKeyModel>(response);
     }
 }

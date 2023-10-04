@@ -33,10 +33,8 @@ public class CredentialEndpoint : ICredentialEndpoint
 
             return output;
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<List<CredentialModel>>(response);
     }
 
     public async Task<CredentialModel> GetCredentialAsync(string id)
@@ -46,10 +44,8 @@ public class CredentialEndpoint : ICredentialEndpoint
         {
             return await response.Content.ReadFromJsonAsync<CredentialModel>();
         }
-        else
-        {
-            return _api.NotFoundError<CredentialModel>(response);
-        }
+
+        return _api.ServerError<CredentialModel>(response);
     }
 
     public async Task<CredentialModel> CreateCredentialAsync(CredentialModel credential)
@@ -60,10 +56,8 @@ public class CredentialEndpoint : ICredentialEndpoint
             SecureStorage.Remove(CacheName);
             return await response.Content.ReadFromJsonAsync<CredentialModel>();
         }
-        else
-        {
-            return _api.NotFoundError<CredentialModel>(response);
-        }
+
+        return _api.ServerError<CredentialModel>(response);
     }
 
     public async Task<string> UpdateCredentialAsync(CredentialModel credential)
@@ -74,10 +68,8 @@ public class CredentialEndpoint : ICredentialEndpoint
             SecureStorage.Remove(CacheName);
             return await response.Content.ReadAsStringAsync();
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<string>(response);
     }
 
     public async Task<string> DeleteCredentialAsync(CredentialModel credential)
@@ -88,9 +80,7 @@ public class CredentialEndpoint : ICredentialEndpoint
             SecureStorage.Remove(CacheName);
             return await response.Content.ReadAsStringAsync();
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<string>(response);
     }
 }

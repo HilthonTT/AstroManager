@@ -33,10 +33,8 @@ public class TypeEndpoint : ITypeEndpoint
 
             return output;
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<List<TypeModel>>(response);
     }
 
     public async Task<TypeModel> CreateTypeAsync(TypeModel type)
@@ -46,9 +44,7 @@ public class TypeEndpoint : ITypeEndpoint
         {
             return await response.Content.ReadFromJsonAsync<TypeModel>();
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<TypeModel>(response);
     }
 }

@@ -33,10 +33,8 @@ public class CredentialTemplateEndpoint : ICredentialTemplateEndpoint
 
             return output;
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<List<CredentialTemplateModel>>(response);
     }
 
     public async Task<CredentialTemplateModel> GetTemplateAsync(string id)
@@ -46,10 +44,8 @@ public class CredentialTemplateEndpoint : ICredentialTemplateEndpoint
         {
             return await response.Content.ReadFromJsonAsync<CredentialTemplateModel>();
         }
-        else
-        {
-            return _api.NotFoundError<CredentialTemplateModel>(response);
-        }
+        
+        return _api.ServerError<CredentialTemplateModel>(response);
     }
 
     public async Task<CredentialTemplateModel> CreateTemplateAsync(CredentialTemplateModel template)
@@ -59,9 +55,7 @@ public class CredentialTemplateEndpoint : ICredentialTemplateEndpoint
         {
             return await response.Content.ReadFromJsonAsync<CredentialTemplateModel>();
         }
-        else
-        {
-            return _api.NotFoundError<CredentialTemplateModel>(response);
-        }
+
+        return _api.ServerError<CredentialTemplateModel>(response);
     }
 }

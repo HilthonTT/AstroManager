@@ -38,10 +38,8 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
 
             return output;
         }
-        else
-        {
-            return _api.NotFoundError<MasterPasswordModel>(response);
-        }
+
+        return _api.ServerError<MasterPasswordModel>(response);
     }
 
     public async Task<MasterPasswordModel> CreateMasterPasswordAsync(MasterPasswordModel password)
@@ -52,10 +50,8 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
             SecureStorage.Remove(CacheName);
             return await response.Content.ReadFromJsonAsync<MasterPasswordModel>();
         }
-        else
-        {
-            return _api.NotFoundError<MasterPasswordModel>(response);
-        }
+
+        return _api.ServerError<MasterPasswordModel>(response);
     }
 
     public async Task<string> UpdateMasterPasswordAsync(PasswordResetModel password)
@@ -66,10 +62,8 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
             SecureStorage.Remove(CacheName);
             return await response.Content.ReadAsStringAsync();
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<string>(response);
     }
 
     public async Task<bool> VerifyPasswordAsync(string userId, string password)
@@ -79,9 +73,7 @@ public class MasterPasswordEndpoint : IMasterPasswordEndpoint
         {
             return await response.Content.ReadFromJsonAsync<bool>();
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<bool>(response);
     }
 }

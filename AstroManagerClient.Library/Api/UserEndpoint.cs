@@ -33,10 +33,8 @@ public class UserEndpoint : IUserEndpoint
 
             return output;
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<List<UserModel>>(response);
     }
 
     public async Task<UserModel> GetUserAsync(string id)
@@ -46,10 +44,8 @@ public class UserEndpoint : IUserEndpoint
         {
             return await response.Content.ReadFromJsonAsync<UserModel>();
         }
-        else 
-        {
-            return _api.NotFoundError<UserModel>(response);
-        }
+
+        return _api.ServerError<UserModel>(response);
     }
 
     public async Task<UserModel> GetUserFromAuthAsync(string oid)
@@ -59,10 +55,8 @@ public class UserEndpoint : IUserEndpoint
         {
             return await response.Content.ReadFromJsonAsync<UserModel>();
         }
-        else
-        {
-            return _api.NotFoundError<UserModel>(response);
-        }
+
+        return _api.ServerError<UserModel>(response);
     }
 
     public async Task<UserModel> CreateUserAsync(UserModel user)
@@ -72,10 +66,8 @@ public class UserEndpoint : IUserEndpoint
         {
             return await response.Content.ReadFromJsonAsync<UserModel>();
         }
-        else
-        {
-            return _api.NotFoundError<UserModel>(response);
-        }
+
+        return _api.ServerError<UserModel>(response);
     }
 
     public async Task<string> UpdateUserAsync(UserModel user)
@@ -85,9 +77,7 @@ public class UserEndpoint : IUserEndpoint
         {
             return await response.Content.ReadAsStringAsync();
         }
-        else
-        {
-            throw new Exception(response.ReasonPhrase);
-        }
+
+        return _api.ServerError<string>(response);
     }
 }

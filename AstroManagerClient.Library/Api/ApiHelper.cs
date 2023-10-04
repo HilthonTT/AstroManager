@@ -52,7 +52,7 @@ public class ApiHelper : IApiHelper
         _loggedInUser.EmailAddress = "";
     }
 
-    public T NotFoundError<T>(HttpResponseMessage response)
+    public T ServerError<T>(HttpResponseMessage response)
     {
         string[] errorPhrases = new string[] { "Not Found", "No Content" };
 

@@ -6,5 +6,5 @@ public interface IApiHelper
 
     void AcquireHeaders(string token);
     void Logout();
-    T NotFoundError<T>(HttpResponseMessage response);
+    T ServerError<T>(HttpResponseMessage response);
 }
