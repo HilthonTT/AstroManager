@@ -17,19 +17,26 @@ public partial class CredentialDisplayModel : ObservableObject
     [ObservableProperty]
     private string _notes;
 
-    public string ImageSource => GetImageSource();
-    public string FavoriteImageSource => Favorited ? "star.png" : "star_black.png";
-
-    public TypeModel Type { get; set; }
-    public BasicUserModel User { get; set; }
-    public DateTime DateAdded { get; set; } = DateTime.UtcNow;
-
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FavoriteImageSource))]
     private bool _favorited;
 
     [ObservableProperty]
     private DateTime _dateModified;
+
+    [ObservableProperty]
+    private DateTime _dateAdded;
+
+    [ObservableProperty]
+    private TypeModel _type;
+
+    [ObservableProperty]
+    private BasicUserModel _user;
+
+    public string ImageSource => GetImageSource();
+    public string FavoriteImageSource => Favorited ? "star.png" : "star_black.png";
+    public string DateAddedText => DateAdded.ToLongDateString();
+    public string DateModifiedText => DateModified.ToLongDateString();
 
     public CredentialDisplayModel()
     {

@@ -169,8 +169,8 @@
                                             <Grid ColumnDefinitions="200,*,150,150">
                                                 <Label Text="{Binding Title}" />
                                                 <Label Text="{Binding Type.Name}" Grid.Column="1" />
-                                                <Label Text="{Binding DateAdded.Date}" Grid.Column="2" />
-                                                <Label Text="{Binding DateModified.Date}" Grid.Column="3" />
+                                                <Label Text="{Binding DateAddedText}" Grid.Column="2" />
+                                                <Label Text="{Binding DateModifiedText}" Grid.Column="3" />
                                             </Grid>
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>

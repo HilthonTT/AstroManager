@@ -44,33 +44,19 @@ public partial class HomeViewModel : BaseViewModel
     [ObservableProperty]
     private string _searchText;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FavoriteImageSource))]
+    private bool _isFavorited = false;
+
+    public string FavoriteImageSource => IsFavorited ? "star.png" : "star_black.png";
+
     public ObservableCollection<string> TypeNames => Types?.Select(x => x.Name).ToObservableCollection() ?? new();
 
     [ObservableProperty]
     private string _selectedType;
     async partial void OnSelectedTypeChanged(string value)
     {
-        try
-        {
-            var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
-            var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
-
-            if (value == "All")
-            {
-                Credentials = new(mappedCredentials);
-                return;
-            }
-
-            var types = await _typeEndpoint.GetAllTypesAsync();
-            var selectedType = types.Where(x => x.Name.Equals(value)).FirstOrDefault();
-
-            Credentials = mappedCredentials.Where(x => x.Type.Id == selectedType.Id).ToObservableCollection();
-        }
-        catch (Exception ex)
-        {
-            _error.SetErrorMessage(ex.Message);
-            OpenErrorPopup();
-        }
+        await FilterCredentialsAsync();
     }
 
     [RelayCommand]
@@ -157,16 +143,39 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task SearchCredentialsAsync()
+    private static void CreateCredentialPopup()
+    {
+        var message = new OpenCreateCredentialMessage(true);
+        WeakReferenceMessenger.Default.Send(message);
+    }
+
+    [RelayCommand]
+    private async Task FilterCredentialsAsync()
     {
         try
         {
-            await LoadCredentialsAsync();
+            var output = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
+            var mappedOutput = output.Select(x => new CredentialDisplayModel(x)).ToList();
+
+            if (string.IsNullOrWhiteSpace(SelectedType) is false && SelectedType != "All")
+            {
+                var types = await _typeEndpoint.GetAllTypesAsync();
+                var selectedType = types.FirstOrDefault(x => x.Name.Equals(SelectedType));
+                mappedOutput = mappedOutput.Where(x => x.Type.Id == selectedType?.Id).ToList();
+            }
 
             if (string.IsNullOrWhiteSpace(SearchText) is false)
             {
-                Credentials = Credentials.OrderByDescending(x => x.Title.Contains(SearchText)).ToObservableCollection();
+                mappedOutput = mappedOutput.OrderByDescending(x => x.Title.Contains(
+                    SearchText, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
+
+            if (IsFavorited)
+            {
+                mappedOutput = mappedOutput.Where(x => x.Favorited).ToList();
+            }
+
+            Credentials = new(mappedOutput);
         }
         catch (Exception ex)
         {
@@ -176,9 +185,9 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private static void CreateCredentialPopup()
+    private async Task FavoriteClickAsync()
     {
-        var message = new OpenCreateCredentialMessage(true);
-        WeakReferenceMessenger.Default.Send(message);
+        IsFavorited = !IsFavorited;
+        await FilterCredentialsAsync();
     }
 }
