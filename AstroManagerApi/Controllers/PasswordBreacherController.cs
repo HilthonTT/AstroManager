@@ -22,7 +22,6 @@ public class PasswordBreacherController : CustomController<PasswordBreacherContr
         ILogger<PasswordBreacherController> logger) : base(logger)
     {
         _httpClient = http.CreateClient();
-        _httpClient.DefaultRequestHeaders.Add("User-Agent", "AstroManager");
         _config = config;
     }
 

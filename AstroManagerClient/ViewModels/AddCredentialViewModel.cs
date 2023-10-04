@@ -82,7 +82,7 @@ public partial class AddCredentialViewModel : BaseViewModel
             Fields = Template.Fields,
             Type = new TypeDisplayModel(Template.Type),
             User = new BasicUserModel((UserModel)_loggedInUser),
-            Notes = "",
+            DateAdded = DateTime.UtcNow,
         };
 
         var credentialToCreate = ModelConverter.GetCredential(c);

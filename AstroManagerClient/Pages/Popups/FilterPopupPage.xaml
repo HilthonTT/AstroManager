@@ -19,6 +19,7 @@
                  RadioButtonGroup.SelectedValue="{Binding Type}">
                 <BindableLayout.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
+                        <x:String>All</x:String>
                         <x:String>Logins</x:String>
                         <x:String>Passwords</x:String>
                         <x:String>Secure Note</x:String>
@@ -31,6 +32,15 @@
                         <RadioButton ControlTemplate="{StaticResource ButtonRadioTemplate}"
                                 Value="{Binding .}">
                             <RadioButton.Triggers>
+                                <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
+                                            Value="All">
+                                <Setter Property="Content" 
+                                    Value="{Binding 
+                                        Source={RelativeSource 
+                                        AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                        Path=LocalizationResourceManager[All], 
+                                        Mode=OneWay}"/>
+                                </DataTrigger>
                                 <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
                                             Value="Logins">
                                     <Setter Property="Content" 

@@ -82,6 +82,7 @@ public static class RegisterServices
         builder.Services.AddTransient<ITypeEndpoint, TypeEndpoint>();
         builder.Services.AddTransient<IUserEndpoint, UserEndpoint>();
         builder.Services.AddTransient<IPasswordBreacherEndpoint, PasswordBreacherEndpoint>();
+        builder.Services.AddTransient<IWeakPasswordEndpoint, WeakPasswordEndpoint>();
 
         builder.Services.AddTransient<HomePage>();
         builder.Services.AddTransient<LoginPage>();

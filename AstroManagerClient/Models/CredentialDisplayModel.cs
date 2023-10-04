@@ -15,9 +15,6 @@ public partial class CredentialDisplayModel : ObservableObject
     private ObservableCollection<FieldDisplayModel> _fields;
 
     [ObservableProperty]
-    private string _notes;
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(FavoriteImageSource))]
     private bool _favorited;
 
@@ -35,8 +32,8 @@ public partial class CredentialDisplayModel : ObservableObject
 
     public string ImageSource => GetImageSource();
     public string FavoriteImageSource => Favorited ? "star.png" : "star_black.png";
-    public string DateAddedText => DateAdded.ToLongDateString();
-    public string DateModifiedText => DateModified.ToLongDateString();
+    public string DateAddedText => DateAdded.ToString("MMMM dd yyyy", LocalizationResourceManager.Instance.CurrentCulture);
+    public string DateModifiedText => DateModified.ToString("MMMM dd yyyy", LocalizationResourceManager.Instance.CurrentCulture);
 
     public CredentialDisplayModel()
     {

@@ -31,7 +31,10 @@ public static class RegisterServices
         builder.Services.AddDistributedMemoryCache();
         builder.Services.AddMemoryCache();
 
-        builder.Services.AddHttpClient();
+        builder.Services.AddHttpClient("AstroManagerClient", client =>
+        {
+            client.DefaultRequestHeaders.Add("User-Agent", "AstroManager");
+        });
 
         builder.Services.AddStackExchangeRedisCache(options =>
         {

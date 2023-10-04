@@ -1,5 +1,4 @@
-﻿using AstroManagerClient.ConstantsVariables;
-using AstroManagerClient.Library.Api.Interfaces;
+﻿using AstroManagerClient.Library.Api.Interfaces;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
 using AstroManagerClient.Models;
@@ -10,21 +9,25 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace AstroManagerClient.ViewModels;
 public partial class DashboardViewModel : BaseViewModel
 {
     private readonly ILoggedInUser _loggedInUser;
     private readonly ICredentialEndpoint _credentialEndpoint;
+    private readonly IWeakPasswordEndpoint _weakPasswordEndpoint;
     private readonly IErrorDisplayModel _error;
 
     public DashboardViewModel(
         ILoggedInUser loggedInUser,
         ICredentialEndpoint credentialEndpoint,
+        IWeakPasswordEndpoint weakPasswordEndpoint,
         IErrorDisplayModel error)
     {
         _loggedInUser = loggedInUser;
         _credentialEndpoint = credentialEndpoint;
+        _weakPasswordEndpoint = weakPasswordEndpoint;
         _error = error;
         WeakReferenceMessenger.Default.Register<CloseFilterPopupMessage>(this, async (r, m) =>
         {
@@ -48,6 +51,9 @@ public partial class DashboardViewModel : BaseViewModel
     private ObservableCollection<CredentialDisplayModel> _credentials = new();
 
     [ObservableProperty]
+    private ObservableCollection<string> _commonWords = new();
+
+    [ObservableProperty]
     private ObservableCollection<CredentialDisplayModel> _filterableCredentials;
 
     public ObservableCollection<CredentialDisplayModel> RecentlyUpdatedCredentials => Credentials
@@ -63,6 +69,9 @@ public partial class DashboardViewModel : BaseViewModel
     {
         try
         {
+            var commonWords = await _weakPasswordEndpoint.GetWeakPasswordAsync();
+            CommonWords = new(commonWords);
+
             var credentials = await _credentialEndpoint.GetUsersCredentialsAsync(_loggedInUser.Id);
             var mappedCredentials = credentials.Select(x => new CredentialDisplayModel(x)).ToList();
 
@@ -87,12 +96,6 @@ public partial class DashboardViewModel : BaseViewModel
     {
         var message = new OpenFilterPopupMessage(true);
         WeakReferenceMessenger.Default.Send(message);
-    }
-
-    private static bool IsCommonWord(string password)
-    {
-        string lowercasePassword = password.ToLower();
-        return Constants.CommonWords.Contains(lowercasePassword);
     }
 
     private static bool HasComplexity(string password)
@@ -149,7 +152,7 @@ public partial class DashboardViewModel : BaseViewModel
                     var passwordValue = passwordField.Value;
 
                     return passwordValue.Length < minimumPasswordLength ||
-                        (useDictionaryCheck && IsCommonWord(passwordValue)) ||
+                        (useDictionaryCheck && CommonWords.Contains(passwordValue)) ||
                         !HasComplexity(passwordValue);
                 }
 
@@ -160,13 +163,20 @@ public partial class DashboardViewModel : BaseViewModel
         return weakPasswords;
     }
 
+    private static bool IsEmailAddress(string text)
+    {
+        string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+        return Regex.IsMatch(text, pattern);
+    }
+
     private ObservableCollection<CredentialDisplayModel> GetTwoFactorAuth()
     {
-        string emailFieldName = "Email";
+        string userNameField = "Username";
 
         var credentialsWithEmails = Credentials
-            .Where(cred => cred.Fields.Any(field => string.Equals(
-                field.Name, emailFieldName, StringComparison.InvariantCultureIgnoreCase)))
+            .Where(cred => cred.Fields.Any(field => field.Name.Equals(
+                userNameField, StringComparison.InvariantCultureIgnoreCase) &&
+                IsEmailAddress(field.Value))) 
             .ToObservableCollection();
 
         return credentialsWithEmails;

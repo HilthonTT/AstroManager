@@ -8,6 +8,7 @@ public class LocalizationResourceManager : INotifyPropertyChanged
     private LocalizationResourceManager()
     {
         AppResources.Culture = CultureInfo.CurrentCulture;
+        CurrentCulture = CultureInfo.CurrentCulture;
         Today = DateTime.Now.ToString("dddd, MMMM dd yyyy", AppResources.Culture);
     }
 
@@ -21,7 +22,22 @@ public class LocalizationResourceManager : INotifyPropertyChanged
             _today = value; 
             if (_today != value)
             {
-                PropertyChanged?.Invoke(nameof(Today), new PropertyChangedEventArgs(null));
+                PropertyChanged?.Invoke(nameof(Today), new(null));
+            }
+        }
+    }
+
+    private CultureInfo _currentCulture;
+
+    public CultureInfo CurrentCulture
+    {
+        get { return _currentCulture; }
+        set 
+        { 
+            _currentCulture = value; 
+            if (_currentCulture != value)
+            {
+                PropertyChanged?.Invoke(nameof(CurrentCulture), new(null));
             }
         }
     }
@@ -37,8 +53,9 @@ public class LocalizationResourceManager : INotifyPropertyChanged
     public void SetCulture(CultureInfo culture) 
     {
         AppResources.Culture = culture;
-        Today = DateTime.Now.ToString("dddd, MMMM dd yyyy", AppResources.Culture);
 
+        CurrentCulture = culture;
+        Today = DateTime.Now.ToString("dddd, MMMM dd yyyy", AppResources.Culture);
 
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
     }
