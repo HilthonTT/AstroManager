@@ -1,4 +1,5 @@
 ﻿using AstroManagerClient.Library.Api.Interfaces;
+using AstroManagerClient.Library.Encryption;
 using AstroManagerClient.Library.Models;
 using AstroManagerClient.Library.Models.Interfaces;
 using AstroManagerClient.Messages;
@@ -101,7 +102,7 @@ public partial class AddCredentialViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private async Task GeneratePasswordAsync()
+    private void GeneratePassword()
     {
         if (Template is null || Template.Fields.Any() is false)
         {
@@ -111,7 +112,7 @@ public partial class AddCredentialViewModel : BaseViewModel
         var passwordField = Template.Fields.FirstOrDefault(x => x.Name.Equals(
             "Password", StringComparison.InvariantCultureIgnoreCase));
 
-        passwordField.Value = await _breacherEndpoint.GeneratePasswordAsync();
+        passwordField.Value = PasswordGenerator.GenerateRandomPassword();
         
         Template.Fields.FirstOrDefault(x => x.Name.Equals(
             "Password", StringComparison.InvariantCultureIgnoreCase)).Value = passwordField.Value;

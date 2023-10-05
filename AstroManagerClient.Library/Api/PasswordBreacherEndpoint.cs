@@ -36,17 +36,4 @@ public class PasswordBreacherEndpoint : IPasswordBreacherEndpoint
 
         return _api.ServerError<List<CredentialModel>>(response);
     }
-
-    public async Task<string> GeneratePasswordAsync(int length = 20)
-    {
-        using var response = await _api.HttpClient.GetAsync($"{ApiUrl}/{length}");
-        if (response.IsSuccessStatusCode)
-        {
-            string password = await response.Content.ReadAsStringAsync();
-
-            return password.Trim('"');
-        }
-
-        return _api.ServerError<string>(response);
-    }
 }
