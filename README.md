@@ -13,4 +13,3 @@ Open Source and Customizable
 🚀 Start safeguarding your passwords today with this intuitive and reliable password manager!
 
 #CSharp #DotNETMaui #AzureB2C #MongoDB #PasswordManager
-Feel free to customize it further to include any specific details or features of your project.
