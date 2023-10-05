@@ -264,7 +264,8 @@
                                 <TapGestureRecognizer />
                             </Border.GestureRecognizers>
                             <HorizontalStackLayout Margin="14,12" Spacing="12">
-                                <Label Text="{x:Static fonts:IconFont.ChevronDown}" FontFamily="FontAwesome" VerticalOptions="Center"/>
+                                <Label Text="{x:Static fonts:IconFont.ChevronDown}" 
+                                       FontFamily="FontAwesome" VerticalOptions="Center"/>
                                 <Label Text="{Binding LocalizationResourceManager[Today], Mode=OneWay}" 
                                        VerticalOptions="Center"/>
                             </HorizontalStackLayout>

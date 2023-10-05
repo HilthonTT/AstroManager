@@ -18,7 +18,7 @@ public partial class FilterPopupViewModel : BaseViewModel
     private TypeModel _selectedType;
 
     [ObservableProperty]
-    private string _type = "Logins";
+    private string _type;
     async partial void OnTypeChanged(string value)
     {
         var types = await _typeEndpoint.GetAllTypesAsync();

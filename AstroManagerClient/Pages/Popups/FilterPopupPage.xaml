@@ -13,10 +13,12 @@
 
     <Grid RowDefinitions="*,108">
         <VerticalStackLayout HorizontalOptions="Center" Margin="20">
-            <layouts:HorizontalWrapLayout 
-                 Spacing="20"
-                 RadioButtonGroup.GroupName="CredentialTypes"
-                 RadioButtonGroup.SelectedValue="{Binding Type}">
+            <VerticalStackLayout
+                Spacing="20"
+                WidthRequest="300"
+                HorizontalOptions="Center"
+                RadioButtonGroup.GroupName="Credential Types - Filter"
+                RadioButtonGroup.SelectedValue="{Binding Type}">
                 <BindableLayout.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>All</x:String>
@@ -29,17 +31,22 @@
                 </BindableLayout.ItemsSource>
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton ControlTemplate="{StaticResource ButtonRadioTemplate}"
-                                Value="{Binding .}">
+                        <RadioButton 
+                            ControlTemplate="{StaticResource ButtonRadioTemplate}"
+                            Value="{Binding .}"
+                            WidthRequest="250">
                             <RadioButton.Triggers>
                                 <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
                                             Value="All">
-                                <Setter Property="Content" 
-                                    Value="{Binding 
-                                        Source={RelativeSource 
-                                        AncestorType={x:Type vms:FilterPopupViewModel}}, 
-                                        Path=LocalizationResourceManager[All], 
-                                        Mode=OneWay}"/>
+                                    <Setter Property="Content" 
+                                        Value="{Binding 
+                                            Source={RelativeSource 
+                                            AncestorType={x:Type vms:FilterPopupViewModel}}, 
+                                            Path=LocalizationResourceManager[All], 
+                                            Mode=OneWay}"/>
+                                    <Setter 
+                                        Property="IsChecked"
+                                        Value="True"/>
                                 </DataTrigger>
                                 <DataTrigger TargetType="RadioButton" Binding="{Binding .}"
                                             Value="Logins">
@@ -90,7 +97,7 @@
                         </RadioButton>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
-            </layouts:HorizontalWrapLayout>
+            </VerticalStackLayout>
             
         </VerticalStackLayout>
         <Button Grid.Row="1" Margin="24" 
