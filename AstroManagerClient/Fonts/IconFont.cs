@@ -1,6 +1,6 @@
 ﻿namespace AstroManagerClient.Fonts;
 
-static class IconFont
+public static class IconFont
 {
     // FontAwesome
     public const string Ad = "\uf641";

@@ -1,6 +1,6 @@
 ﻿namespace Icons;
 
-static class FabIconFont
+public static class FabIconFont
 {
     public static string JPPostalMark = "\u3012";
     public static string FlipVertical = "\uE300";

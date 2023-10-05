@@ -1,10 +1,4 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Extensions.Interfaces;
-using AstroManagerApi.Library.Models;
-using MongoDB.Driver;
-
-namespace AstroManagerApi.Library.DataAccess;
+﻿namespace AstroManagerApi.Library.DataAccess;
 public class MongoMasterPasswordData : IMasterPasswordData
 {
     private const string CacheNamePrefix = $"{nameof(MongoMasterPasswordData)}_";

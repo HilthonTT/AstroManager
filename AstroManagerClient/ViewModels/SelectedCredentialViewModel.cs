@@ -1,14 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Messages;
-using AstroManagerClient.Models;
-using AstroManagerClient.Models.Interfaces;
-using CommunityToolkit.Maui.Storage;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using System.Text.Json;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class SelectedCredentialViewModel : BaseViewModel
 {
     private readonly IErrorDisplayModel _error;

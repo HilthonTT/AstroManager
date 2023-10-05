@@ -1,6 +1,4 @@
-﻿using AstroManagerApi.Library.Models;
-
-namespace AstroManagerApi.Library.DataAccess.Interfaces;
+﻿namespace AstroManagerApi.Library.DataAccess.Interfaces;
 public interface ICredentialTemplateData
 {
     Task<CredentialTemplateModel> CreateTemplateAsync(CredentialTemplateModel template);

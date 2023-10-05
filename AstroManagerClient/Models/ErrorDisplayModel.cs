@@ -1,7 +1,4 @@
-﻿using AstroManagerClient.Models.Interfaces;
-using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace AstroManagerClient.Models;
+﻿namespace AstroManagerClient.Models;
 public partial class ErrorDisplayModel : ObservableObject, IErrorDisplayModel
 {
     [ObservableProperty]

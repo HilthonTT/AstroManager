@@ -1,11 +1,4 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Extensions.Interfaces;
-using AstroManagerApi.Library.Models;
-using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
-
-namespace AstroManagerApi.Library.DataAccess;
+﻿namespace AstroManagerApi.Library.DataAccess;
 public class MongoCredentialData : ICredentialData
 {
     private const string CacheName = nameof(MongoCredentialData);

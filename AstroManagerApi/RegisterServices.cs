@@ -1,15 +1,4 @@
-﻿using AstroManagerApi.Data;
-using AstroManagerApi.Data.Interfaces;
-using AstroManagerApi.Library.DataAccess;
-using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Encryption;
-using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Extensions;
-using AstroManagerApi.Library.Extensions.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
-
-namespace AstroManagerApi;
+﻿namespace AstroManagerApi;
 
 public static class RegisterServices
 {

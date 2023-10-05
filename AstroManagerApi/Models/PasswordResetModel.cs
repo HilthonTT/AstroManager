@@ -1,6 +1,4 @@
-﻿using AstroManagerApi.Library.Models;
-
-namespace AstroManagerApi.Models;
+﻿namespace AstroManagerApi.Models;
 
 public class PasswordResetModel
 {

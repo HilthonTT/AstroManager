@@ -1,7 +1,4 @@
-﻿using AstroManagerApi.Library.Encryption.Interfaces;
-using System.Security.Cryptography;
-
-namespace AstroManagerApi.Library.Encryption;
+﻿namespace AstroManagerApi.Library.Encryption;
 public class RecoveryKeyGenerator : IRecoveryKeyGenerator
 {
     private const int NumberOfKeys = 3;

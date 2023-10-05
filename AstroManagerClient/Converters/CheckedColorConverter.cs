@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace AstroManagerClient.Converters;
+﻿namespace AstroManagerClient.Converters;
 public class CheckedColorConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

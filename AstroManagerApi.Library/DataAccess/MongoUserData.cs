@@ -1,8 +1,4 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Models;
-using MongoDB.Driver;
-
-namespace AstroManagerApi.Library.DataAccess;
+﻿namespace AstroManagerApi.Library.DataAccess;
 public class MongoUserData : IUserData
 {
     private readonly IMongoCollection<UserModel> _users;

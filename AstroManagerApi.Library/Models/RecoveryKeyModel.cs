@@ -1,7 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace AstroManagerApi.Library.Models;
+﻿namespace AstroManagerApi.Library.Models;
 public class RecoveryKeyModel
 {
     [BsonId]

@@ -1,9 +1,4 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Extensions.Interfaces;
-using AstroManagerApi.Library.Models;
-using MongoDB.Driver;
-
-namespace AstroManagerApi.Library.DataAccess;
+﻿namespace AstroManagerApi.Library.DataAccess;
 public class MongoTypeData : ITypeData
 {
     private const string CacheName = nameof(MongoTypeData);

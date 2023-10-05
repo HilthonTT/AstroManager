@@ -1,9 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using AstroManagerClient.Library.Models;
-using System.Collections.ObjectModel;
-using CommunityToolkit.Maui.Core.Extensions;
-
-namespace AstroManagerClient.Models;
+﻿namespace AstroManagerClient.Models;
 public partial class CredentialDisplayModel : ObservableObject
 {
     public string Id { get; set; }

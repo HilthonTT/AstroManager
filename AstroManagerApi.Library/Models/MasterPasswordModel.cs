@@ -1,8 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.ComponentModel.DataAnnotations;
-
-namespace AstroManagerApi.Library.Models;
+﻿namespace AstroManagerApi.Library.Models;
 public class MasterPasswordModel
 {
     [BsonId]

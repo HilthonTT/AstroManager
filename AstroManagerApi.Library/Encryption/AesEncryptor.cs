@@ -1,9 +1,4 @@
-﻿using AstroManagerApi.Library.Encryption.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace AstroManagerApi.Library.Encryption;
+﻿namespace AstroManagerApi.Library.Encryption;
 public class AesEncryptor : IAesEncryptor
 {
     private readonly Aes _aes;
@@ -59,8 +54,6 @@ public class AesEncryptor : IAesEncryptor
             decryptedBytes = ms.ToArray();
         }
 
-        string decryptedText = Encoding.UTF8.GetString(decryptedBytes).TrimEnd('\0');
-
-        return decryptedText;
+        return Encoding.UTF8.GetString(decryptedBytes).TrimEnd('\0');
     }
 }

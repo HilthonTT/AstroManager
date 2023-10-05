@@ -1,17 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
-using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Messages;
-using AstroManagerClient.Models;
-using AstroManagerClient.Models.Interfaces;
-using AstroManagerClient.Pages;
-using CommunityToolkit.Maui.Core.Extensions;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using System.Collections.ObjectModel;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class HomeViewModel : BaseViewModel
 {
     private readonly ILoggedInUser _loggedInUser;
@@ -64,8 +51,7 @@ public partial class HomeViewModel : BaseViewModel
     {
         try
         {
-            await LoadCredentialsAsync();
-            await LoadTypesAsync();
+            await Task.WhenAll(LoadCredentialsAsync(), LoadTypesAsync());
         }
         catch (Exception ex)
         {

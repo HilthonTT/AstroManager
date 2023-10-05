@@ -1,11 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
-using AstroManagerClient.Messages;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class FilterPopupViewModel : BaseViewModel
 {
     private readonly ITypeEndpoint _typeEndpoint;

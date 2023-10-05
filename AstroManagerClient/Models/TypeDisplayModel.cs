@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using AstroManagerClient.Library.Models;
-
-namespace AstroManagerClient.Models;
+﻿namespace AstroManagerClient.Models;
 public partial class TypeDisplayModel : ObservableObject
 {
     public string Id { get; set; }

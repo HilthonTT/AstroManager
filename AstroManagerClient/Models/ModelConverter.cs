@@ -1,6 +1,4 @@
-﻿using AstroManagerClient.Library.Models;
-
-namespace AstroManagerClient.Models;
+﻿namespace AstroManagerClient.Models;
 public static class ModelConverter
 {
     public static CredentialModel GetCredential(CredentialDisplayModel credentialDisplay)

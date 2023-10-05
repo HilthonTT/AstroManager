@@ -1,13 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
-using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Messages;
-using AstroManagerClient.Models.Interfaces;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class AccountPopupViewModel : BaseViewModel
 {
     private readonly IErrorDisplayModel _error;

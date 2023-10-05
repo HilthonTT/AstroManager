@@ -1,13 +1,3 @@
-using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Messages;
-using AstroManagerClient.Pages.Popups;
-using AstroManagerClient.ViewModels;
-using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.Messaging;
-using Microcharts;
-using SkiaSharp.Views.Maui;
-
 namespace AstroManagerClient.Pages;
 
 public partial class DashboardPage : ContentPage

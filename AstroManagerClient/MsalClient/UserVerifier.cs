@@ -1,8 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
-using Microsoft.Identity.Client;
-
-namespace AstroManagerClient.MsalClient;
+﻿namespace AstroManagerClient.MsalClient;
 public static class UserVerifier
 {
     private static readonly IUserEndpoint _userEndpoint = App.Services.GetService<IUserEndpoint>();
@@ -86,12 +82,10 @@ public static class UserVerifier
         {
             if (string.IsNullOrWhiteSpace(loggedInUser.Id))
             {
-                await _userEndpoint.CreateUserAsync(loggedInUser);
+                return await _userEndpoint.CreateUserAsync(loggedInUser);
             }
-            else
-            {
-                await _userEndpoint.UpdateUserAsync(loggedInUser);
-            }
+
+            await _userEndpoint.UpdateUserAsync(loggedInUser);
         }
 
         return loggedInUser;

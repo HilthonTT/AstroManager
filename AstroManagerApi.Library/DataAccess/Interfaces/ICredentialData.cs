@@ -1,6 +1,4 @@
-﻿using AstroManagerApi.Library.Models;
-
-namespace AstroManagerApi.Library.DataAccess.Interfaces;
+﻿namespace AstroManagerApi.Library.DataAccess.Interfaces;
 public interface ICredentialData
 {
     Task<CredentialModel> CreateCredentialAsync(CredentialModel credential);

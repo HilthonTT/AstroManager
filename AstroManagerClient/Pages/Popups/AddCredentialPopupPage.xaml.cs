@@ -1,8 +1,3 @@
-using AstroManagerClient.Messages;
-using AstroManagerClient.ViewModels;
-using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.Messaging;
-
 namespace AstroManagerClient.Pages.Popups;
 
 public partial class AddCredentialPopupPage : Popup

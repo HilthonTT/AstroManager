@@ -1,19 +1,7 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Encryption;
-using AstroManagerClient.Library.Models;
-using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Messages;
-using AstroManagerClient.Models;
-using AstroManagerClient.Models.Interfaces;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class AddCredentialViewModel : BaseViewModel
 {
     private readonly IErrorDisplayModel _error;
-    private readonly IPasswordBreacherEndpoint _breacherEndpoint;
     private readonly ICredentialTemplateEndpoint _templateEndpoint;
     private readonly ICredentialEndpoint _credentialEndpoint;
     private readonly ILoggedInUser _loggedInUser;
@@ -24,7 +12,6 @@ public partial class AddCredentialViewModel : BaseViewModel
         _templateEndpoint = App.Services.GetService<ICredentialTemplateEndpoint>();
         _loggedInUser = App.Services.GetService<ILoggedInUser>();
         _credentialEndpoint = App.Services.GetService<ICredentialEndpoint>();
-        _breacherEndpoint = App.Services.GetService<IPasswordBreacherEndpoint>();
 
         Height = GetHeight();
     }

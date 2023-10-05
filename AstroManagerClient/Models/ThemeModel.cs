@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
-namespace AstroManagerClient.Models;
+﻿namespace AstroManagerClient.Models;
 public partial class ThemeModel : ObservableObject
 {
     public string Theme { get; set; }

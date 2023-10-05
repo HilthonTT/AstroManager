@@ -1,9 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models.Interfaces;
-using Microsoft.Extensions.Configuration;
-using System.Net.Http.Headers;
-
-namespace AstroManagerClient.Library.Api;
+﻿namespace AstroManagerClient.Library.Api;
 public class ApiHelper : IApiHelper
 {
     private readonly IConfiguration _config;

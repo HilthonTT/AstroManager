@@ -1,6 +1,4 @@
-﻿using AstroManagerApi.Library.Encryption.Interfaces;
-using AstroManagerApi.Library.Models;
-using BC = BCrypt.Net.BCrypt;
+﻿using BC = BCrypt.Net.BCrypt;
 
 namespace AstroManagerApi.Library.Encryption;
 public class TextHasher : ITextHasher

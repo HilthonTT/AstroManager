@@ -1,7 +1,4 @@
-﻿using AstroManagerApi.Library.Models;
-using MongoDB.Driver;
-
-namespace AstroManagerApi.Library.DataAccess.Interfaces;
+﻿namespace AstroManagerApi.Library.DataAccess.Interfaces;
 public interface IDbConnection
 {
     MongoClient Client { get; }

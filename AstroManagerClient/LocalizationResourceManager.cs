@@ -1,8 +1,4 @@
-﻿using AstroManagerClient.Resources.Languages;
-using System.ComponentModel;
-using System.Globalization;
-
-namespace AstroManagerClient;
+﻿namespace AstroManagerClient;
 public class LocalizationResourceManager : INotifyPropertyChanged
 {
     private LocalizationResourceManager()

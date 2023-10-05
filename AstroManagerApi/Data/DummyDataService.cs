@@ -1,8 +1,4 @@
-﻿using AstroManagerApi.Data.Interfaces;
-using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Models;
-
-namespace AstroManagerApi.Data;
+﻿namespace AstroManagerApi.Data;
 
 public class DummyDataService : IDummyDataService
 {

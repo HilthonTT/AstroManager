@@ -1,7 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-
-namespace AstroManagerApi.Library.Models;
+﻿namespace AstroManagerApi.Library.Models;
 public class BasicUserModel
 {
     [BsonRepresentation(BsonType.ObjectId)]

@@ -1,9 +1,4 @@
-﻿using AstroManagerClient.Library.Models;
-using CommunityToolkit.Maui.Core.Extensions;
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
-
-namespace AstroManagerClient.Models;
+﻿namespace AstroManagerClient.Models;
 public partial class TemplateDisplayModel : ObservableObject
 {
     public string Id { get; set; }

@@ -1,9 +1,4 @@
-﻿using AstroManagerApi.Library.DataAccess.Interfaces;
-using AstroManagerApi.Library.Models;
-using Microsoft.Extensions.Configuration;
-using MongoDB.Driver;
-
-namespace AstroManagerApi.Library.DataAccess;
+﻿namespace AstroManagerApi.Library.DataAccess;
 public class DbConnection : IDbConnection
 {
     private const string ConnectionId = "MongoDB";

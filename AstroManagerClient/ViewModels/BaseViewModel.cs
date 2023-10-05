@@ -1,8 +1,4 @@
-﻿using AstroManagerClient.Messages;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class BaseViewModel : ObservableObject
 {
     [ObservableProperty]

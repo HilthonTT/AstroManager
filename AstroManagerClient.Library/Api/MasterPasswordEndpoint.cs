@@ -1,9 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
-using AstroManagerClient.Library.Storage.Interfaces;
-using System.Net.Http.Json;
-
-namespace AstroManagerClient.Library.Api;
+﻿namespace AstroManagerClient.Library.Api;
 public class MasterPasswordEndpoint : IMasterPasswordEndpoint
 {
     private const string CacheName = nameof(MasterPasswordEndpoint);

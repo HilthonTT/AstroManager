@@ -1,9 +1,3 @@
-using AstroManagerClient.Messages;
-using AstroManagerClient.Pages.Popups;
-using AstroManagerClient.ViewModels;
-using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.Messaging;
-
 namespace AstroManagerClient.Pages;
 
 public partial class HomePage : ContentPage

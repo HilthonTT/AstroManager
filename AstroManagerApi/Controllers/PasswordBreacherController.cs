@@ -1,12 +1,4 @@
-﻿using AstroManagerApi.Common;
-using AstroManagerApi.Library.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Concurrent;
-using System.Security.Cryptography;
-using System.Text;
-
-namespace AstroManagerApi.Controllers;
+﻿namespace AstroManagerApi.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace AstroManagerApi.Common;
+﻿namespace AstroManagerApi.Common;
 public class CustomController<T> : ControllerBase
 {
     protected readonly ILogger<T> _logger;

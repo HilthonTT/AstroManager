@@ -1,8 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Storage.Interfaces;
-using System.Net.Http.Json;
-
-namespace AstroManagerClient.Library.Api;
+﻿namespace AstroManagerClient.Library.Api;
 public class WeakPasswordEndpoint : IWeakPasswordEndpoint
 {
     private const string CacheName = nameof(WeakPasswordEndpoint);

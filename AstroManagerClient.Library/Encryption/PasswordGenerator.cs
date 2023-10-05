@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace AstroManagerClient.Library.Encryption;
+﻿namespace AstroManagerClient.Library.Encryption;
 public static class PasswordGenerator
 {
     private const string ValidChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+<>~-";

@@ -1,0 +1,15 @@
+﻿global using AstroManagerApi.Library.DataAccess.Interfaces;
+global using AstroManagerApi.Library.Models;
+global using Microsoft.Extensions.Configuration;
+global using MongoDB.Driver;
+global using AstroManagerApi.Library.Encryption.Interfaces;
+global using AstroManagerApi.Library.Extensions.Interfaces;
+global using Microsoft.Extensions.Logging;
+global using System.Security.Cryptography;
+global using System.Text;
+global using Microsoft.Extensions.Caching.Distributed;
+global using Microsoft.Extensions.Caching.Memory;
+global using System.Text.Json;
+global using MongoDB.Bson.Serialization.Attributes;
+global using MongoDB.Bson;
+global using System.ComponentModel.DataAnnotations;

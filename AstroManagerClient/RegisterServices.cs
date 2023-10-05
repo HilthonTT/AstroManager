@@ -1,20 +1,4 @@
-﻿using AstroManagerClient.Library.Api;
-using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models;
-using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Library.Storage;
-using AstroManagerClient.Library.Storage.Interfaces;
-using AstroManagerClient.ViewModels;
-using AstroManagerClient.Pages;
-using CommunityToolkit.Maui;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using SkiaSharp.Views.Maui.Controls.Hosting;
-using AstroManagerClient.Pages.Popups;
-using AstroManagerClient.Models.Interfaces;
-using AstroManagerClient.Models;
-
-#if WINDOWS
+﻿#if WINDOWS
     using Microsoft.UI;
     using Microsoft.UI.Windowing;
     using Windows.Graphics;

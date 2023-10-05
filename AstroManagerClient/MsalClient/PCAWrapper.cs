@@ -1,11 +1,4 @@
-﻿using AstroManagerClient.Messages;
-using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Client;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
-namespace AstroManagerClient.MsalClient;
+﻿namespace AstroManagerClient.MsalClient;
 public class PCAWrapper
 {
     public static PCAWrapper Instance { get; private set; } = new();

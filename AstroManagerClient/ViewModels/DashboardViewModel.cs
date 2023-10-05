@@ -1,17 +1,4 @@
-﻿using AstroManagerClient.Library.Api.Interfaces;
-using AstroManagerClient.Library.Models.Interfaces;
-using AstroManagerClient.Messages;
-using AstroManagerClient.Models;
-using AstroManagerClient.Models.Interfaces;
-using AstroManagerClient.Pages;
-using CommunityToolkit.Maui.Core.Extensions;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-
-namespace AstroManagerClient.ViewModels;
+﻿namespace AstroManagerClient.ViewModels;
 public partial class DashboardViewModel : BaseViewModel
 {
     private readonly ILoggedInUser _loggedInUser;
@@ -57,7 +44,9 @@ public partial class DashboardViewModel : BaseViewModel
     private ObservableCollection<CredentialDisplayModel> _filterableCredentials;
 
     public ObservableCollection<CredentialDisplayModel> RecentlyUpdatedCredentials => Credentials
-        .OrderByDescending(x => x.DateModified).Take(3).ToObservableCollection();
+        .OrderByDescending(x => x.DateModified)
+        .Take(3)
+        .ToObservableCollection();
 
     public ObservableCollection<CredentialDisplayModel> ReusedCredentials => GetReusedPassword();
     public ObservableCollection<CredentialDisplayModel> WeakCredentials => GetWeakPasswords();
