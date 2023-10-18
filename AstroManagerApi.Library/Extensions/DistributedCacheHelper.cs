@@ -47,8 +47,6 @@ public class DistributedCacheHelper : IDistributedCacheHelper
     {
         try
         {
-            await _redisCache.RemoveAsync(recordId);
-
             string jsonData = await _redisCache.GetStringAsync(recordId);
 
             if (string.IsNullOrWhiteSpace(jsonData))
